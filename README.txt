@@ -44,3 +44,21 @@ Target Audience
 * Security tools vendors / security open source developers who need to implement libraries to enumerate useful information about CVEs without wasting time to correlate and to create a proprietary database. vFeed is by far the best solution. Methods can be invoked from programs or scripts with a simple call.
 * Any security hacker who is conducting researches and need a very fast and accurate way to enumerate available exploits or techniques to check a vulnerability
 
+
+Changelog Beta v0.3
+
+* Rewrite vFeedApi.py as a class (added _init_db() method with sql query sanitization)
+* Added a class vFeedInfo to return variables and global configuration
+* Added a config.py module.
+* Updated the "update.py". Now verifies if a new db is available (support of checksum)
+* Renamed method checkReferences into checkREF()
+* Updated the sample scripts (vFeedAPI_calls_1 and _2) to reflect the changes
+* documentation update (always in progress) and will be mainly delivered via vfeed github wiki.
+
+Changelog Beta v0.2
+* moved project to github
+* added an updater.py to download the vFeed vulnerability database
+
+Changelog Beta v0.1
+* initial release 
+* read documentation

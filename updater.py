@@ -1,26 +1,60 @@
 #!/usr/bin/env python
 
-__author__ = 'NJ OUCHN'
-__email__ = 'hacker@toolswatch.org'
-__website__= 'http://www.toolswatch.org'
-__release__ = 'vFeed b0.2'
-
 import os
 import sys
 import urllib2
 import tarfile
+from lib import config as config
+import hashlib
 
 '''
 updater.py -  vFeed Database Updater
 
-Todo:
-
-- read info from a configuration file
-- check file integrity using a hash function
-
 '''
-
+def checksumfile(file):
+    '''
+    returning the sha1 hash value 
+    '''
+    sha1 = hashlib.sha1()
+    f = open(file, 'rb')
+    try:
+        sha1.update(f.read())
+    finally:
+        f.close()
+    return sha1.hexdigest()
+    
+def _checkDBversion(vfeed_db_primary_url,updateStatus,vfeed_db,vfeed_db_compressed):
+    '''
+    updating the existing vfeed database if needed
+    '''
+    url = vfeed_db_primary_url + updateStatus
+    _updateDB(url)     
+    hashLocal = checksumfile(vfeed_db)
+    with open(updateStatus,'r') as f:
+        output = f.read()
+        hashRemote = output.split(',')[1]
+    
+    if hashRemote <> hashLocal:
+        print '[New Update] Downloading the recent vFeed Database %s from %s' %(vfeed_db_compressed,vfeed_db_primary_url)
+        _updateDB(vfeed_db_primary_url+vfeed_db_compressed)
+    
+        print '[info] Decompressing %s ...' %vfeed_db_compressed
+        _uncompress(vfeed_db_compressed)
+    
+        print '[info] Cleaning ' + vfeed_db_compressed
+        os.remove(vfeed_db_compressed)
+        exit(0)
+        
+    if hashRemote == hashLocal:
+        print '[info] You have the latest %s vulnerability database' %vfeed_db
+        
+    
 def _updateDB(url):
+    '''
+    This function was found on internet.
+    So thanks to its author whenever he is.
+    '''
+    
     filename = url.split('/')[-1]
     u = urllib2.urlopen(url)
     f = open(filename, 'wb')
@@ -44,7 +78,9 @@ def _updateDB(url):
     print ' '
     
 def _uncompress(vfeed_db_compressed):
-        
+    '''
+    uncompress the tgz db
+    '''    
     if not os.path.isfile(vfeed_db_compressed):
         print '[error] ' + vfeed_db_compressed + ' not found'
         print '[info] Get manually your copy from %s' %vfeed_db_url
@@ -61,19 +97,30 @@ def _uncompress(vfeed_db_compressed):
 
 def main():
     
-    # Official URL
-    vfeed_db_primary_url = 'http://www.toolswatch.org/vfeed/'
-    vfeed_db_compressed= 'vfeed.db.tgz'
-    vfeed_db = 'vfeed.db'
-
-    print '[info] Downloading the recent vFeed Database %s from %s' %(vfeed_db_compressed,vfeed_db_primary_url)
-    _updateDB(vfeed_db_primary_url+vfeed_db_compressed)
+    configData = config.database['primary']
+    
+    vfeed_db_primary_url =  configData['url']
+    vfeed_db_compressed  = configData['vfeed_db_compressed']
+    vfeed_db  = configData['vfeed_db']
+    updateStatus = configData['updateStatus']
+    
+    if not os.path.isfile(vfeed_db):
+        print '[install] First time %s Database download ...' %vfeed_db
+        _updateDB(vfeed_db_primary_url+vfeed_db_compressed)
+        print '[info] Decompressing %s ...' %vfeed_db_compressed
+        _uncompress(vfeed_db_compressed)
+        print '[info] Cleaning ' + vfeed_db_compressed
+        os.remove(vfeed_db_compressed)
+        exit(0)
         
-    print '[info] Decompressing %s ...' %vfeed_db_compressed
-    _uncompress(vfeed_db_compressed)
+    if os.path.isfile(vfeed_db):
+        print '[info] Checking for the latest %s ' %vfeed_db
+        update = _checkDBversion(vfeed_db_primary_url,updateStatus,vfeed_db,vfeed_db_compressed)
 
-    print '[info] Cleaning ' + vfeed_db_compressed
-    os.remove(vfeed_db_compressed)
+    # removing the updateStatus file
+    os.remove(updateStatus)
+  
+  
 
 if __name__ == '__main__':
     main()

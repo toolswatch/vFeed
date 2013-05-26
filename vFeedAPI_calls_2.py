@@ -1,14 +1,10 @@
 #!/usr/bin/env python
 
-__author__ = 'NJ OUCHN'
-__email__ = 'hacker@toolswatch.org'
-__website__= 'http://www.toolswatch.org'
-__release__ = 'vFeed b0.2'
-
 
 import sys
 import os
 from lib import vFeedApi
+from lib import config as config
 '''
 vFeedAPI_calls_2.py -  Sample script to test available methods.
 
@@ -16,7 +12,7 @@ methods :
 
 - checkCVE
 - checkCVSS
-- checkReferences
+- checkREF (changed from checkReferences)
 - checkCWE
 - checkCPE
 - checkOVAL
@@ -31,237 +27,228 @@ methods :
 
 '''
 
-def call_checkCVE(myCVE):
-    PublishedDate,ModifiedDate,vulnDescription  = vFeedApi.checkCVE(myCVE)
-    print '[cve_description]:',vulnDescription
-    print '[cve_published]:',PublishedDate
-    print '[cve_modified]:',ModifiedDate
+
+
+def call_checkCVE():
+    cveInfo = vfeed.checkCVE()
+    if cveInfo:
+        print '[cve_description]:',cveInfo['cveDescription']
+        print '[cve_published]:', cveInfo['publishedDate']
+        print '[cve_modified]:', cveInfo['modifiedDate']
     
 
-def call_checkCVSS(myCVE):
-    cvssBase,cvssImpact,cvssExploit = vFeedApi.checkCVSS(myCVE)
-    print '[cvss_base]:', cvssBase
-    print '[cvss_impact]:',cvssImpact
-    print '[cvss_exploit]:',cvssExploit 
+def call_checkCVSS():
+    cvssScore = vfeed.checkCVSS()
+    if cvssScore:
+        print '[cvss_base]:', cvssScore['base']
+        print '[cvss_impact]:',cvssScore['impact']
+        print '[cvss_exploit]:',cvssScore['exploit'] 
 
 
-def call_checkReferences(myCVE):
-    # as you notice, this method returns a list.
-    
-    cveRef_id,cveRef_Link = vFeedApi.checkReferences(myCVE)
-   
-    for i in range(0,len(cveRef_id)):
-        print '[reference_id]:', cveRef_id[i]
-        print '[reference_link]', cveRef_Link[i]
+def call_checkREF():
+
+    cveRef = vfeed.checkREF()
+    for i in range (0,len(cveRef)):
+        print '[reference_id]:', cveRef[i]['id']
+        print '[reference_link]', cveRef[i]['link']   
+    print ''
+    print '[stats] %d Reference(s)' % len(cveRef)
+
+def call_checkCWE():
+
+    cveCWE = vfeed.checkCWE()
+    for i in range (0,len(cveCWE)):
+        print '[cwe_id]:', cveCWE[i]['id']
+    print ''
+    print '[stats] %d CWE(s) ' %len(cveCWE)
+
+def  call_checkCPE():
+
+    cveCPE = vfeed.checkCPE()
+    for i in range (0,len(cveCPE)):
+        print '[cpe_id]:', cveCPE[i]['id']
 
     print ''
-    print '[stats] %s has %d references' %(myCVE,len(cveRef_id))
+    print '[stats] %d CPE(s)' %len(cveCWE)
 
-def call_checkCWE(myCVE):
-    # as you notice, this method returns a list.
+def  call_checkOVAL():
     
-    cveCWE_id = vFeedApi.checkCWE(myCVE)
-    
-    for i in range(0,len(cveCWE_id)):
-        print '[cwe_id]:', cveCWE_id[i]
+    cveOVAL = vfeed.checkOVAL()
+    for i in range (0,len(cveOVAL)):
+        print '[oval_id]:', cveOVAL[i]['id']
+        print '[oval_file]:', cveOVAL[i]['file']
 
     print ''
-    print '[stats] %s has %d CWE' %(myCVE,len(cveCWE_id))
+    print '[stats] %d OVAL definition(s)' %len(cveOVAL)
 
-def  call_checkCPE(myCVE):
-    # as you notice, this method returns a list.
-    
-    cveCPE_id = vFeedApi.checkCPE(myCVE)
+def  call_checkNESSUS():
 
-    for i in range(0,len(cveCPE_id)):
-        print '[cpe_id]:', cveCPE_id[i]
-
-    print ''
-    print '[stats] %s has %d CPE' %(myCVE,len(cveCPE_id))
-
-def  call_checkOVAL(myCVE):
-    # as you notice, this method returns a list.
-    
-    cveOVAL_id,cveOVAL_file = vFeedApi.checkOVAL(myCVE)
-    
-    for i in range(0,len(cveOVAL_id)):
-        print '[oval_id]:', cveOVAL_id[i]
-        print '[oval_file]:', cveOVAL_file[i]
-    
-    print ''
-    print '[stats] %s has %d OVAL definition(s)' %(myCVE,len(cveOVAL_id))
-
-def  call_checkNESSUS(myCVE):
-    # as you notice, this method returns a list.
-
-    cveNESSUS_id,cveNESSUS_file,cveNESSUS_name,cveNESSUS_family = vFeedApi.checkNESSUS(myCVE)
-    
-    for i in range(0,len(cveNESSUS_id)):
-        print '[nessus_id]:', cveNESSUS_id[i]
-        print '[nessus_file]:', cveNESSUS_file[i]
-        print '[nessus_name]:', cveNESSUS_name[i]
-        print '[nessus_family]:', cveNESSUS_family[i]
-    
-    print ''
-    print '[stats] %s has %d Nessus testing script(s)' %(myCVE,len(cveNESSUS_id))
-
-
-def  call_checkEDB(myCVE):
-    # as you notice, this method returns a list.
-
-    cveEDB_id,cveEDB_file = vFeedApi.checkEDB(myCVE)
-  
-    for i in range(0,len(cveEDB_id)):
-        print '[edb_id]:', cveEDB_id[i]
-        print '[edb_exploit]:', cveEDB_file[i]
-    
-    print ''
-    print '[stats] %s has %d Exploit-DB exploit(s)' %(myCVE,len(cveEDB_id))
-
-
-def  call_checkMS(myCVE):
-    # as you notice, this method returns a list.
-    
-    cveMS_id = vFeedApi.checkMS(myCVE)
-    
-    for i in range(0,len(cveMS_id)):
-        print '[Microsoft_MS_id]:', cveMS_id[i]
+    cveNessus = vfeed.checkNESSUS()
+    for i in range (0,len(cveNessus)):
+        print '[nessus_id]:', cveNessus[i]['id']
+        print '[nessus_name]:', cveNessus[i]['name']
+        print '[nessus_file]:', cveNessus[i]['file']    
+        print '[nessus_family]:', cveNessus[i]['family']
         
     print ''
-    print '[stats] %s has %d Microsoft MS Patch(s)' %(myCVE,len(cveMS_id))
+    print '[stats] %d Nessus testing script(s)' %len(cveNessus)
 
-def  call_checkKB(myCVE):
-    # as you notice, this method returns a list.
+
+def  call_checkEDB():
+
+    cveEDB = vfeed.checkEDB()
+    for i in range (0,len(cveEDB)):
+        print '[edb_id]:', cveEDB[i]['id']
+        print '[edb_exploit]:', cveEDB[i]['file']    
     
-    cveKB_id = vFeedApi.checkKB(myCVE)
-    
-    for i in range(0,len(cveKB_id)):
-        print '[Microsoft_KB_id]:', cveKB_id[i]
+    print ''
+    print '[stats] %d Exploit-DB exploit(s)' %len(cveEDB)
+
+
+def  call_checkMS():
+
+    cveMS = vfeed.checkMS()
+    for i in range (0,len(cveMS)):
+        print '[Microsoft_MS_id]:', cveMS[i]['id']
         
     print ''
-    print '[stats] %s has %d Microsoft KB bulletin(s)' %(myCVE,len(cveKB_id))
+    print '[stats] %d Microsoft MS Patch(s)' %len(cveMS)
 
-def  call_checkAIXAPAR(myCVE):
-    # as you notice, this method returns a list.
+def  call_checkKB():
+
+    cveKB = vfeed.checkKB()
+    for i in range (0,len(cveKB)):
+        print '[Microsoft_KB_id]:', cveKB[i]['id']
     
-    cveAIXAPAR_id = vFeedApi.checkAIXAPAR(myCVE)
-    
-    for i in range(0,len(cveAIXAPAR_id)):
-        print '[IBM_AIXAPAR_id]:', cveAIXAPAR_id[i]
+    print ''
+    print '[stats] %d Microsoft KB bulletin(s)' %len(cveKB)  
+
+def  call_checkAIXAPAR():
+
+    cveAIX = vfeed.checkAIXAPAR()
+    for i in range (0,len(cveAIX)):
+        print '[IBM_AIXAPAR_id]:', cveAIX[i]['id']
         
     print ''
-    print '[stats] %s has %d IBM AIX APAR(s)' %(myCVE,len(cveAIXAPAR_id))
+    print '[stats] %d IBM AIX APAR(s)' %len(cveAIX)
 
-def  call_checkREDHAT(myCVE):
-    # as you notice, this method returns a list.
-    
-    cveREDHAT_id = vFeedApi.checkREDHAT(myCVE)
-    
-    for i in range(0,len(cveREDHAT_id)):
-        print '[REDHAT_id]:', cveREDHAT_id[i]
+def  call_checkREDHAT():
+
+    cveRHEL = vfeed.checkREDHAT()
+    for i in range (0,len(cveRHEL)):
+        print '[REDHAT_id]:', cveRHEL[i]['id']
         
     print ''
-    print '[stats] %s has %d REDHAT id(s)' %(myCVE,len(cveREDHAT_id))
+    print '[stats] %d REDHAT id(s)' %len(cveRHEL)
 
-def  call_checkSUSE(myCVE):
-    # as you notice, this method returns a list.
-    
-    cveSUSE_id = vFeedApi.checkSUSE(myCVE)
-    
-    for i in range(0,len(cveSUSE_id)):
-        print '[SUSE_id]:', cveSUSE_id[i]
+def  call_checkSUSE():
+
+    cveSUSE = vfeed.checkSUSE()
+    for i in range (0,len(cveSUSE)):
+        print '[SUSE_id]:', cveSUSE[i]['id']
         
     print ''
-    print '[stats] %s has %d SUSE id(s)' %(myCVE,len(cveSUSE_id))
+    print '[stats] %d SUSE id(s)' %len(cveSUSE)
 
-def  call_checkRISK(myCVE):
+def  call_checkRISK():
     
-    levelSeverity,isTopVulnerable,PCIstatus = vFeedApi.checkRISK(myCVE)
-    print '[cve_severity]:',levelSeverity
-    print '[cve_isTopVulnerable]:',isTopVulnerable
-    print '[cve_pcistatus]:',PCIstatus
+    cveRISK= vfeed.checkRISK()
+    print 'Severity:' , cveRISK['severitylevel']
+    print 'top vulnerablity:', cveRISK['topvulnerable']
+    print 'pci compliance:', cveRISK['pciCompliance']
 
 
 def main():
+    
+    global vfeed
+    
+    info = vFeedApi.vFeedInfo()
     
     if len(sys.argv) == 3:
         myCVE = sys.argv[2]
         apiMethod = sys.argv[1]
         
     else:
-        print ''        
-        print '[ver] %s' %__release__
-        print '[info] usage: ' + str(sys.argv[0]) + ' <API Method> <CVE id>'
+        print '-----------------------------------------------------------'
+        print info.get_version()['title']
+        print '                                           version ' + info.get_version()['build']
+        print '-----------------------------------------------------------'
+        print ''
+        print '[usage]: ' + str(sys.argv[0]) + ' <API Method> <CVE id>'
         print ''
         print '[info] available API methods:'
-        print 'checkCVE | checkCPE | checkCVSS | checkCWE | checkReferences | checkRISK'
+        print 'checkCVE | checkCPE | checkCVSS | checkCWE | checkREF | checkRISK'
         print 'checkOVAL | checkNESSUS | checkEDB'
         print 'checkMS | checkKB | checkAIXAPAR | checkREDHAT | checkSUSE'
         print 'exportXML (for exporting the vFeed XML file)'
         exit(0)
     
+    
+    vfeed = vFeedApi.vFeed(myCVE)
+    
+        
     if apiMethod == "checkCVE":
-        call_checkCVE(myCVE)
+        call_checkCVE()
         exit(0)
 
     if apiMethod == "checkCVSS":
-        call_checkCVSS(myCVE)
+        call_checkCVSS()
         exit(0)
 
-    if apiMethod == "checkReferences":
-        call_checkReferences(myCVE)
+    if apiMethod == "checkREF":
+        call_checkREF()
         exit(0)
 
     if apiMethod == "checkCWE":
-        call_checkCWE(myCVE)        
+        call_checkCWE()        
         exit(0)
 
     if apiMethod == "checkCPE":
-        call_checkCPE(myCVE)           
+        call_checkCPE()           
         exit(0)
 
     if apiMethod == "checkOVAL":
-        call_checkOVAL(myCVE)   
+        call_checkOVAL()   
         exit(0)
 
     if apiMethod == "checkNESSUS":
-        call_checkNESSUS(myCVE)   
+        call_checkNESSUS()   
         exit(0)
 
     if apiMethod == "checkEDB":
-        call_checkEDB(myCVE)   
+        call_checkEDB()   
         exit(0)
 
     if apiMethod == "checkMS":
-        call_checkMS(myCVE)   
+        call_checkMS()   
         exit(0)
 
     if apiMethod == "checkKB":
-        call_checkKB(myCVE)   
+        call_checkKB()   
         exit(0)
 
     if apiMethod == "checkAIXAPAR":
-        call_checkAIXAPAR(myCVE) 
+        call_checkAIXAPAR() 
         exit(0)
 
     if apiMethod == "checkREDHAT":
-        call_checkREDHAT(myCVE) 
+        call_checkREDHAT() 
         exit(0)
 
     if apiMethod == "checkSUSE":
-        call_checkSUSE(myCVE) 
+        call_checkSUSE() 
         exit(0)
 
     if apiMethod == "checkRISK":
-        call_checkRISK(myCVE)  
+        call_checkRISK()  
         exit(0)
 
     if apiMethod == "exportXML":
-        vFeedApi.exportXML(myCVE)
+        vfeed.exportXML()
         exit(0)
     
     else:
-        print'[error] the method %s is not implemented yet' % apiMethod
+        print'[error] the method %s is not implemented' % apiMethod
     
            
 if __name__ == '__main__':

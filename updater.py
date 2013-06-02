@@ -115,7 +115,7 @@ def main():
         
     if os.path.isfile(vfeed_db):
         print '[info] Checking for the latest %s ' %vfeed_db
-        update = _checkDBversion(vfeed_db_primary_url,updateStatus,vfeed_db,vfeed_db_compressed)
+        _checkDBversion(vfeed_db_primary_url,updateStatus,vfeed_db,vfeed_db_compressed)
 
     # removing the updateStatus file
     os.remove(updateStatus)

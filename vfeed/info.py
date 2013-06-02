@@ -1,5 +1,12 @@
 from . import config
 
+'''
+info.py -  vFeed Open Source Vulnerability Database Cross-Linker and Aggregator for NVD/CVE
+
+Class vFeedInfo : supplying the vFeed information
+'''
+
+
 class vFeedInfo(object):
     def __init__(self):
         self.vFeedInfo = {}

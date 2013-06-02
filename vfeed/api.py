@@ -10,10 +10,9 @@ from . import config
 
 
 '''
-vFeedApi.py -  vFeed Open Source Vulnerability Database Cross-Linker and Aggregator for NVD/CVE
+api.py -  vFeed Open Source Vulnerability Database Cross-Linker and Aggregator for NVD/CVE
 
-Class vFeedInfo : supplying the vFeed information
-Class vFeed : the main class with 15 methods
+Class vFeed : the main class
 
 '''
 class vFeed(object):

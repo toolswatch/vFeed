@@ -72,7 +72,7 @@ def  call_checkCPE():
         print '[cpe_id]:', cveCPE[i]['id']
 
     print ''
-    print '[stats] %d CPE(s)' %len(cveCWE)
+    print '[stats] %d CPE(s)' %len(cveCPE)
 
 def  call_checkOVAL():
     

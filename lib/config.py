@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-
-
 '''
 vFeed Framework - The Open Source Cross Linked Local Vulnerability Database
 

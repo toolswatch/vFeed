@@ -36,7 +36,7 @@ database = {
 
 
     'secondary': {
-        'descripion': 'secondary repository (not effective yet)',
+        'description': 'secondary repository (not effective yet)',
         'url': 'http://www.vfeed.org/',
         'vfeed_db': 'vfeed.db',
         'vfeed_db_compressed': 'vfeed.db.tgz',

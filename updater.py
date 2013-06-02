@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import os
-import sys
 import urllib2
 import tarfile
 from lib import config as config
@@ -83,7 +82,7 @@ def _uncompress(vfeed_db_compressed):
     '''    
     if not os.path.isfile(vfeed_db_compressed):
         print '[error] ' + vfeed_db_compressed + ' not found'
-        print '[info] Get manually your copy from %s' %vfeed_db_url
+        print '[info] Get manually your copy from %s' % config.database['primary']['url']
         exit(0)
     
     try:

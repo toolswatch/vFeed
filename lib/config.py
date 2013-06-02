@@ -31,7 +31,7 @@ database = {
                            'url' : 'http://www.toolswatch.org/vfeed/',
                            'vfeed_db' : 'vfeed.db',
                            'vfeed_db_compressed' : 'vfeed.db.tgz',
-                           'updateStatus' : 'update.txt',  
+                           'updateStatus' : 'update.dat',  
                         },
 
 

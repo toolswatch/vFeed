@@ -1,22 +1,23 @@
 #!/usr/bin/env python
 
 import os
-import sys
 import urllib2
 import tarfile
-from lib import config as config
 import hashlib
 
-'''
-updater.py -  vFeed Database Updater
+from vfeed import config
+
 
 '''
-def checksumfile(file):
+vfeed_update.py -  vFeed Database Updater
+
+'''
+def checksumfile(_file):
     '''
     returning the sha1 hash value 
     '''
     sha1 = hashlib.sha1()
-    f = open(file, 'rb')
+    f = open(_file, 'rb')
     try:
         sha1.update(f.read())
     finally:
@@ -83,7 +84,7 @@ def _uncompress(vfeed_db_compressed):
     '''    
     if not os.path.isfile(vfeed_db_compressed):
         print '[error] ' + vfeed_db_compressed + ' not found'
-        print '[info] Get manually your copy from %s' %vfeed_db_url
+        print '[info] Get manually your copy from %s' % config.database['primary']['url']
         exit(0)
     
     try:
@@ -115,7 +116,7 @@ def main():
         
     if os.path.isfile(vfeed_db):
         print '[info] Checking for the latest %s ' %vfeed_db
-        update = _checkDBversion(vfeed_db_primary_url,updateStatus,vfeed_db,vfeed_db_compressed)
+        _checkDBversion(vfeed_db_primary_url,updateStatus,vfeed_db,vfeed_db_compressed)
 
     # removing the updateStatus file
     os.remove(updateStatus)

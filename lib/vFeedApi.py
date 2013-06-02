@@ -319,23 +319,23 @@ class vFeed():
         self.isTopVulnerable = False
         self.PCIstatus = "Passed"
         
-        self._vrfy_cve()
+        cve_entry = self._vrfy_cve()
         self.cvssScore = self.checkCVSS()
-                       
-        if self.cvssScore['base'] >= "7.0":
-            self.levelSeverity = "High"
-            self.PCIstatus = "Failed"
-    
-        if self.cvssScore['base'] >= "4.0" and self.cvssScore['base'] <= "6.9":
-            self.levelSeverity = "Moderate"        
-    
-        if self.cvssScore['base'] >= "0.1" and self.cvssScore['base'] <= "3.9":
-            self.levelSeverity = "Low"  
-        
-        if self.cvssScore['base'] == "10.0" and self.cvssScore['impact'] == "10.0" and self.cvssScore['exploit'] == "10.0":
+                    
+        if cve_entry is None or 'base' not in self.cvssScore:
+            self.levelSeverity = "Unknown"
+            self.PCIstatus = "Unknown"
+        elif 'impact' in self.cvssScore and 'exploit' in self.cvssScore and self.cvssScore['base'] == "10.0" and self.cvssScore['impact'] == "10.0" and self.cvssScore['exploit'] == "10.0":
             self.levelSeverity = "High"
             self.isTopVulnerable = True
             self.PCIstatus = "Failed"
+        elif self.cvssScore['base'] >= "7.0":
+            self.levelSeverity = "High"
+            self.PCIstatus = "Failed"
+        elif self.cvssScore['base'] >= "4.0" and self.cvssScore['base'] <= "6.9":
+            self.levelSeverity = "Moderate"        
+        elif self.cvssScore['base'] >= "0.1" and self.cvssScore['base'] <= "3.9":
+            self.levelSeverity = "Low"
 
         self.Risk ={ 'severitylevel' : self.levelSeverity,
                      'topvulnerable' : self.isTopVulnerable,

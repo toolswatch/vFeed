@@ -2,10 +2,10 @@
 
 
 '''
-config.py -  Configuration File
+vFeed Framework - The Open Source Cross Linked Local Vulnerability Database
 
-#NJ OUCHN
-
+Name : config.py -  Configuration File
+Purpose : Configuration File. Handles globale variables and database URLs.
 '''
 
 author =   {
@@ -17,8 +17,8 @@ author =   {
 product =  {
             '__title__' : 'vFeed - Open Source Correlated Local Vulnerability Database',
             '__website__' : 'http://www.toolswatch.org/vfeed',
-            '__github__' : 'https://github.com/toolswatch/vFeed',
-            '__build__' : 'beta 0.3',
+            '__mainRepository__' : 'https://github.com/toolswatch/vFeed',
+            '__build__' : 'beta 0.3.5',
             }
 
 
@@ -31,12 +31,12 @@ database = {
                            'url' : 'http://www.toolswatch.org/vfeed/',
                            'vfeed_db' : 'vfeed.db',
                            'vfeed_db_compressed' : 'vfeed.db.tgz',
-                           'updateStatus' : 'update.dat',  
+                           'updateStatus' : 'update.txt',  
                         },
 
 
             'secondary' : {
-                           'descripion' : 'secondary repository',
+                           'descripion' : 'secondary repository (not effective yet)',
                            'url' : 'http://www.vfeed.org/',
                            'vfeed_db' : 'vfeed.db',
                            'vfeed_db_compressed' : 'vfeed.db.tgz',
@@ -49,6 +49,7 @@ gbVariables = {
                 'cve_url' : 'http://cve.mitre.org/cgi-bin/cvename.cgi?name=',
                 'edb_url' : 'http://www.exploit-db.com/exploits/',
                 'oval_url' : 'http://oval.mitre.org/repository/data/getDef?id=',
+                'redhat_oval_url' : 'https://www.redhat.com/security/data/oval/com.redhat.rhsa-'
 
                 }    
     

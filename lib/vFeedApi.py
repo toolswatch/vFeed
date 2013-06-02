@@ -54,6 +54,7 @@ class vFeed():
         self.oval_url = config.gbVariables['oval_url']
         self.edb_url = config.gbVariables['edb_url']
         self.cve_url = config.gbVariables['cve_url']
+        self.redhat_oval_url = config.gbVariables['redhat_oval_url']
         
         self.cveID = cveID.upper()
         self._check_env(self.vfeed_db)
@@ -129,8 +130,7 @@ class vFeed():
         Returning:  CVE references links and their IDs as dictionay
         '''
         self.cnt = 0
-        self.cveReferences = {}
-
+        self.cveReferences = {}  
         self.cur.execute('SELECT * FROM cve_reference WHERE cveid=?', self.query)
 
         for self.data in self.cur.fetchall():
@@ -148,7 +148,7 @@ class vFeed():
         self.cnt = 0
         self.CWE_id = {}
         self.cur.execute('SELECT * FROM cve_cwe WHERE cveid=?', self.query)
-
+        
         for self.data in self.cur.fetchall():
             self.CWE_id[self.cnt] = {
                                     'id' : str(self.data[0]),
@@ -225,19 +225,53 @@ class vFeed():
 
     def checkREDHAT(self):
         '''
-        Returning:  Redhat IDs as dictionary  
+        Returning:  Redhat IDs & Bugzilla 
         '''
         self.cnt = 0
+        self.cnt2 = 0
         self.REDHAT_id = {}
+        self.BUGZILLA_id = {}
+        
         self.cur.execute('SELECT * FROM map_cve_redhat WHERE cveid=?', self.query)
 
         for self.data in self.cur.fetchall():
             self.REDHAT_id[self.cnt] = {
                                     'id' : str(self.data[0]),
+                                    'oval' : str(self.data[1]),
+                                    'title' : str(self.data[2]),
+                                    }
+            
+            # Querying the mapped redhat id and bugzilla id table. New query is set.
+            self.query2 = (self.REDHAT_id[self.cnt]['id'],)
+            self.cur.execute('SELECT * FROM map_redhat_bugzilla WHERE redhatid=?', self.query2)
+            
+            for self.data2 in self.cur.fetchall():
+                self.BUGZILLA_id[self.cnt2] = {
+                                        'date_issue' : str(self.data2[0]),
+                                        'id' : str(self.data2[1]),
+                                        'title' : str(self.data2[2]),
+                                        }
+                self.cnt2+=1
+            self.cnt+=1
+    
+        
+        return (self.REDHAT_id,self.BUGZILLA_id)
+
+    def checkDEBIAN(self):
+        '''
+        Returning:  Debian IDs as dictionary  
+        '''
+        self.cnt = 0
+        self.DEBIAN_id = {}
+        self.cur.execute('SELECT * FROM map_cve_debian WHERE cveid=?', self.query)
+
+        for self.data in self.cur.fetchall():
+            self.DEBIAN_id[self.cnt] = {
+                                    'id' : str(self.data[0]),
                                     }
             self.cnt+=1
         
-        return self.REDHAT_id 
+        return self.DEBIAN_id 
 
 
     def checkSUSE(self):
@@ -256,13 +290,28 @@ class vFeed():
         
         return self.SUSE_id 
 
+    def checkMANDRIVA(self):
+     '''
+     Returning:  MANDRIVA IDs as dictionary  
+     '''
+     self.cnt = 0
+     self.MANDRIVA_id = {}
+     self.cur.execute('SELECT * FROM map_cve_mandriva WHERE cveid=?', self.query)
+
+     for self.data in self.cur.fetchall():
+         self.MANDRIVA_id[self.cnt] = {
+                                 'id' : str(self.data[0]),
+                                 }
+         self.cnt+=1
+     
+     return self.MANDRIVA_id
+   
     def checkOVAL(self):
         '''
         Returning:  OVAL references file and their IDs as dictionay
         '''
         self.cnt = 0
         self.OVAL_id = {}
-
         self.cur.execute('SELECT * FROM map_cve_oval WHERE cveid=?', self.query)
 
         for self.data in self.cur.fetchall():
@@ -279,7 +328,6 @@ class vFeed():
         '''
         self.cnt = 0
         self.NESSUS_id = {}
-
         self.cur.execute('SELECT * FROM map_cve_nessus WHERE cveid=?', self.query)
 
         for self.data in self.cur.fetchall():
@@ -298,7 +346,6 @@ class vFeed():
         '''
         self.cnt = 0
         self.EDB_id = {}
-
         self.cur.execute('SELECT * FROM map_cve_exploitdb WHERE cveid=?', self.query)
 
         for self.data in self.cur.fetchall():
@@ -308,6 +355,24 @@ class vFeed():
                                     }
             self.cnt+=1
         return self.EDB_id  
+
+    def checkSAINT(self):
+        '''
+        Returning:  Saint Corporation Exploits ids and files
+        '''
+        self.cnt = 0
+        self.SAINT_id = {}
+        self.cur.execute('SELECT * FROM map_cve_saint WHERE cveid=?', self.query)
+
+        for self.data in self.cur.fetchall():
+            self.SAINT_id[self.cnt] = {
+                                    'id' : str(self.data[0]),
+                                    'title' : str(self.data[1]),
+                                    'file' : str(self.data[2]),
+                                    }
+            self.cnt+=1
+        return self.SAINT_id  
+
 
     def checkRISK(self):
         '''
@@ -333,7 +398,7 @@ class vFeed():
             self.levelSeverity = "High"
             self.PCIstatus = "Failed"
         elif self.cvssScore['base'] >= "4.0" and self.cvssScore['base'] <= "6.9":
-            self.levelSeverity = "Moderate"        
+            self.levelSeverity = "Moderate"
         elif self.cvssScore['base'] >= "0.1" and self.cvssScore['base'] <= "3.9":
             self.levelSeverity = "Low"
 
@@ -344,7 +409,7 @@ class vFeed():
 
         return self.Risk 
 
-########  the exportXML should be removed to a separate class for the next version ########
+########  the exportXML should be removed to a separate class for the next version 0.4 ########
 
     def exportXML(self):
         '''
@@ -362,11 +427,14 @@ class vFeed():
         self.MS_id = self.checkMS()
         self.KB_id = self.checkKB()
         self.AIXAPAR_id = self.checkAIXAPAR()
-        self.REDHAT_id =  self.checkREDHAT()
+        self.REDHAT_id, self.BUGZILLA_id =  self.checkREDHAT()
+        self.DEBIAN_id  =  self.checkDEBIAN()
         self.SUSE_id = self.checkSUSE()
+        self.MANDRIVA_id = self.checkMANDRIVA()
         self.OVAL_id = self.checkOVAL()
         self.NESSUS_id = self.checkNESSUS()
         self.EDB_id = self.checkEDB()
+        self.SAINT_id = self.checkSAINT()
         
         # define id
         self.vfeedid = self.cveID.replace('self.cveID','vFeed')
@@ -378,9 +446,9 @@ class vFeed():
         # define the vFeed XML attributes
         self.root = Element('vFeed')
         self.root.set('xmlns:xsi', "http://www.w3.org/2001/XMLSchema-instance")
-        self.root.set('xmlns:meta', "http://vfeed.toolswatch.org/0.1")
-        self.root.set('xmlns', "http://vfeed.toolswatch.org/0.1")
-        self.root.set('xsi:schemaLocation', "http://vfeed.toolswatch.org/0.1 http://vfeed.toolswatch.org/vfeed.xsd")
+        self.root.set('xmlns:meta', "http://www.toolswatch.org/vfeed/")
+        self.root.set('xmlns', "http://www.toolswatch.org/vfeed/")
+        self.root.set('xsi:schemaLocation', "http://www.toolswatch.org/vfeed/ http://www.toolswatch.org/vfeed/vFeed.xsd")
                 
         self.root.append(Comment('#####################################'))
         self.root.append(Comment(config.product['__title__']))
@@ -513,9 +581,19 @@ class vFeed():
         for i in range(0,len(self.REDHAT_id)):        
             self.patch_head  = SubElement(self.patchmanagement_head, 'patch',
                             {'id': self.REDHAT_id[i]['id'],
+                             'title': self.REDHAT_id[i]['title'],
                             'reference':'REDHAT',
                             })
+
+        for i in range(0,len(self.BUGZILLA_id)):        
+            self.patch_head  = SubElement(self.patchmanagement_head, 'patch',
+                            {'date_issue': self.BUGZILLA_id[i]['date_issue'],
+                             'id': self.BUGZILLA_id[i]['id'],
+                             'title': self.BUGZILLA_id[i]['title'],
+                            'reference':'BUGZILLA',
+                            }) 
     
+
         ## Exporting SUSE Patches
                 
         for i in range(0,len(self.SUSE_id)):        
@@ -524,6 +602,21 @@ class vFeed():
                             'reference':'SUSE',
                             })
 
+        ## Exporting DEBIAN Patches
+                
+        for i in range(0,len(self.DEBIAN_id)):        
+            self.patch_head  = SubElement(self.patchmanagement_head, 'patch',
+                            {'id': self.DEBIAN_id[i]['id'],
+                            'reference':'DEBIAN',
+                            })
+
+        ## Exporting MANDRIVA Patches
+                
+        for i in range(0,len(self.MANDRIVA_id)):        
+            self.patch_head  = SubElement(self.patchmanagement_head, 'patch',
+                            {'id': self.MANDRIVA_id[i]['id'],
+                            'reference':'MANDRIVA',
+                            })
 
 
         # Attack and Weaknesses Patterns
@@ -556,7 +649,16 @@ class vFeed():
                                        'utility': "OVAL Interpreter",
                                        'file' : self.OVAL_id[i]['file'],
                                        })        
-         
+       
+        
+        for i in range(0,len(self.REDHAT_id)):
+            self.ovalChecks_head  = SubElement(self.securitytest_head, 'check',
+                               {'type':'Local Security Testing',
+                                'id': self.REDHAT_id[i]['oval'],
+                                'utility': "OVAL Interpreter",
+                                'file' : self.redhat_oval_url + self.REDHAT_id[i]['oval'].split('oval:com.redhat.rhsa:def:')[1] + '.xml' ,
+                                })
+       
         ## Exporting Nessus attributes         
         for i in range(0,len(self.NESSUS_id)):
             self.nessusChecks_head  = SubElement(self.securitytest_head, 'check',
@@ -576,6 +678,17 @@ class vFeed():
                                       'file' :  self.EDB_id[i]['file'],
                                       }) 
 
+        ## Exporting SAINT ids 
+        for i in range(0,len(self.SAINT_id)):
+            self.exploitChecks_head  = SubElement(self.securitytest_head, 'check',
+                                     {'type':'Exploitation',
+                                      'utility':"saintExploit",
+                                      'id': self.SAINT_id[i]['id'],
+                                      'title': self.SAINT_id[i]['title'],
+                                      'file' :  self.SAINT_id[i]['file'],
+                                      })
+ 
+          
 
         self.xmlfile=open(self.vfeedfile, 'w+')
         #print self.prettify(self.root)

@@ -25,8 +25,8 @@ print 'vFeed global config returned as dict:', info.get_config()['primary']
 
 # Invoking the vFeed class
 
-cve = "CVE-2008-1447"
-
+#cve = "CVE-2008-1447"
+cve = "CVE-2013-3238"
 print '[setting] using cve ', cve
 
 # create an instance of the class vFeed and pass the CVE
@@ -98,16 +98,39 @@ for i in range (0,len(cveAIX)):
 print 'total found AIXAPAR' , len(cveAIX)
 
 print '[invoking] the checkREDHAT() method '
-cveRHEL = vfeed.checkREDHAT()
+cveRHEL,cveBUGZ = vfeed.checkREDHAT()
 for i in range (0,len(cveRHEL)):
     print 'REDHAT id:', cveRHEL[i]['id']
+    print 'REDHAT Patch Title:', cveRHEL[i]['title']
+    print 'REDHAT OVAL ID:', cveRHEL[i]['oval']
 print 'total found REDHAT' , len(cveRHEL)
+
+for i in range (0,len(cveBUGZ)):
+    print 'Bugzilla date:', cveBUGZ[i]['date_issue']
+    print 'Bugzilla id :', cveBUGZ[i]['id']
+    print 'Bugzilla title :', cveBUGZ[i]['title']
+print 'total found Bugzilla' , len(cveBUGZ)
+
+
+print '[invoking] the checkDEBIAN() method '
+cveDEB = vfeed.checkDEBIAN()
+
+for i in range (0,len(cveDEB)):
+    print 'DEBIAN id:', cveDEB[i]['id']
+print 'total found DEBIAN' , len(cveDEB)
 
 print '[invoking] the checkSUSE() method '
 cveSUSE = vfeed.checkSUSE()
 for i in range (0,len(cveSUSE)):
     print 'SUSE id:', cveSUSE[i]['id']
 print 'total found SUSE' , len(cveSUSE)
+
+print '[invoking] the checkMANDRIVA() method '
+cveMANDRIVA = vfeed.checkMANDRIVA()
+for i in range (0,len(cveMANDRIVA)):
+    print 'MANDRIVA id:', cveMANDRIVA[i]['id']
+print 'total found MANDRIVA' , len(cveMANDRIVA)
+
 
 print '[invoking] the checkOVAL() method '
 cveOVAL = vfeed.checkOVAL()
@@ -118,6 +141,7 @@ print 'total found OVAL' , len(cveOVAL)
 
 print '[invoking] the checkNESSUS() method '
 cveNessus = vfeed.checkNESSUS()
+
 for i in range (0,len(cveNessus)):
     print 'Nessus id:', cveNessus[i]['id']
     print 'Nessus name', cveNessus[i]['name']
@@ -127,11 +151,20 @@ print 'total found NESSUS' , len(cveNessus)
 
 print '[invoking] the checkEDB() method '
 cveEDB = vfeed.checkEDB()
+
 for i in range (0,len(cveEDB)):
     print 'EDB id:', cveEDB[i]['id']
-    print 'EDB file', cveEDB[i]['file']    
-
+    print 'EDB file', cveEDB[i]['file']  
 print 'total found EDB' , len(cveEDB)
+
+print '[invoking] the checkSAINT() method '
+cveSAINTexp = vfeed.checkSAINT()
+for i in range (0,len(cveSAINTexp)):
+    print 'Saint Exploit id:', cveSAINTexp[i]['id']
+    print 'Saint Exploit Title:', cveSAINTexp[i]['title']
+    print 'Saint Exploit File:', cveSAINTexp[i]['file']
+print 'total found Saint Exploit' , len(cveSAINTexp)
+
 
 print '[invoking] the checkRISK() method '
 cveRISK= vfeed.checkRISK()
@@ -140,11 +173,9 @@ print 'top vulnerablity:', cveRISK['topvulnerable']
 print 'pci compliance:', cveRISK['pciCompliance']
 
 
-
-#cve = "CVE-2013-3342"
-
 print '[Generating XML] Invoking the exportXML() method '
 cve = "CVE-2008-1447"
+#cve = "CVE-2013-3238"
 print '[New Instance] Creating new instance with cve ' , cve
 vfeed = vFeedApi.vFeed(cve)
 vfeed.exportXML()

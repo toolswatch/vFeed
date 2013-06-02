@@ -18,10 +18,13 @@ methods :
 - checkOVAL
 - checkNESSUS
 - checkEDB
+- checkSAINT
 - checkMS
 - checkKB
 - checkAIXAPAR
 - checkREDHAT
+- checkDEBIAN
+- checkMANDRIVA
 - checkRISK
 - exportXML
 
@@ -105,6 +108,18 @@ def  call_checkEDB():
     print '[stats] %d Exploit-DB exploit(s)' %len(cveEDB)
 
 
+def  call_checkSAINT():
+
+    cveSAINT = vfeed.checkSAINT()
+    for i in range (0,len(cveSAINT)):
+        print '[SAINTEXPLOIT_id]:', cveSAINT[i]['id']
+        print '[SAINTEXPLOIT_TITLE]:', cveSAINT[i]['title']
+        print '[SAINTEXPLOIT_FILE]:', cveSAINT[i]['file']
+        
+    print ''
+    print '[stats] %d SAINT EXPLOIT id(s)' %len(cveSAINT)
+
+
 def  call_checkMS():
 
     cveMS = vfeed.checkMS()
@@ -134,12 +149,22 @@ def  call_checkAIXAPAR():
 
 def  call_checkREDHAT():
 
-    cveRHEL = vfeed.checkREDHAT()
+    cveRHEL,cveBUGZILLA = vfeed.checkREDHAT()
     for i in range (0,len(cveRHEL)):
         print '[REDHAT_id]:', cveRHEL[i]['id']
+        print '[REDHAT_PATCH_TITLE]:', cveRHEL[i]['title']
+        print '[REDHAT_OVAL_ID]:', cveRHEL[i]['oval']
         
     print ''
     print '[stats] %d REDHAT id(s)' %len(cveRHEL)
+
+
+    for i in range (0,len(cveBUGZILLA)):
+        print '[REDHAT_BUGZILLA_ISSUED]:', cveBUGZILLA[i]['date_issue']
+        print '[REDHAT_BUGZILLA_id]:', cveBUGZILLA[i]['id']
+        print '[REDHAT_BUGZILLA_title]:', cveBUGZILLA[i]['title']
+    print 'total found Bugzilla' , len(cveBUGZILLA)
+
 
 def  call_checkSUSE():
 
@@ -149,6 +174,26 @@ def  call_checkSUSE():
         
     print ''
     print '[stats] %d SUSE id(s)' %len(cveSUSE)
+
+
+def  call_checkDEBIAN():
+
+    cveDEBIAN = vfeed.checkDEBIAN()
+    for i in range (0,len(cveDEBIAN)):
+        print '[DEBIAN_id]:', cveDEBIAN[i]['id']
+        
+    print ''
+    print '[stats] %d DEBIAN id(s)' %len(cveDEBIAN)
+
+
+def  call_checkMANDRIVA():
+
+    cveMANDRIVA = vfeed.checkMANDRIVA()
+    for i in range (0,len(cveMANDRIVA)):
+        print '[MANDRIVA_id]:', cveMANDRIVA[i]['id']
+        
+    print ''
+    print '[stats] %d MANDRIVA id(s)' %len(cveMANDRIVA)
 
 def  call_checkRISK():
     
@@ -169,17 +214,18 @@ def main():
         apiMethod = sys.argv[1]
         
     else:
+        print ''
         print '-----------------------------------------------------------'
         print info.get_version()['title']
-        print '                                           version ' + info.get_version()['build']
+        print '                                         version ' + info.get_version()['build']
         print '-----------------------------------------------------------'
         print ''
         print '[usage]: ' + str(sys.argv[0]) + ' <API Method> <CVE id>'
         print ''
         print '[info] available API methods:'
         print 'checkCVE | checkCPE | checkCVSS | checkCWE | checkREF | checkRISK'
-        print 'checkOVAL | checkNESSUS | checkEDB'
-        print 'checkMS | checkKB | checkAIXAPAR | checkREDHAT | checkSUSE'
+        print 'checkOVAL | checkNESSUS | checkEDB | checkSAINT'
+        print 'checkMS | checkKB | checkAIXAPAR | checkREDHAT | checkSUSE | checkDEBIAN | checkMANDRIVA'
         print 'exportXML (for exporting the vFeed XML file)'
         exit(0)
     
@@ -219,6 +265,10 @@ def main():
         call_checkEDB()   
         exit(0)
 
+    if apiMethod == "checkSAINT":
+        call_checkSAINT()   
+        exit(0)
+
     if apiMethod == "checkMS":
         call_checkMS()   
         exit(0)
@@ -233,6 +283,14 @@ def main():
 
     if apiMethod == "checkREDHAT":
         call_checkREDHAT() 
+        exit(0)
+        
+    if apiMethod == "checkDEBIAN":
+        call_checkDEBIAN() 
+        exit(0)
+
+    if apiMethod == "checkMANDRIVA":
+        call_checkMANDRIVA() 
         exit(0)
 
     if apiMethod == "checkSUSE":

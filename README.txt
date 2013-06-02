@@ -45,6 +45,24 @@ Target Audience
 * Any security hacker who is conducting researches and need a very fast and accurate way to enumerate available exploits or techniques to check a vulnerability
 
 
+changelog Beta v0.3.5
+
+* Extended the checkREDHAT method
+ ** Added the support of Redhat OVAL ids reference. Now, vFeed reports more accurate Redhat Patchs with associated Redhat OVAL ids 
+ ** Added the support of Redhat Bugzilla Ids and advisory issue date
+* Added the support of Debian ids. vFeed now reports DSA as patch
+* Added the support of Mandriva ids.
+* Extended Exploitation Checks to support Saint Corporation Exploits. If available, title, link to exploit file are reported
+* To reflect the newest cross references, 3 new methods have been added 
+ ** checkREDHAT extended to support Redhat OVAL, Bugzilla ids more redhat patchs ids.
+ ** checkDEBIAN to check for debian patchs
+ ** checkMANDRIVA to check for mandrake patchs
+ ** checkSAINT to check for Saint corporation exploits 
+* Fixed a small bug in checkRISK() (thanks to Ronald Bister https://github.com/savon-noir)
+* Updating wiki documentation in progress
+ 
+
+
 Changelog Beta v0.3
 
 * Rewrite vFeedApi.py as a class (added _init_db() method with sql query sanitization)

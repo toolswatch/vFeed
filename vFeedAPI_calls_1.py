@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-from lib import vFeedApi
+from vfeed import vFeed, vFeedInfo
 
 '''
 vFeedAPI_calls_1.py -  Sample script to call methods from your programs
@@ -10,7 +10,7 @@ vFeedAPI_calls_1.py -  Sample script to call methods from your programs
 
 # create an instance of the class vFeedInfo
 print '[instance] creating an instance with vFeedApi.vFeedInfo() '
-info = vFeedApi.vFeedInfo()
+info = vFeedInfo()
 
 print '[invoking] the get_version() method '
 print 'version: ', info.get_version()['build']
@@ -30,7 +30,7 @@ print '[setting] using cve ', cve
 
 # create an instance of the class vFeed and pass the CVE
 print '[instance] creating an instance with vFeedApi.vFeed(cve) '
-vfeed = vFeedApi.vFeed(cve)
+vfeed = vFeed(cve)
 
 
 print '[invoking] the checkCVE() method '
@@ -168,7 +168,7 @@ print 'total found Saint Exploit', len(cveSAINTexp)
 print '[invoking] the checkRISK() method '
 cveRISK = vfeed.checkRISK()
 print 'Severity:', cveRISK['severitylevel']
-print 'top vulnerablity:', cveRISK['topvulnerable']
+print 'top vulnerability:', cveRISK['topvulnerable']
 print 'pci compliance:', cveRISK['pciCompliance']
 
 
@@ -176,5 +176,5 @@ print '[Generating XML] Invoking the exportXML() method '
 cve = "CVE-2008-1447"
 #cve = "CVE-2013-3238"
 print '[New Instance] Creating new instance with cve ', cve
-vfeed = vFeedApi.vFeed(cve)
+vfeed = vFeed(cve)
 vfeed.exportXML()

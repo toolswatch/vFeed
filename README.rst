@@ -54,6 +54,14 @@ Target Audience
 Changelog
 =========
 
+Beta v0.3.9
+-----------
+
+* Refactoring as a first step towards having the vfeed module in pypi.
+* Bug fixes
+* PEP8 compatible code (at least what autopep8 can do)
+* README format is now RST
+
 Beta v0.3.5
 -----------
 

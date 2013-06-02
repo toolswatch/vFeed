@@ -1,12 +1,12 @@
-import sys
 import os
-from time import gmtime, strftime
 import sqlite3
+
+from time import gmtime, strftime
 from xml.etree import ElementTree
-from xml.etree.ElementTree import Element, SubElement, Comment, tostring
-import xml.dom.minidom
+from xml.etree.ElementTree import Element, SubElement, Comment
 from xml.dom import minidom
-import config as config
+
+from . import config
 
 
 '''
@@ -16,32 +16,7 @@ Class vFeedInfo : supplying the vFeed information
 Class vFeed : the main class with 15 methods
 
 '''
-
-
-class vFeedInfo():
-    def __init__(self):
-        self.vFeedInfo = {}
-
-    def get_version(self):
-        self.vFeedInfo['title'] = config.product['__title__']
-        self.vFeedInfo['build'] = config.product['__build__']
-        return self.vFeedInfo
-
-    def get_owner(self):
-
-        self.vFeedInfo['author'] = config.author['__name__']
-        self.vFeedInfo['email'] = config.author['__email__']
-        self.vFeedInfo['website'] = config.author['__website__']
-        return self.vFeedInfo
-
-    def get_config(self):
-
-        self.vFeedInfo['primary'] = config.database['primary']
-        self.vFeedInfo['secondary'] = config.database['secondary']
-        return self.vFeedInfo
-
-
-class vFeed():
+class vFeed(object):
 
     def __init__(self, cveID):
 
@@ -73,7 +48,7 @@ class vFeed():
 
         if not os.path.isfile(file):
             print '[error] ' + file + ' is missing.'
-            print '[db_error] use the "updater.py" to retrieve a fresh copy of the database %s' % self.vfeed_db_url
+            print '[db_error] use the "vfeed_update.py" to retrieve a fresh copy of the database %s' % self.vfeed_db_url
             exit(0)
 
     def _db_init(self):
@@ -389,7 +364,9 @@ class vFeed():
         if cve_entry is None or 'base' not in self.cvssScore:
             self.levelSeverity = "Unknown"
             self.PCIstatus = "Unknown"
-        elif 'impact' in self.cvssScore and 'exploit' in self.cvssScore and self.cvssScore['base'] == "10.0" and self.cvssScore['impact'] == "10.0" and self.cvssScore['exploit'] == "10.0":
+        elif 'impact' in self.cvssScore and 'exploit' in self.cvssScore\
+        and self.cvssScore['base'] == "10.0" and self.cvssScore['impact'] == "10.0"\
+        and self.cvssScore['exploit'] == "10.0":
             self.levelSeverity = "High"
             self.isTopVulnerable = True
             self.PCIstatus = "Failed"

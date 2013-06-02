@@ -2,7 +2,7 @@
 vFeed Framework - The Open Source Cross Linked Local Vulnerability Database
 
 Name : config.py -  Configuration File
-Purpose : Configuration File. Handles globale variables and database URLs.
+Purpose : Configuration File. Handles global variables and database URLs.
 '''
 
 author = {

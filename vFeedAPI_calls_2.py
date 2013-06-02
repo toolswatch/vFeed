@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-
-
 import sys
-from lib import vFeedApi
+
+from vfeed import vFeed, vFeedInfo
+
 '''
 vFeedAPI_calls_2.py -  Sample script to test available methods.
 
@@ -29,7 +29,7 @@ methods :
 '''
 
 
-def call_checkCVE():
+def call_checkCVE(vfeed):
     cveInfo = vfeed.checkCVE()
     if cveInfo:
         print '[cve_description]:', cveInfo['cveDescription']
@@ -37,7 +37,7 @@ def call_checkCVE():
         print '[cve_modified]:', cveInfo['modifiedDate']
 
 
-def call_checkCVSS():
+def call_checkCVSS(vfeed):
     cvssScore = vfeed.checkCVSS()
     if cvssScore:
         print '[cvss_base]:', cvssScore['base']
@@ -45,7 +45,7 @@ def call_checkCVSS():
         print '[cvss_exploit]:', cvssScore['exploit']
 
 
-def call_checkREF():
+def call_checkREF(vfeed):
 
     cveRef = vfeed.checkREF()
     for i in range(0, len(cveRef)):
@@ -55,7 +55,7 @@ def call_checkREF():
     print '[stats] %d Reference(s)' % len(cveRef)
 
 
-def call_checkCWE():
+def call_checkCWE(vfeed):
 
     cveCWE = vfeed.checkCWE()
     for i in range(0, len(cveCWE)):
@@ -64,7 +64,7 @@ def call_checkCWE():
     print '[stats] %d CWE(s) ' % len(cveCWE)
 
 
-def  call_checkCPE():
+def call_checkCPE(vfeed):
 
     cveCPE = vfeed.checkCPE()
     for i in range(0, len(cveCPE)):
@@ -74,7 +74,7 @@ def  call_checkCPE():
     print '[stats] %d CPE(s)' % len(cveCPE)
 
 
-def  call_checkOVAL():
+def call_checkOVAL(vfeed):
 
     cveOVAL = vfeed.checkOVAL()
     for i in range(0, len(cveOVAL)):
@@ -85,7 +85,7 @@ def  call_checkOVAL():
     print '[stats] %d OVAL definition(s)' % len(cveOVAL)
 
 
-def  call_checkNESSUS():
+def call_checkNESSUS(vfeed):
 
     cveNessus = vfeed.checkNESSUS()
     for i in range(0, len(cveNessus)):
@@ -98,7 +98,7 @@ def  call_checkNESSUS():
     print '[stats] %d Nessus testing script(s)' % len(cveNessus)
 
 
-def  call_checkEDB():
+def call_checkEDB(vfeed):
 
     cveEDB = vfeed.checkEDB()
     for i in range(0, len(cveEDB)):
@@ -109,7 +109,7 @@ def  call_checkEDB():
     print '[stats] %d Exploit-DB exploit(s)' % len(cveEDB)
 
 
-def  call_checkSAINT():
+def call_checkSAINT(vfeed):
 
     cveSAINT = vfeed.checkSAINT()
     for i in range(0, len(cveSAINT)):
@@ -121,7 +121,7 @@ def  call_checkSAINT():
     print '[stats] %d SAINT EXPLOIT id(s)' % len(cveSAINT)
 
 
-def  call_checkMS():
+def call_checkMS(vfeed):
 
     cveMS = vfeed.checkMS()
     for i in range(0, len(cveMS)):
@@ -131,7 +131,7 @@ def  call_checkMS():
     print '[stats] %d Microsoft MS Patch(s)' % len(cveMS)
 
 
-def  call_checkKB():
+def call_checkKB(vfeed):
 
     cveKB = vfeed.checkKB()
     for i in range(0, len(cveKB)):
@@ -141,7 +141,7 @@ def  call_checkKB():
     print '[stats] %d Microsoft KB bulletin(s)' % len(cveKB)
 
 
-def  call_checkAIXAPAR():
+def call_checkAIXAPAR(vfeed):
 
     cveAIX = vfeed.checkAIXAPAR()
     for i in range(0, len(cveAIX)):
@@ -151,7 +151,7 @@ def  call_checkAIXAPAR():
     print '[stats] %d IBM AIX APAR(s)' % len(cveAIX)
 
 
-def  call_checkREDHAT():
+def call_checkREDHAT(vfeed):
 
     cveRHEL, cveBUGZILLA = vfeed.checkREDHAT()
     for i in range(0, len(cveRHEL)):
@@ -169,7 +169,7 @@ def  call_checkREDHAT():
     print 'total found Bugzilla', len(cveBUGZILLA)
 
 
-def  call_checkSUSE():
+def call_checkSUSE(vfeed):
 
     cveSUSE = vfeed.checkSUSE()
     for i in range(0, len(cveSUSE)):
@@ -179,7 +179,7 @@ def  call_checkSUSE():
     print '[stats] %d SUSE id(s)' % len(cveSUSE)
 
 
-def  call_checkDEBIAN():
+def call_checkDEBIAN(vfeed):
 
     cveDEBIAN = vfeed.checkDEBIAN()
     for i in range(0, len(cveDEBIAN)):
@@ -189,7 +189,7 @@ def  call_checkDEBIAN():
     print '[stats] %d DEBIAN id(s)' % len(cveDEBIAN)
 
 
-def  call_checkMANDRIVA():
+def call_checkMANDRIVA(vfeed):
 
     cveMANDRIVA = vfeed.checkMANDRIVA()
     for i in range(0, len(cveMANDRIVA)):
@@ -199,19 +199,17 @@ def  call_checkMANDRIVA():
     print '[stats] %d MANDRIVA id(s)' % len(cveMANDRIVA)
 
 
-def  call_checkRISK():
+def call_checkRISK(vfeed):
 
     cveRISK = vfeed.checkRISK()
     print 'Severity:', cveRISK['severitylevel']
-    print 'top vulnerablity:', cveRISK['topvulnerable']
-    print 'pci compliance:', cveRISK['pciCompliance']
+    print 'Top vulnerablity:', cveRISK['topvulnerable']
+    print 'PCI compliance:', cveRISK['pciCompliance']
 
 
 def main():
 
-    global vfeed
-
-    info = vFeedApi.vFeedInfo()
+    info = vFeedInfo()
 
     if len(sys.argv) == 3:
         myCVE = sys.argv[2]
@@ -233,82 +231,18 @@ def main():
         print 'exportXML (for exporting the vFeed XML file)'
         exit(0)
 
-    vfeed = vFeedApi.vFeed(myCVE)
-
-    if apiMethod == "checkCVE":
-        call_checkCVE()
-        exit(0)
-
-    if apiMethod == "checkCVSS":
-        call_checkCVSS()
-        exit(0)
-
-    if apiMethod == "checkREF":
-        call_checkREF()
-        exit(0)
-
-    if apiMethod == "checkCWE":
-        call_checkCWE()
-        exit(0)
-
-    if apiMethod == "checkCPE":
-        call_checkCPE()
-        exit(0)
-
-    if apiMethod == "checkOVAL":
-        call_checkOVAL()
-        exit(0)
-
-    if apiMethod == "checkNESSUS":
-        call_checkNESSUS()
-        exit(0)
-
-    if apiMethod == "checkEDB":
-        call_checkEDB()
-        exit(0)
-
-    if apiMethod == "checkSAINT":
-        call_checkSAINT()
-        exit(0)
-
-    if apiMethod == "checkMS":
-        call_checkMS()
-        exit(0)
-
-    if apiMethod == "checkKB":
-        call_checkKB()
-        exit(0)
-
-    if apiMethod == "checkAIXAPAR":
-        call_checkAIXAPAR()
-        exit(0)
-
-    if apiMethod == "checkREDHAT":
-        call_checkREDHAT()
-        exit(0)
-
-    if apiMethod == "checkDEBIAN":
-        call_checkDEBIAN()
-        exit(0)
-
-    if apiMethod == "checkMANDRIVA":
-        call_checkMANDRIVA()
-        exit(0)
-
-    if apiMethod == "checkSUSE":
-        call_checkSUSE()
-        exit(0)
-
-    if apiMethod == "checkRISK":
-        call_checkRISK()
-        exit(0)
+    vfeed = vFeed(myCVE)
 
     if apiMethod == "exportXML":
         vfeed.exportXML()
         exit(0)
 
-    else:
+    try:
+        globals()['call_%s' % apiMethod](vfeed)
+    except:
         print'[error] the method %s is not implemented' % apiMethod
+    else:
+        exit(0)
 
 
 if __name__ == '__main__':

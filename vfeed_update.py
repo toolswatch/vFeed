@@ -3,19 +3,21 @@
 import os
 import urllib2
 import tarfile
-from lib import config as config
 import hashlib
 
-'''
-updater.py -  vFeed Database Updater
+from vfeed import config
+
 
 '''
-def checksumfile(file):
+vfeed_update.py -  vFeed Database Updater
+
+'''
+def checksumfile(_file):
     '''
     returning the sha1 hash value 
     '''
     sha1 = hashlib.sha1()
-    f = open(file, 'rb')
+    f = open(_file, 'rb')
     try:
         sha1.update(f.read())
     finally:

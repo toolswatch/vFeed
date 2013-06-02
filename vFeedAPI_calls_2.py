@@ -2,9 +2,7 @@
 
 
 import sys
-import os
 from lib import vFeedApi
-from lib import config as config
 '''
 vFeedAPI_calls_2.py -  Sample script to test available methods.
 

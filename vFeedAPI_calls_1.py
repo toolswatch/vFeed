@@ -2,7 +2,6 @@
 
 
 from lib import vFeedApi
-from lib import config as config
 
 '''
 vFeedAPI_calls_1.py -  Sample script to call methods from your programs

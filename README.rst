@@ -54,13 +54,14 @@ Target Audience
 Changelog
 =========
 
-Beta v0.3.9
+Beta v0.3.6
 -----------
 
-* Refactoring as a first step towards having the vfeed module in pypi.
-* Bug fixes
-* PEP8 compatible code (at least what autopep8 can do)
-* README format is now RST
+* Refactoring as a first step towards having the vfeed module in pypi (andres riancho)
+* PEP8 compatible code (at least what autopep8 can do) (andres riancho)
+* README format is now RST (andres riancho)
+* Bug fixes (andres riancho)
+* Global vfeed.db update with latest CVEs, Redhat OVAL, SaintExploit, Nessus Scripts ..... 
 
 Beta v0.3.5
 -----------

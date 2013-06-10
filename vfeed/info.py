@@ -1,7 +1,7 @@
 from . import config
 
 '''
-info.py -  vFeed Open Source Vulnerability Database Cross-Linker and Aggregator for NVD/CVE
+info.py -  vFeed - Open Source Cross-linked and Aggregated Local Vulnerability Database
 
 Class vFeedInfo : supplying the vFeed information
 '''

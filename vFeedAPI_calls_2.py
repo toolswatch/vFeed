@@ -4,6 +4,8 @@ import sys
 from vfeed import vFeed, vFeedInfo
 
 '''
+vFeed - Open Source Cross-linked and Aggregated Local Vulnerability Database
+
 vFeedAPI_calls_2.py -  Sample script to test available methods.
 
 methods :

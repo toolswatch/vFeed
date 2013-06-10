@@ -11,11 +11,15 @@ author = {
     '__website__': 'http://www.toolswatch.org/vfeed',
 }
 
+contributor = {
+    '__name__': 'Andres Riancho @w3af',
+}
+
 product = {
-    '__title__': 'vFeed - Open Source Correlated Local Vulnerability Database',
+    '__title__': 'vFeed - Open Source Cross-linked and Aggregated Local Vulnerability Database',
     '__website__': 'http://www.toolswatch.org/vfeed',
     '__mainRepository__': 'https://github.com/toolswatch/vFeed',
-    '__build__': 'beta 0.3.5',
+    '__build__': 'beta 0.3.6',
 }
 
 
@@ -46,6 +50,6 @@ gbVariables = {
     'cve_url': 'http://cve.mitre.org/cgi-bin/cvename.cgi?name=',
     'edb_url': 'http://www.exploit-db.com/exploits/',
     'oval_url': 'http://oval.mitre.org/repository/data/getDef?id=',
-                'redhat_oval_url': 'https://www.redhat.com/security/data/oval/com.redhat.rhsa-'
+    'redhat_oval_url': 'https://www.redhat.com/security/data/oval/com.redhat.rhsa-'
 
 }

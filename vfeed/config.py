@@ -16,7 +16,7 @@ product = {
     '__title__': 'vFeed - Open Source Cross-linked and Aggregated Local Vulnerability Database',
     '__website__': 'http://www.toolswatch.org/vfeed',
     '__mainRepository__': 'https://github.com/toolswatch/vFeed',
-    '__build__': 'beta 0.4.5',
+    '__build__': 'beta 0.4.6',
 }
 
 

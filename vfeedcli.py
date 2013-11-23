@@ -140,6 +140,19 @@ def call_get_snort(vfeed):
     print ''
     print '[stats] %d Snort Rule(s)' % len(cveSnort)
 
+
+def call_get_suricata(vfeed):
+
+    cveSuricata = vfeed.get_suricata()
+    for i in range(0, len(cveSuricata)):
+        print '[suricata_id]:', cveSuricata[i]['id']
+        print '[suricata_signature]:', cveSuricata[i]['signature']
+        print '[suricata_classtype]:', cveSuricata[i]['classtype']
+
+    print ''
+    print '[stats] %d Suricata Rule(s)' % len(cveSuricata)
+
+
 def call_get_nessus(vfeed):
 
     cveNessus = vfeed.get_nessus()
@@ -326,6 +339,15 @@ def call_get_mandriva(vfeed):
     print ''
     print '[stats] %d Mandriva id(s)' % len(cveMANDRIVA)
 
+def call_get_vmware(vfeed):
+
+    cveVMWARE = vfeed.get_vmware()
+    for i in range(0, len(cveVMWARE)):
+        print '[vmware_id]:', cveVMWARE[i]['id']
+
+    print ''
+    print '[stats] %d VMware id(s)' % len(cveVMWARE)
+
 
 def call_get_risk(vfeed):
 
@@ -364,9 +386,9 @@ def main():
         print 'References   ==> get_refs | get_scip | get_osvdb | get_certvn'
         print 'Risk         ==> get_risk | get_cvss'
         print 'Patchs       ==> get_ms | get_kb | get_aixapar | get_redhat | get_suse | get_debian'
-        print 'Patchs       ==> get_mandriva | get_cisco | get_ubuntu | get_gentoo | get_fedora'
+        print 'Patchs       ==> get_mandriva | get_cisco | get_ubuntu | get_gentoo | get_fedora | get_vmware'
         print 'Assessment   ==> get_oval | get_nessus | get_openvas '
-        print 'Defense      ==> get_snort'
+        print 'Defense      ==> get_snort | get_suricata'
         print 'Exploitation ==> get_milw0rm | get_edb | get_saint | get_msf'
         print ''
         print 'Hint: Type ./vfeedcmd.py export CVE-XXXX-XXXX to export the CVE as vFeed XML format'

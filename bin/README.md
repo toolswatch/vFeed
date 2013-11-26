@@ -3,6 +3,7 @@
 * Created By: Glenn 'devalias' Grant (http://devalias.net)
 * License: The MIT License (MIT) - Copyright (c) 2013 Glenn 'devalias' Grant (see http://choosealicense.com/licenses/mit/ for full license text)
 * vFeed URL: https://github.com/toolswatch/vfeed
+* vFeed.sh announcement/info: http://blog.devalias.net/post/67532513020/vfeed-wrapper-helper-scripts-for-speed-and-efficiency
 
 Version 0.2 (20131126)
 -----------------------

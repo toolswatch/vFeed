@@ -54,6 +54,19 @@ Target Audience
 Changelog
 =========
 
+Beta v0.4.6
+---------
+
+* Added the support to Suricata ET SID (http://suricata-ids.org/). When available, vFeed reports the mapping with Suricata ID, Attack title rule and class type
+* Added the support to VMware IDs. 
+* Updated the Gentoo GLSA mapper. Many new IDs have been added to vFeed.db
+* Updated the Fedora mapper. Many new IDs have been added to vFeed.db
+* To reflect the newest cross references, the following methods have been added: 
+ - `get_suricata` to enumerate Suricata ID rules. This function returns Suricata SID, signature title and class type
+ - `get_vmware`to list VMware patches
+
+° vfeed.db the sqlite opensource cross linked vulnerability database fully regenerated to support the new changes
+ 
 Beta v0.4.5
 ----------
 

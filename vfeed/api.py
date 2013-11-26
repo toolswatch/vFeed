@@ -481,6 +481,24 @@ class vFeed(object):
 
         return self.MANDRIVA_id
 
+    def get_vmware(self):
+        '''
+        Returning:  VMWARE IDs as dictionary
+        '''
+        self.cnt = 0
+        self.VMWARE_id = {}
+        self.cur.execute(
+            'SELECT * FROM map_cve_vmware WHERE cveid=?', self.query)
+
+        for self.data in self.cur.fetchall():
+            self.VMWARE_id[self.cnt] = {
+                'id': str(self.data[0]),
+            }
+            self.cnt += 1
+
+        return self.VMWARE_id
+
+
     def get_cisco(self):
         '''
         Returning:  Cisco SA Advisory ids as dictionary
@@ -643,6 +661,27 @@ class vFeed(object):
             self.cnt += 1
 
         return self.SNORT_id
+
+
+    def get_suricata(self):
+        '''
+        Returning:  Suricata references as dictionary
+        '''
+        self.cnt = 0
+        self.SURICATA_id = {}
+        self.cur.execute('SELECT * FROM map_cve_suricata WHERE cveid=?', self.query)
+        
+        for self.data in self.cur.fetchall():
+            self.SURICATA_id[self.cnt] = {
+                'id': str(self.data[0]),
+                'signature': str(self.data[1]),
+                'classtype': str(self.data[2]),
+            }
+            self.cnt += 1
+
+        return self.SURICATA_id
+
+
 
         
     def get_risk(self):

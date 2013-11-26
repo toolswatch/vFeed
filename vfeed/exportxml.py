@@ -59,6 +59,7 @@ class vFeedXML(object):
         self.UBUNTU_id = self.vfeed.get_ubuntu()
         self.CISCO_id = self.vfeed.get_cisco()
         self.MANDRIVA_id = self.vfeed.get_mandriva()
+        self.VMWARE_id = self.vfeed.get_vmware()
         self.OVAL_id = self.vfeed.get_oval()
         self.NESSUS_id = self.vfeed.get_nessus()
         self.OPENVAS_id = self.vfeed.get_openvas()
@@ -67,7 +68,7 @@ class vFeedXML(object):
         self.MSF_id = self.vfeed.get_msf()
         self.MILWORM_id = self.vfeed.get_milw0rm()
         self.SNORT_id = self.vfeed.get_snort()
-        
+        self.SURICATA_id = self.vfeed.get_suricata()        
     
     def export(self):
         '''
@@ -315,6 +316,15 @@ class vFeedXML(object):
                                           'source': 'MANDRIVA',
                                           })
 
+        ## Exporting VMWARE Patches
+    
+        for i in range(0, len(self.VMWARE_id)):
+            self.patch_head = SubElement(self.patchmanagement_head, 'patch',
+                                         {'id': self.VMWARE_id[i]['id'],
+                                          'source': 'VMWARE',
+                                          })
+
+
         ## Exporting CISCO Patches
     
         for i in range(0, len(self.CISCO_id)):
@@ -481,7 +491,7 @@ class vFeedXML(object):
     
             ## Exporting Snort Rules
         for i in range(0, len(self.SNORT_id)):
-            self.snortRules_head = SubElement(
+            self.idsRules_head = SubElement(
                 self.defense_head, 'rule',
                 {'type': 'Defense',
                  'utility': "Snort",
@@ -489,6 +499,19 @@ class vFeedXML(object):
                  'signature': self.SNORT_id[i]['signature'],
                  'classtype': self.SNORT_id[i]['classtype'],
                  })
+ 
+             ## Exporting Suricata Rules
+        for i in range(0, len(self.SURICATA_id)):
+            self.idsRules_head = SubElement(
+                self.defense_head, 'rule',
+                {'type': 'Defense',
+                 'utility': "Suricata",
+                 'id': self.SURICATA_id[i]['id'],
+                 'signature': self.SURICATA_id[i]['signature'],
+                 'classtype': self.SURICATA_id[i]['classtype'],
+                 })
+  
+ 
                     
         self.xmlfile = open(self.vfeedfile, 'w+')
         print '[info] vFeed xml file %s exported for %s' % (self.vfeedfile, self.cveID)

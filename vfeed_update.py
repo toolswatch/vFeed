@@ -117,6 +117,12 @@ def main():
     if os.path.isfile(vfeed_db):
         print '[info] Checking for the latest %s ' %vfeed_db
         _checkDBversion(vfeed_db_primary_url,updateStatus,vfeed_db,vfeed_db_compressed)
+    
+    if os.path.isfile(config.gbVariables['edb_archive_url'].split('/')[-1]):
+        os.remove(config.gbVariables['edb_archive_url'].split('/')[-1])
+    print '[info] Exploit-DB archive download ...'
+    _updateDB(config.gbVariables['edb_archive_url'])
+
 
     # removing the updateStatus file
     os.remove(updateStatus)

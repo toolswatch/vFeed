@@ -47,6 +47,7 @@ gbVariables = {
     'cve_url': 'http://cve.mitre.org/cgi-bin/cvename.cgi?name=',
     'certvn_url':'http://www.kb.cert.org/vuls/id/',
     'edb_url': 'http://www.exploit-db.com/exploits/',
+    'edb_archive_url': 'http://www.exploit-db.com/archive.tar.bz2',
     'oval_url': 'http://oval.mitre.org/repository/data/getDef?id=',
     'redhat_oval_url': 'https://www.redhat.com/security/data/oval/com.redhat.rhsa-',
     'cwe_url' : 'http://cwe.mitre.org/data/definitions/',

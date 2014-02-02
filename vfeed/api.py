@@ -15,6 +15,7 @@ class vFeed(object):
         self.vfeed_db_url = config.database['primary']['url']
         self.oval_url = config.gbVariables['oval_url']
         self.edb_url = config.gbVariables['edb_url']
+        self.bid_url = config.gbVariables['bid_url']
         
         self.cveID = cveID.upper()
         self._check_env(self.vfeed_db)
@@ -345,6 +346,25 @@ class vFeed(object):
 
         return self.AIXAPAR_id
 
+    def get_bid(self):
+        '''
+        Returning:  BID ids and url link
+        '''
+        self.cnt = 0
+        self.BID_id = {}
+        self.cur.execute(
+            'SELECT * FROM map_cve_bid WHERE cveid=?', self.query)
+
+        for self.data in self.cur.fetchall():
+            self.BID_id[self.cnt] = {
+                'id': str(self.data[0]),
+                'link': self.bid_url + str(self.data[0]),
+            }
+            self.cnt += 1
+        return self.BID_id
+    
+    
+    
     def get_redhat(self):
         '''
         Returning:  Redhat IDs & Bugzilla
@@ -662,7 +682,6 @@ class vFeed(object):
 
         return self.SNORT_id
 
-
     def get_suricata(self):
         '''
         Returning:  Suricata references as dictionary
@@ -681,7 +700,22 @@ class vFeed(object):
 
         return self.SURICATA_id
 
+    def get_hp(self):
+        '''
+        Returning:  HP references as dictionary
+        '''
+        self.cnt = 0
+        self.HP_id = {}
+        self.cur.execute(
+            'SELECT * FROM map_cve_hp WHERE cveid=?', self.query)
 
+        for self.data in self.cur.fetchall():
+            self.HP_id[self.cnt] = {
+                'id': str(self.data[0]),
+                'link': str(self.data[1]),
+            }
+            self.cnt += 1
+        return self.HP_id
 
         
     def get_risk(self):

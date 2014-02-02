@@ -16,7 +16,7 @@ product = {
     '__title__': 'vFeed - Open Source Cross-linked and Aggregated Local Vulnerability Database',
     '__website__': 'http://www.toolswatch.org/vfeed',
     '__mainRepository__': 'https://github.com/toolswatch/vFeed',
-    '__build__': 'beta 0.4.6',
+    '__build__': 'beta 0.4.7',
 }
 
 
@@ -45,6 +45,7 @@ database = {
 
 gbVariables = {
     'cve_url': 'http://cve.mitre.org/cgi-bin/cvename.cgi?name=',
+    'bid_url': 'http://www.securityfocus.com/bid/',
     'certvn_url':'http://www.kb.cert.org/vuls/id/',
     'edb_url': 'http://www.exploit-db.com/exploits/',
     'oval_url': 'http://oval.mitre.org/repository/data/getDef?id=',

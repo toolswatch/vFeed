@@ -54,6 +54,21 @@ Target Audience
 Changelog
 =========
 
+Beta v0.4.7
+---------
+* Refactored the `vfeed_update.py` script as a separate class vFeedUpdate (vfeed\update.py). The method `update()` could be invoked to update the vulnerability database vFeed.db
+* Added the support to HP (Hewlett-Packard) patch ids
+* Added the support to BID - SecurityFocus ids
+* Updated the Ubuntu, Redhat, CERT-VN mappers. Many new IDs have been added to vFeed.db
+* To reflect the newest cross references, the following methods have been added:
+ - `get_hp` to enumerate HP ids. This function returns the patches alonside with links
+ - `get_bid`to list SecurityFocus Ids
+ - `update`to download the newest vFeed.db database. python vfeedcli.py update will do the trick now.
+
+° vfeed.db the sqlite opensource cross linked vulnerability database fully regenerated to support the new changes
+* Documentation updated accordingly
+
+
 Beta v0.4.6
 ---------
 

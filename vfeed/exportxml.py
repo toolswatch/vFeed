@@ -31,6 +31,7 @@ class vFeedXML(object):
         self.milw0rm_url = config.gbVariables['milw0rm_url']
         self.ms_bulletin_url  = config.gbVariables['ms_bulletin_url']
         self.ms_kb_url  = config.gbVariables['ms_kb_url']
+        self.bid_url = config.gbVariables['bid_url']
         
         #Invoking the vFeed api with CVE object
         self.cveID = cveID.upper()
@@ -39,6 +40,7 @@ class vFeedXML(object):
        # Calling all available methods
         self.cveInfo = self.vfeed.get_cve()
         self.cveRef = self.vfeed.get_refs()
+        self.cveBID = self.vfeed.get_bid()
         self.SCIP_id = self.vfeed.get_scip()
         self.CERTVN_id = self.vfeed.get_certvn()
         self.IAVM_id = self.vfeed.get_iavm()
@@ -68,7 +70,8 @@ class vFeedXML(object):
         self.MSF_id = self.vfeed.get_msf()
         self.MILWORM_id = self.vfeed.get_milw0rm()
         self.SNORT_id = self.vfeed.get_snort()
-        self.SURICATA_id = self.vfeed.get_suricata()        
+        self.SURICATA_id = self.vfeed.get_suricata()
+        self.HP_id = self.vfeed.get_hp()
     
     def export(self):
         '''
@@ -174,6 +177,15 @@ class vFeedXML(object):
                                            'id': self.IAVM_id[i]['id'],
                                            'title': self.IAVM_id[i]['title'],
                                            'source': "DISA/IAVM",
+                                           })
+
+        # Exporting BID ref from Mapping
+
+        for i in range(0, len(self.cveBID)):
+            self.source_head = SubElement(self.mappedrefs_head, 'ref',
+                                          {'id': self.cveBID[i]['id'],
+                                           'url': self.cveBID[i]['link'],
+                                           'source': "SecurityFocus",
                                            })
 
         # Exporting OSVDB ref from Mapping
@@ -357,6 +369,14 @@ class vFeedXML(object):
                                           'source': 'FEDORA',
                                           })  
 
+        ## Exporting HP Patches
+    
+        for i in range(0, len(self.HP_id)):
+            self.patch_head = SubElement(self.patchmanagement_head, 'patch',
+                                         {'id': self.HP_id[i]['id'],
+                                          'link': self.HP_id[i]['link'],
+                                          'source': 'Hewlett-Packard',
+                                          })  
 
 
         # Attack and Weaknesses Patterns
@@ -407,12 +427,15 @@ class vFeedXML(object):
                                                })
     
         for i in range(0, len(self.REDHAT_id)):
-            self.ovalChecks_head = SubElement(self.securitytest_head, 'check',
-                                              {'type': 'Local Security Testing',
-                                               'id': self.REDHAT_id[i]['oval'],
-                                               'utility': "OVAL Interpreter",
-                                               'file': self.redhat_oval_url + self.REDHAT_id[i]['oval'].split('oval:com.redhat.rhsa:def:')[1] + '.xml',
-                                               })
+            try:
+                self.ovalChecks_head = SubElement(self.securitytest_head, 'check',
+                                                  {'type': 'Local Security Testing',
+                                                   'id': self.REDHAT_id[i]['oval'],
+                                                   'utility': "OVAL Interpreter",
+                                                   'file': self.redhat_oval_url + self.REDHAT_id[i]['oval'].split('oval:com.redhat.rhsa:def:')[1] + '.xml',
+                                                   })
+            except:
+                pass
     
         ## Exporting Nessus attributes
         for i in range(0, len(self.NESSUS_id)):

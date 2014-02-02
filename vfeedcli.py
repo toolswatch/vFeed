@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 
-from vfeed import vFeed, vFeedInfo, vFeedXML
+from vfeed import vFeed, vFeedInfo, vFeedXML, vFeedUpdate
 
 '''
 vFeed - Open Source Cross-linked and Aggregated Local Vulnerability Database
@@ -9,6 +9,34 @@ Wiki Documentation https://github.com/toolswatch/vFeed/wiki
 
 '''
 
+def get_help():
+    info = vFeedInfo()
+    print ''
+    print '-----------------------------------------------------------------------------'
+    print info.get_version()['title']
+    print '                                                          version ' + info.get_version()['build']
+    print '                                         ' + info.get_owner()['website']
+    print '-----------------------------------------------------------------------------'
+    print ''
+    print '[usage 1]: python' + str(sys.argv[0]) + ' <Method> <CVE>'
+    print '[info] Available vFeed methods:'
+    print 'Information  ==> get_cve | get_cpe | get_cwe | get_capec | get_category | get_iavm'
+    print 'References   ==> get_refs | get_scip | get_osvdb | get_certvn | get_bid'
+    print 'Risk         ==> get_risk | get_cvss'
+    print 'Patchs 1/2   ==> get_ms | get_kb | get_aixapar | get_redhat | get_suse | get_debian | get_hp'
+    print 'Patchs 2/2   ==> get_mandriva | get_cisco | get_ubuntu | get_gentoo | get_fedora | get_vmware'
+    print 'Assessment   ==> get_oval | get_nessus | get_openvas '
+    print 'Defense      ==> get_snort | get_suricata'
+    print 'Exploitation ==> get_milw0rm | get_edb | get_saint | get_msf'
+    print '----------'
+    print '[usage 2]: python ' + str(sys.argv[0]) + ' export <CVE>'
+    print '[info]: This method will export the CVE as vFeed XML format'
+    print ''
+    print '----------'
+    print '[Update]: python ' + str(sys.argv[0]) + ' update'
+    print '[info]: This method will update the SQLite vfeed database to its latest release'
+    print ''
+    exit(0)
 
 def call_get_cve(vfeed):
     cveInfo = vfeed.get_cve()
@@ -58,6 +86,16 @@ def call_get_scip(vfeed):
         print '[scip_link]', cveSCIP[i]['link']
     print ''
     print '[stats] %d Scip id(s)' % len(cveSCIP)
+
+def call_get_bid(vfeed):
+
+    cveBID = vfeed.get_bid()
+    for i in range(0, len(cveBID)):
+        print '[bid_id]:', cveBID[i]['id']
+        print '[bid_link]', cveBID[i]['link']
+    print ''
+    print '[stats] %d BID id(s)' % len(cveBID)
+
 
 def call_get_certvn(vfeed):
 
@@ -348,7 +386,15 @@ def call_get_vmware(vfeed):
     print ''
     print '[stats] %d VMware id(s)' % len(cveVMWARE)
 
+def call_get_hp(vfeed):
 
+    cveHP = vfeed.get_hp()
+    for i in range(0, len(cveHP)):
+        print '[hp_id]:', cveHP[i]['id']
+        print '[hp_link]', cveHP[i]['link']
+    print ''
+    print '[stats] %d HP id(s)' % len(cveHP)
+    
 def call_get_risk(vfeed):
 
     cveRISK = vfeed.get_risk()
@@ -362,54 +408,35 @@ def call_get_risk(vfeed):
     print 'PCI compliance:', cveRISK['pciCompliance']
     print 'is Top alert:', cveRISK['topAlert']
 
-
 def main():
-
-    info = vFeedInfo()
 
     if len(sys.argv) == 3:
         myCVE = sys.argv[2]
         apiMethod = sys.argv[1]
-
-    else:
-        print ''
-        print '-----------------------------------------------------------------------------'
-        print info.get_version()['title']
-        print '                                                          version ' + info.get_version()['build']
-        print '                                         ' + info.get_owner()['website']
-        print '-----------------------------------------------------------------------------'
-        print ''
-        print '[usage]: ' + str(sys.argv[0]) + ' <API Method> <CVE id>'
-        print ''
-        print '[info] Available vFeed methods:'
-        print 'Information  ==> get_cve | get_cpe | get_cwe | get_capec | get_category | get_iavm'
-        print 'References   ==> get_refs | get_scip | get_osvdb | get_certvn'
-        print 'Risk         ==> get_risk | get_cvss'
-        print 'Patchs       ==> get_ms | get_kb | get_aixapar | get_redhat | get_suse | get_debian'
-        print 'Patchs       ==> get_mandriva | get_cisco | get_ubuntu | get_gentoo | get_fedora | get_vmware'
-        print 'Assessment   ==> get_oval | get_nessus | get_openvas '
-        print 'Defense      ==> get_snort | get_suricata'
-        print 'Exploitation ==> get_milw0rm | get_edb | get_saint | get_msf'
-        print ''
-        print 'Hint: Type ./vfeedcmd.py export CVE-XXXX-XXXX to export the CVE as vFeed XML format'
-        print ''
-        exit(0)
-
-    vfeed = vFeed(myCVE)
-
-    if apiMethod == "export":
         
-        vfeed = vFeedXML(myCVE)
-        vfeed.export()
-        exit(0)
-
-    try:
-        globals()['call_%s' % apiMethod](vfeed)
-    except:
-        print'[error] the method %s is not implemented' % apiMethod
+        if apiMethod == "export":
+            vfeed = vFeedXML(myCVE)
+            vfeed.export()
+            exit(0)
+    
+        vfeed = vFeed(myCVE)
+        try:
+            globals()['call_%s' % apiMethod](vfeed)
+        except:
+            print'[error] the method %s is not implemented' % apiMethod
+        else:
+            exit(0)
+   
+    elif len(sys.argv) == 2:
+        apiMethod = sys.argv[1]
+        if apiMethod == "update":
+            db = vFeedUpdate()
+            db.update()
+            exit(0)
+        else:
+           get_help()
     else:
-        exit(0)
-
+        get_help() 
 
 if __name__ == '__main__':
     main()

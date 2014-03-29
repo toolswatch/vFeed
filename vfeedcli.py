@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 
-from vfeed import vFeed, vFeedInfo, vFeedXML, vFeedUpdate
+from vfeed import vFeed, vFeedInfo, vFeedXML, vFeedUpdate, vFeedStats
 
 '''
 vFeed - Open Source Cross-linked and Aggregated Local Vulnerability Database
@@ -28,14 +28,20 @@ def get_help():
     print 'Assessment   ==> get_oval | get_nessus | get_openvas '
     print 'Defense      ==> get_snort | get_suricata'
     print 'Exploitation ==> get_milw0rm | get_edb | get_saint | get_msf'
+    print ''
     print '----------'
     print '[usage 2]: python ' + str(sys.argv[0]) + ' export <CVE>'
     print '[info]: This method will export the CVE as vFeed XML format'
     print ''
     print '----------'
+    print '[usage 3]: python ' + str(sys.argv[0]) + ' stats or latest_cve'
+    print '[info]: Available stats methods'
+    print 'Global statistics   ==> stats'
+    print 'Latest Added CVEs   ==> latest_cve '
+    print ''
+    print '----------'
     print '[Update]: python ' + str(sys.argv[0]) + ' update'
     print '[info]: This method will update the SQLite vfeed database to its latest release'
-    print ''
     exit(0)
 
 def call_get_cve(vfeed):
@@ -433,6 +439,19 @@ def main():
             db = vFeedUpdate()
             db.update()
             exit(0)
+        
+        if apiMethod == "stats":
+            stat = vFeedStats()
+            stat.stats()
+            exit(0)           
+            
+        if apiMethod == "latest_cve":
+            stat = vFeedStats()
+            stat.latest_cve()
+            exit(0)    
+        
+        
+        
         else:
            get_help()
     else:

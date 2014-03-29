@@ -1,6 +1,5 @@
 import os
 import sqlite3
-
 from . import config
 
 '''
@@ -40,7 +39,7 @@ class vFeed(object):
 
         if not os.path.isfile(file):
             print '[error] ' + file + ' is missing.'
-            print '[db_error] use the "vfeed_update.py" to retrieve a fresh copy of the database %s' % self.vfeed_db_url
+            print '[db_error] try python vfeedcli.py update '
             exit(0)
 
     def _db_init(self):
@@ -160,26 +159,6 @@ class vFeed(object):
             }
             self.cnt += 1
         return self.CERTVN_id    
-
-
-    def get_scip(self):
-        '''
-        Returning:  SCIP ids and links as dictionay
-        http://www.scip.ch
-        '''
-        self.cnt = 0
-        self.SCIP_id = {}
-        self.cur.execute(
-            'SELECT * FROM map_cve_scip WHERE cveid=?', self.query)
-
-        for self.data in self.cur.fetchall():
-            self.SCIP_id[self.cnt] = {
-                'id': str(self.data[0]),
-                'link': str(self.data[1]),
-            }
-            self.cnt += 1
-        return self.SCIP_id  
-
 
     def get_iavm(self):
         '''

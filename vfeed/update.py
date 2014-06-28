@@ -85,8 +85,8 @@ class vFeedUpdate(object):
             exit(0)
         
         try:
-            tar = tarfile.open(self.vfeed_db_compressed, 'r:gz')
-            tar.extractall('.')
+            self.tar = tarfile.open(self.vfeed_db_compressed, 'r:gz')
+            self.tar.extractall('.')
             self.tar.close            
         except:
             print '[error] Database not extracted.'

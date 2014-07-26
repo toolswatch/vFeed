@@ -579,12 +579,14 @@ class vFeed(object):
         self.EDB_id = {}
         self.cur.execute(
             'SELECT * FROM map_cve_exploitdb WHERE cveid=?', self.query)
-
+            
         for self.data in self.cur.fetchall():
             self.EDB_id[self.cnt] = {
                 'id': str(self.data[0]),
-                'file': self.edb_url + str(self.data[0]),
+                'file': str(self.data[1]),
+                'link': self.edb_url + str(self.data[0]),
             }
+            
             self.cnt += 1
         return self.EDB_id
 

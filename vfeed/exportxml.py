@@ -469,6 +469,7 @@ class vFeedXML(object):
                  'utility': "exploit-db",
                  'id': self.EDB_id[i]['id'],
                  'file': self.EDB_id[i]['file'],
+                 'link': self.EDB_id[i]['link'],
                  })
     
         ## Exporting Milw0rm ids 

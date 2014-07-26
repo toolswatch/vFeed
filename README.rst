@@ -56,8 +56,11 @@ Changelog
 
 Beta v0.4.8 build 2 
 ---------
-* Added support to CWE schema v2.7 (http://cwe.mitre.org/)
-* Fixed map_cve_exploitdb table. The method get_edb returns exploit id, file link and URL link.
+* Added full support to CWE schema v2.7 (http://cwe.mitre.org/). The appropriate tables has been updated to include the newest CWE-942 and CWE-943
+* Fixed map_cve_exploitdb table. The method get_edb has been also modified within different classes to return exploit id, file link and URL link.
+* vfeed.db updated accordingly to reflect the above minor changes.
+
+
 
 Beta v0.4.8
 ---------

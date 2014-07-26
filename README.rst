@@ -54,6 +54,11 @@ Target Audience
 Changelog
 =========
 
+Beta v0.4.8 build 2 
+---------
+* Added support to CWE schema v2.7 (http://cwe.mitre.org/)
+* Fixed map_cve_exploitdb table. The method get_edb returns exploit id, file link and URL link.
+
 Beta v0.4.8
 ---------
 * Added a new class vFeedStats (stats.py) to display vfeed.db statistics and the latest added CVEs (feature requested by Ryan Barnett from SpiderLabs).

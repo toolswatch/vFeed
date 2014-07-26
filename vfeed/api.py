@@ -792,5 +792,6 @@ class vFeed(object):
                     if self.CATEGORY_id[i]['id'] == self.cat_id:
                         self.topAlert += self.CATEGORY_id[i]['title'] + " | "
                         
-        
+        else:
+            self.topAlert = "None"
         return self.topAlert

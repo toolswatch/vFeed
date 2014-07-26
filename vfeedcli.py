@@ -226,8 +226,9 @@ def call_get_edb(vfeed):
     cveEDB = vfeed.get_edb()
     for i in range(0, len(cveEDB)):
         print '[edb_id]:', cveEDB[i]['id']
-        print '[edb_exploit]:', cveEDB[i]['file']
-
+        print '[edb_file]:', cveEDB[i]['file']
+        print '[edb_link]:', cveEDB[i]['link']        
+        
     print ''
     print '[stats] %d ExploitDB id(s)' % len(cveEDB)
 

@@ -523,13 +523,19 @@ class vFeed(object):
         self.OVAL_id = {}
         self.cur.execute(
             'SELECT * FROM map_cve_oval WHERE cveid=?', self.query)
+        
+        self.rst = self.cur.fetchall()
 
-        for self.data in self.cur.fetchall():
-            self.OVAL_id[self.cnt] = {
-                'id': str(self.data[0]),
-                'file': self.oval_url + str(self.data[0]),
-            }
-            self.cnt += 1
+        if self.rst is not None:
+            for self.data in self.rst:
+                self.OVAL_id[self.cnt] = {
+                    'id': str(self.data[0]),
+                    'class': str(self.data[1]),
+                    'title': str(self.data[2]),
+                    'file': self.oval_url + str(self.data[0]),
+                }
+                self.cnt += 1
+            
         return self.OVAL_id
 
     def get_nessus(self):
@@ -550,6 +556,24 @@ class vFeed(object):
             }
             self.cnt += 1
         return self.NESSUS_id
+
+    def get_nmap(self):
+        '''
+        Returning:  Nmap Script Id/name, Category  Script as dictionay
+        '''
+        self.cnt = 0
+        self.NMAP_id = {}
+        self.cur.execute(
+            'SELECT * FROM map_cve_nmap WHERE cveid=?', self.query)
+        
+        for self.data in self.cur.fetchall():
+            self.NMAP_id[self.cnt] = {
+                'file': str(self.data[0]),
+                'family': str(self.data[1]),
+            }
+            self.cnt += 1
+        return self.NMAP_id
+
 
     def get_openvas(self):
         '''
@@ -583,7 +607,8 @@ class vFeed(object):
         for self.data in self.cur.fetchall():
             self.EDB_id[self.cnt] = {
                 'id': str(self.data[0]),
-                'file': self.edb_url + str(self.data[0]),
+                'file': str(self.data[1]),
+                'link': self.edb_url + str(self.data[0]),
             }
             self.cnt += 1
         return self.EDB_id
@@ -642,6 +667,22 @@ class vFeed(object):
             self.cnt += 1
         return self.MSF_id
 
+    def get_d2(self):
+        '''
+        Returning:  D2 Elliot Framework Exploits script link and title
+        '''
+        self.cnt = 0
+        self.D2_id = {}
+        self.cur.execute(
+            'SELECT * FROM map_cve_d2 WHERE cveid=?', self.query)
+
+        for self.data in self.cur.fetchall():
+            self.D2_id[self.cnt] = {
+                'title': str(self.data[0]),
+                'file': str(self.data[1]),
+            }
+            self.cnt += 1
+        return self.D2_id
 
     def get_snort(self):
         '''
@@ -744,7 +785,7 @@ class vFeed(object):
     def _isTopAlert(self):
         
         '''
-        Returning:  The CWE Category such as CWE/SANS 2011, OWASP 2010....
+        Returning:  The CWE Category such as CWE/SANS 2011, OWASP 2010, OWASP 2013....
 
         '''
         
@@ -788,7 +829,5 @@ class vFeed(object):
                 # Checking for top CWE 2011, OWASP Top Ten 2010 and OWASP Top 2013
                 for self.cat_id in self.TopCategories:
                     if self.CATEGORY_id[i]['id'] == self.cat_id:
-                        self.topAlert += self.CATEGORY_id[i]['title'] + " | "
-                        
-        
+                        self.topAlert += '\n' + '\t' + '- ' +   self.CATEGORY_id[i]['title']
         return self.topAlert

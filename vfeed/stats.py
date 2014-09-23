@@ -15,7 +15,7 @@ class vFeedStats(object):
         self.cur = self.conn.cursor()
         
 
-    def stats(self):
+    def get_stats(self):
 
 
         print"---------------------------------------------------------------"
@@ -60,18 +60,20 @@ class vFeedStats(object):
             print '\t[-] Metasploit Exploits or Modules:', self.data[25]
             print '\t[-] Milw0rm Proof of Concepts and exploits:', self.data[26]
             print '\t[-] Saint Corporation Proof of Concepts and exploits:', self.data[27]
+            print '\t[-] D2 Elliot Web Exploitation Framework:', self.data[32]
             
             print '\n[+] Third Party Security Scanners Scripts'
             print '\t[-] Nessus Security Scripts:', self.data[28]
             print '\t[-] OpenVAS Security Scripts:', self.data[29]
+            print '\t[-] Nmap NSE scripts:', self.data[32]
             print '\t[-] Open Vulnerability Assessment Language (OVAL) definitions:', self.data[30]
  
             print '\n[+] Open Source Intrusion Detection Rules'
             print '\t[-] Snort Detection Rules:', self.data[31]
-            print '\t[-] Suricata Detection Rules:', self.data[32]
+            print '\t[-] Suricata Detection Rules:', self.data[33]
 
 
-    def latest_cve(self):
+    def get_latest(self):
 
 
         print"---------------------------------------------------------------"

@@ -25,9 +25,9 @@ def get_help():
     print 'Risk         ==> get_risk | get_cvss'
     print 'Patchs 1/2   ==> get_ms | get_kb | get_aixapar | get_redhat | get_suse | get_debian | get_hp'
     print 'Patchs 2/2   ==> get_mandriva | get_cisco | get_ubuntu | get_gentoo | get_fedora | get_vmware'
-    print 'Assessment   ==> get_oval | get_nessus | get_openvas '
+    print 'Assessment   ==> get_oval | get_nmap | get_nessus | get_openvas '
     print 'Defense      ==> get_snort | get_suricata'
-    print 'Exploitation ==> get_milw0rm | get_edb | get_saint | get_msf'
+    print 'Exploitation ==> get_milw0rm | get_edb | get_saint | get_msf | get_d2'
     print ''
     print '----------'
     print '[usage 2]: python ' + str(sys.argv[0]) + ' export <CVE>'
@@ -36,8 +36,8 @@ def get_help():
     print '----------'
     print '[usage 3]: python ' + str(sys.argv[0]) + ' stats or latest_cve'
     print '[info]: Available stats methods'
-    print 'Global statistics   ==> stats'
-    print 'Latest Added CVEs   ==> latest_cve '
+    print 'Global statistics   ==> get_stats'
+    print 'Latest Added CVEs   ==> get_latest '
     print ''
     print '----------'
     print '[Update]: python ' + str(sys.argv[0]) + ' update'
@@ -69,6 +69,7 @@ def call_get_refs(vfeed):
 
     cveRef = vfeed.get_refs()
     for i in range(0, len(cveRef)):
+        print ' ------- '
         print '[reference_id]:', cveRef[i]['id']
         print '[reference_link]', cveRef[i]['link']
     print ''
@@ -88,6 +89,7 @@ def call_get_scip(vfeed):
 
     cveSCIP = vfeed.get_scip()
     for i in range(0, len(cveSCIP)):
+        print ' ------- '
         print '[scip_id]:', cveSCIP[i]['id']
         print '[scip_link]', cveSCIP[i]['link']
     print ''
@@ -97,6 +99,7 @@ def call_get_bid(vfeed):
 
     cveBID = vfeed.get_bid()
     for i in range(0, len(cveBID)):
+        print ' ------- '
         print '[bid_id]:', cveBID[i]['id']
         print '[bid_link]', cveBID[i]['link']
     print ''
@@ -107,6 +110,7 @@ def call_get_certvn(vfeed):
 
     cveCERTVN = vfeed.get_certvn()
     for i in range(0, len(cveCERTVN)):
+        print ' ------- '
         print '[certvn_id]:', cveCERTVN[i]['id']
         print '[certvn_link]', cveCERTVN[i]['link']
     print ''
@@ -116,6 +120,7 @@ def call_get_iavm(vfeed):
 
     cveIAVM = vfeed.get_iavm()
     for i in range(0, len(cveIAVM)):
+        print ' ------- '
         print '[iavm_title]', cveIAVM[i]['title']
         print '[iavm_id]:', cveIAVM[i]['id']
         print '[disa_key]:', cveIAVM[i]['key']
@@ -127,6 +132,7 @@ def call_get_cwe(vfeed):
 
     cveCWE = vfeed.get_cwe()
     for i in range(0, len(cveCWE)):
+        print ' ------- '
         print '[cwe_id]:', cveCWE[i]['id']
         print '[cwe_title]:', cveCWE[i]['title']
     print ''
@@ -167,16 +173,20 @@ def call_get_oval(vfeed):
 
     cveOVAL = vfeed.get_oval()
     for i in range(0, len(cveOVAL)):
+        print ' ------- '
         print '[oval_id]:', cveOVAL[i]['id']
+        print '[oval_title]:', cveOVAL[i]['title']
+        print '[oval_class]:', cveOVAL[i]['class']
         print '[oval_file]:', cveOVAL[i]['file']
-
     print ''
     print '[stats] %d OVAL Definition id(s)' % len(cveOVAL)
+
 
 def call_get_snort(vfeed):
 
     cveSnort = vfeed.get_snort()
     for i in range(0, len(cveSnort)):
+        print ' ------- '
         print '[snort_id]:', cveSnort[i]['id']
         print '[snort_signature]:', cveSnort[i]['signature']
         print '[snort_classtype]:', cveSnort[i]['classtype']
@@ -189,6 +199,7 @@ def call_get_suricata(vfeed):
 
     cveSuricata = vfeed.get_suricata()
     for i in range(0, len(cveSuricata)):
+        print ' ------- '
         print '[suricata_id]:', cveSuricata[i]['id']
         print '[suricata_signature]:', cveSuricata[i]['signature']
         print '[suricata_classtype]:', cveSuricata[i]['classtype']
@@ -201,6 +212,7 @@ def call_get_nessus(vfeed):
 
     cveNessus = vfeed.get_nessus()
     for i in range(0, len(cveNessus)):
+        print ' ------- '
         print '[nessus_id]:', cveNessus[i]['id']
         print '[nessus_name]:', cveNessus[i]['name']
         print '[nessus_file]:', cveNessus[i]['file']
@@ -213,6 +225,7 @@ def call_get_openvas(vfeed):
     
     cveOpenvas = vfeed.get_openvas()
     for i in range(0, len(cveOpenvas)):
+        print ' ------- '
         print '[openvas_id]:', cveOpenvas[i]['id']
         print '[openvas_name]:', cveOpenvas[i]['name']
         print '[openvas_file]:', cveOpenvas[i]['file']
@@ -221,12 +234,24 @@ def call_get_openvas(vfeed):
     print ''
     print '[stats] %d OpenVAS testing script(s)' % len(cveOpenvas)
     
+def call_get_nmap(vfeed):
+
+    cveNmap = vfeed.get_nmap()
+    for i in range(0, len(cveNmap)):
+        print ' ------- '
+        print '[Nmap_file]:', cveNmap[i]['file']
+        print '[Nmap_family]:', cveNmap[i]['family']  
+    print ''
+    print '[stats] %d Nmap script(s)' % len(cveNmap)
+
 def call_get_edb(vfeed):
 
     cveEDB = vfeed.get_edb()
     for i in range(0, len(cveEDB)):
+        print ' ------- '
         print '[edb_id]:', cveEDB[i]['id']
-        print '[edb_exploit]:', cveEDB[i]['file']
+        print '[edb_file]:', cveEDB[i]['file']
+        print '[edb_link]:', cveEDB[i]['link']
 
     print ''
     print '[stats] %d ExploitDB id(s)' % len(cveEDB)
@@ -245,6 +270,7 @@ def call_get_saint(vfeed):
 
     cveSAINT = vfeed.get_saint()
     for i in range(0, len(cveSAINT)):
+        print ' ------- '
         print '[saintexploit_id]:', cveSAINT[i]['id']
         print '[saintexploit_title]:', cveSAINT[i]['title']
         print '[saintexploit_file]:', cveSAINT[i]['file']
@@ -257,6 +283,7 @@ def call_get_msf(vfeed):
 
     cveMSF = vfeed.get_msf()
     for i in range(0, len(cveMSF)):
+        print ' ------- '
         print '[msf_id]:', cveMSF[i]['id']
         print '[msf_title]:', cveMSF[i]['title']
         print '[msf_file]:', cveMSF[i]['file']
@@ -264,11 +291,23 @@ def call_get_msf(vfeed):
     print ''
     print '[stats] %d Metasploit Exploits/Plugins' % len(cveMSF)
 
+def call_get_d2(vfeed):
+
+    cveD2 = vfeed.get_d2()
+    for i in range(0, len(cveD2)):
+        print ' ------- '
+        print '[d2_title]:', cveD2[i]['title']
+        print '[d2_file]:', cveD2[i]['file']
+
+    print ''
+    print '[stats] %d D2 Elliot Framwork Exploits' % len(cveD2)
+
 
 def call_get_ms(vfeed):
 
     cveMS = vfeed.get_ms()
     for i in range(0, len(cveMS)):
+        print ' ------- '
         print '[Microsoft_ms_id]:', cveMS[i]['id']
         print '[Microsoft_ms_title]:', cveMS[i]['title']
 
@@ -280,6 +319,7 @@ def call_get_kb(vfeed):
 
     cveKB = vfeed.get_kb()
     for i in range(0, len(cveKB)):
+        print ' ------- '
         print '[Microsoft_kb_id]:', cveKB[i]['id']
         print '[Microsoft_kb_id]:', cveKB[i]['title']  
     print ''
@@ -300,6 +340,7 @@ def call_get_redhat(vfeed):
 
     cveRHEL, cveBUGZILLA = vfeed.get_redhat()
     for i in range(0, len(cveRHEL)):
+        print ' ------- '
         print '[redhat_id]:', cveRHEL[i]['id']
         print '[redhat_patch_title]:', cveRHEL[i]['title']
         print '[redhat_oval_id]:', cveRHEL[i]['oval']
@@ -309,9 +350,10 @@ def call_get_redhat(vfeed):
     print ''
     
     for i in range(0, len(cveBUGZILLA)):
+        print ' ------- '
         print '[redhat_bugzilla_issued]:', cveBUGZILLA[i]['date_issue']
-        print '[redhat_bugzilla__id]:', cveBUGZILLA[i]['id']
-        print '[redhat_bugzilla__title]:', cveBUGZILLA[i]['title']
+        print '[redhat_bugzilla_id]:', cveBUGZILLA[i]['id']
+        print '[redhat_bugzilla_title]:', cveBUGZILLA[i]['title']
     
     print ''
     print '[stats] %d Bugzilla id(s)' %len(cveBUGZILLA)
@@ -363,7 +405,6 @@ def call_get_fedora(vfeed):
     print '[stats] %d Fedora id(s)' % len(cveFEDORA)
 
 
-
 def call_get_debian(vfeed):
 
     cveDEBIAN = vfeed.get_debian()
@@ -396,6 +437,7 @@ def call_get_hp(vfeed):
 
     cveHP = vfeed.get_hp()
     for i in range(0, len(cveHP)):
+        print ' ------- '
         print '[hp_id]:', cveHP[i]['id']
         print '[hp_link]', cveHP[i]['link']
     print ''
@@ -440,14 +482,14 @@ def main():
             db.update()
             exit(0)
         
-        if apiMethod == "stats":
+        if apiMethod == "get_stats":
             stat = vFeedStats()
-            stat.stats()
+            stat.get_stats()
             exit(0)           
             
-        if apiMethod == "latest_cve":
+        if apiMethod == "get_latest":
             stat = vFeedStats()
-            stat.latest_cve()
+            stat.get_latest()
             exit(0)    
         
         

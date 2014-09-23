@@ -47,8 +47,8 @@ class vFeedUpdate(object):
     
     def _updateDB(self,url):
         '''
-        This function was found on internet.
-        So thanks to its author wherever he is.
+        This function was found in internet. So thanks to its author wherever he is.
+        Just added the percentage display 
         '''
         
         self.filename = url.split('/')[-1]

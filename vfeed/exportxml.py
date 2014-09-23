@@ -11,7 +11,6 @@ from . import config
 '''
 exportxml.py -  Class to export CVE into the vFeed structured XML format
 
-
 '''
 
 class vFeedXML(object):
@@ -68,11 +67,13 @@ class vFeedXML(object):
         self.EDB_id = self.vfeed.get_edb()
         self.SAINT_id = self.vfeed.get_saint()
         self.MSF_id = self.vfeed.get_msf()
+        self.D2_id = self.vfeed.get_d2()
         self.MILWORM_id = self.vfeed.get_milw0rm()
         self.SNORT_id = self.vfeed.get_snort()
         self.SURICATA_id = self.vfeed.get_suricata()
         self.HP_id = self.vfeed.get_hp()
-    
+        self.NMAP_id = self.vfeed.get_nmap()
+        
     def export(self):
         '''
             exporting data to the vFeed XML format
@@ -205,9 +206,7 @@ class vFeedXML(object):
                 Comment('#####################################'))
             self.entry_head.append(
                 Comment('Vulnerable Targets according to CPE'))
-            self.vulnerabletargets_head = SubElement(
-                self.entry_head, 'vulnerableTargets',
-                {'totalCPE': str(len(self.CPE_id)), })
+            self.vulnerabletargets_head = SubElement(self.entry_head, 'vulnerableTargets')
     
             for i in range(0, len(self.CPE_id)):
                 self.cpe_head = SubElement(self.vulnerabletargets_head, 'cpe',
@@ -422,9 +421,12 @@ class vFeedXML(object):
             self.ovalChecks_head = SubElement(self.securitytest_head, 'check',
                                               {'type': 'Local Security Testing',
                                                'id': self.OVAL_id[i]['id'],
+                                               'class': self.OVAL_id[i]['class'],
+                                               'title': self.OVAL_id[i]['title'],
                                                'utility': "OVAL Interpreter",
                                                'file': self.OVAL_id[i]['file'],
                                                })
+       
     
         for i in range(0, len(self.REDHAT_id)):
             try:
@@ -460,6 +462,16 @@ class vFeedXML(object):
                  'file': self.OPENVAS_id[i]['file'],
                  'utility': "OpenVAS Vulnerability Scanner",
                  })           
+
+        ## Exporting Nmap attributes
+        for i in range(0, len(self.NMAP_id)):
+            self.nmapChecks_head = SubElement(
+                self.securitytest_head, 'check',
+                {'type': 'Remote Security Testing',
+                 'family': self.NMAP_id[i]['family'].replace('"', ''),
+                 'file': self.NMAP_id[i]['file'],
+                 'utility': "Nmap Network Mapper",
+                 })  
             
         ## Exporting EDB ids
         for i in range(0, len(self.EDB_id)):
@@ -469,6 +481,7 @@ class vFeedXML(object):
                  'utility': "exploit-db",
                  'id': self.EDB_id[i]['id'],
                  'file': self.EDB_id[i]['file'],
+                 'link': self.EDB_id[i]['link'],
                  })
     
         ## Exporting Milw0rm ids 
@@ -504,6 +517,15 @@ class vFeedXML(object):
                  'script': self.MSF_id[i]['file'],
                  })
 
+        ## Exporting D2 Elliot Framework 
+        for i in range(0, len(self.D2_id)):
+            self.exploitChecks_head = SubElement(
+                self.securitytest_head, 'check',
+                {'type': 'Exploitation',
+                 'utility': "D2 Elliot",
+                 'title': self.D2_id[i]['title'],
+                 'script': self.D2_id[i]['file'],
+                 })
 
         # Exporting Defense rules
         
@@ -542,7 +564,7 @@ class vFeedXML(object):
     
     def prettify(self, elem):
         """Return a pretty-printed XML string for the Element.
-        This function found on internet.
+        This function was found in internet.
         So thanks to its author whenever he is.
         """
         rough_string = ElementTree.tostring(elem, 'UTF-8')

@@ -18,7 +18,7 @@ def get_help():
     print '                                         ' + info.get_owner()['website']
     print '-----------------------------------------------------------------------------'
     print ''
-    print '[usage 1]: python' + str(sys.argv[0]) + ' <Method> <CVE>'
+    print '[usage 1]: python ' + str(sys.argv[0]) + ' <Method> <CVE>'
     print '[info] Available vFeed methods:'
     print 'Information  ==> get_cve | get_cpe | get_cwe | get_capec | get_category | get_iavm'
     print 'References   ==> get_refs | get_scip | get_osvdb | get_certvn | get_bid'

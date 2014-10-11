@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 
-from vfeed import vFeed, vFeedInfo, vFeedXML, vFeedUpdate, vFeedStats
+from vfeed import vFeed, vFeedInfo, vFeedXML, vFeedUpdate, vFeedStats, vFeedSearch
 
 '''
 vFeed - Open Source Cross-linked and Aggregated Local Vulnerability Database
@@ -14,14 +14,14 @@ def get_help():
     print ''
     print '-----------------------------------------------------------------------------'
     print info.get_version()['title']
-    print '                                                          version ' + info.get_version()['build']
+    print '                                                               version ' + info.get_version()['build']
     print '                                         ' + info.get_owner()['website']
     print '-----------------------------------------------------------------------------'
     print ''
-    print '[usage 1]: python' + str(sys.argv[0]) + ' <Method> <CVE>'
+    print '[usage 1]: python ' + str(sys.argv[0]) + ' <Method> <CVE>'
     print '[info] Available vFeed methods:'
-    print 'Information  ==> get_cve | get_cpe | get_cwe | get_capec | get_category | get_iavm'
-    print 'References   ==> get_refs | get_scip | get_osvdb | get_certvn | get_bid'
+    print 'Information  ==> get_cve | get_cpe | get_cwe | get_capec | get_category'
+    print 'References   ==> get_refs | get_scip | get_osvdb | get_certvn | get_bid | get_iavm'
     print 'Risk         ==> get_risk | get_cvss'
     print 'Patchs 1/2   ==> get_ms | get_kb | get_aixapar | get_redhat | get_suse | get_debian | get_hp'
     print 'Patchs 2/2   ==> get_mandriva | get_cisco | get_ubuntu | get_gentoo | get_fedora | get_vmware'
@@ -34,7 +34,11 @@ def get_help():
     print '[info]: This method will export the CVE as vFeed XML format'
     print ''
     print '----------'
-    print '[usage 3]: python ' + str(sys.argv[0]) + ' stats or latest_cve'
+    print '[usage 3]: python ' + str(sys.argv[0]) + ' search <CVE> | <CPE>'
+    print '[info]: This method searches for CVE or CPE. It returns useful information that will help you dig deeper.'
+    print ''
+    print '----------'
+    print '[usage 4]: python ' + str(sys.argv[0]) + ' stats or latest_cve'
     print '[info]: Available stats methods'
     print 'Global statistics   ==> get_stats'
     print 'Latest Added CVEs   ==> get_latest '
@@ -459,15 +463,20 @@ def call_get_risk(vfeed):
 def main():
 
     if len(sys.argv) == 3:
-        myCVE = sys.argv[2]
+        myinput = sys.argv[2]
         apiMethod = sys.argv[1]
         
+        if apiMethod == "search":
+            search = vFeedSearch(myinput)
+            search.search()
+            exit(0)
+
         if apiMethod == "export":
-            vfeed = vFeedXML(myCVE)
+            vfeed = vFeedXML(myinput)
             vfeed.export()
             exit(0)
     
-        vfeed = vFeed(myCVE)
+        vfeed = vFeed(myinput)
         try:
             globals()['call_%s' % apiMethod](vfeed)
         except:
@@ -477,6 +486,7 @@ def main():
    
     elif len(sys.argv) == 2:
         apiMethod = sys.argv[1]
+        
         if apiMethod == "update":
             db = vFeedUpdate()
             db.update()
@@ -491,8 +501,6 @@ def main():
             stat = vFeedStats()
             stat.get_latest()
             exit(0)    
-        
-        
         
         else:
            get_help()

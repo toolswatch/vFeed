@@ -1,6 +1,21 @@
 vFeed Changelog
 ==============
 
+Beta v0.5.0
+---------
+* Added a new class search.py. Now it is possible to search for CPE associated CVEs. Check the full documentation
+* Added the support to CWE v2.8 with the addition to 58 nodes. Check here the full changelog http://cwe.mitre.org/data/reports/diff_reports/v2.7_v2.8.html
+* Updated the `vfeed_calls_samples.py` with example to use update and search methods within your python scripts.
+* Fixed an incoherence in the ExploitDB. In some cases, the exploit file is filled with http://www.exploit-db.com/download/Id_Exploit instead of blank.
+*  Fixed variable naming in uncompress() try statement in the `update` class (thanks to Jason https://github.com/Cashiuus)
+* To reflect this update, the following methods have been added:
+ - `search` to enumerate CVE and CPEs information (ex: ./vfeedcli.py search CVE-2010-4345 or ./vfeedcli.py search cpe:/a:openssl:openssl:1.0.1). Refer to documentation https://github.com/toolswatch/vFeed/wiki/%5B2%5D-Usage section "searching for occurrences"
+
+* vfeed.db the sqlite opensource cross linked vulnerability database fully regenerated to support the new changes
+* The documentation updated https://github.com/toolswatch/vFeed/wiki/
+
+
+
 Beta v0.4.9
 ---------
 * Added the support to Nmap NSE scripts (http://www.nmap.org)

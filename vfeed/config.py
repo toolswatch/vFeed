@@ -1,8 +1,5 @@
 '''
-vFeed Framework - The Open Source Cross Linked Local Vulnerability Database
-
-Name : config.py -  Configuration File
-Purpose : Configuration File. Handles global variables and database URLs.
+config.py -  Configuration File to handle global variables and database URLs.
 '''
 
 author = {
@@ -16,7 +13,7 @@ product = {
     '__title__': 'vFeed - Open Source Cross-linked and Aggregated Local Vulnerability Database',
     '__website__': 'http://www.toolswatch.org/vfeed',
     '__mainRepository__': 'https://github.com/toolswatch/vFeed',
-    '__build__': 'beta 0.4.9',
+    '__build__': '0.5.0',
 }
 
 

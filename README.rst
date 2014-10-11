@@ -56,18 +56,18 @@ See the wiki for more details.
 Latest release
 ==============
 
-Beta v0.4.9
+Beta v0.5.0
 ---------
-* Added the support to Nmap NSE scripts (http://www.nmap.org)
-* Added the support to D2 Elliot Web Exploitation Framework Exploits (http://www.d2sec.com/index.html)
-* Now fully rely on OVAL Open Vulnerability Assessment Language definitions (https://oval.mitre.org/rep-data/5.10/org.mitre.oval/oval.xml)
-* Updated the `get_oval` to return more information such title and class.
-* Changed the stats methods names to `get_stats` and  `get_latest`
+* Added a new class search.py. Now it is possible to search for CPE associated CVEs. Check the full documentation
+* Added the support to CWE v2.8 with the addition to 58 nodes. Check here the full changelog http://cwe.mitre.org/data/reports/diff_reports/v2.7_v2.8.html
+* Updated the `vfeed_calls_samples.py` with example to use update and search methods within your python scripts.
+* Fixed an incoherence in the ExploitDB. In some cases, the exploit file is filled with http://www.exploit-db.com/download/Id_Exploit instead of blank.
+*  Fixed variable naming in uncompress() try statement in the `update` class (thanks to Jason https://github.com/Cashiuus)
 * To reflect this update, the following methods have been added:
- - `get_nmap` to enumerate Nmap NSE scripts. This function returns file name and category (ex: ./vfeedcli.py get_nmap CVE-2010-4345)
- - `get_d2` to enumerate D2 Elliot exploits. This function returns title and url link (ex: ./vfeedcli.py get_d2 CVE-2011-4106)
+ - `search` to enumerate CVE and CPEs information (ex: ./vfeedcli.py search CVE-2010-4345 or ./vfeedcli.py search cpe:/a:openssl:openssl:1.0.1). Refer to documentation https://github.com/toolswatch/vFeed/wiki/%5B2%5D-Usage section "searching for occurrences"
 
 * vfeed.db the sqlite opensource cross linked vulnerability database fully regenerated to support the new changes
+* The documentation updated https://github.com/toolswatch/vFeed/wiki/
 
 
 See changelog for details

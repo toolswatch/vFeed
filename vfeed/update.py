@@ -48,7 +48,7 @@ class vFeedUpdate(object):
     def _updateDB(self,url):
         '''
         This function was found in internet. So thanks to its author wherever he is.
-        Just added the percentage display 
+        Just improve it a little by adding the percentage display
         '''
         
         self.filename = url.split('/')[-1]
@@ -85,8 +85,8 @@ class vFeedUpdate(object):
             exit(0)
         
         try:
-            tar = tarfile.open(self.vfeed_db_compressed, 'r:gz')
-            tar.extractall('.')
+            self.tar = tarfile.open(self.vfeed_db_compressed, 'r:gz')
+            self.tar.extractall('.')
             self.tar.close            
         except:
             print '[error] Database not extracted.'
@@ -103,9 +103,9 @@ class vFeedUpdate(object):
             self.hashRemote = self.output.split(',')[1]
         
         if self.hashRemote <> self.hashLocal:
-            print '[New Update] Downloading the recent vFeed Database %s from %s' %(self.vfeed_db_compressed,self.vfeed_db_primary_url)            
+            print '\n[New Update] Downloading the recent vFeed Database %s from %s' %(self.vfeed_db_compressed,self.vfeed_db_primary_url)            
             self._updateDB(self.urlCompressed)
-            print '[info] Decompressing %s ...' %self.vfeed_db_compressed
+            print '\n[info] Decompressing %s ...' %self.vfeed_db_compressed
             self._uncompress()
             self.cleaning()
             exit(0)

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 
-from vfeed import vFeed, vFeedInfo, vFeedXML
+from vfeed import vFeed, vFeedInfo, vFeedXML,vFeedUpdate, vFeedSearch
+
 
 '''
 vfeed_calls_sample.py -  Sample script to call methods from your programs
@@ -25,9 +26,7 @@ print 'vFeed global config returned as dict:', info.get_config()['primary']
 
 # Invoking the vFeed class
 
-#cve = "cve-2007-5243"
-#cve = "cve-2013-3238"
-cve = "cve-2013-3661"
+cve = "cve-2014-0160"
 print '[setting] using cve ', cve
 
 # create an instance of the class vFeed and pass the cve
@@ -159,9 +158,17 @@ print 'total found msf Exploit', len(cvemsfexp)
 
 
 print '[Generating XML] Invoking the exportXML() method '
-##cve = "cve-2008-1447"
-cve = "cve-2013-3661"
-print '[New Instance] Creating new instance with cve ', cve
+
+cve = "cve-2014-0160"
+print '[Exporting] Creating new instance with cve ', cve
 vfeed = vFeedXML(cve)
 vfeed.export()
 
+print '[Updating db] Invoking the update method from within your scripts'
+db = vFeedUpdate()
+db.update()
+
+print '[searching a CPE] Invoking the search method from within your scripts'
+mycpe = "cpe:/a:adobe:acrobat:9.5.1"
+search = vFeedSearch(mycpe)
+search.search()

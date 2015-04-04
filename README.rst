@@ -52,7 +52,7 @@ How to ?
 Run `vfeedcli.py` it's self-explanatory.
 See the wiki for more details.
 
- Standard Compatibility
+Standard Compatibility
 ==============
 
 vFeed is now officially registered as CVE-Compatible Product by the Mitre Corp (https://cve.mitre.org/compatible/compatible.html)

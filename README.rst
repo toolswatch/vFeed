@@ -54,8 +54,9 @@ See the wiki for more details.
 
 Standard Compatibility
 ==============
-![](https://nvd.nist.gov/NVDLegacy/media/NVDLegacyMedia/images/leftbar/cve.jpg)
+
 vFeed is now officially registered as CVE-Compatible Product by the Mitre Corp (https://cve.mitre.org/compatible/compatible.html)
+Certificate of Compatibility >> http://cve.mitre.org/compatible/questionnaires/certificates/166.jpg 
 
 Latest release
 ==============

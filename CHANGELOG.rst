@@ -33,6 +33,7 @@ Beta v0.4.9
 Beta v0.4.8
 ---------
 * Added a new class vFeedStats (vfeed\stats.py) to display vfeed.db statistics and the latest added CVEs (feature requested by Ryan Barnett from SpiderLabs).
+* Added support to CWE v2.7
 * To reflect this update, the following methods have been added:
  - `stats` to enumerate vfeed.db global statistics such as total CVE, CPE, Nessus and more. This function returns the total for each reference
  - `latest_cve` to list the latest CVEs. 

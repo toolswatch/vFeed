@@ -1,6 +1,7 @@
 import os
 import sqlite3
 from . import config
+import re
 
 '''
 api.py -  vFeed - Open Source Cross-linked and Aggregated Local Vulnerability Database
@@ -14,12 +15,23 @@ class vFeed(object):
         self.vfeed_db_url = config.database['primary']['url']
         self.oval_url = config.gbVariables['oval_url']
         self.edb_url = config.gbVariables['edb_url']
-        self.bid_url = config.gbVariables['bid_url']
+        self.bid_url = config.gbVariables['bid_url']  
+	
+	# Changes by Uday
+	#Changes made to check for CVEs based on CPE input	       
+	# Looking for CPE in text, CPEs are in lowercase, CVEs are in UPPERCSE
+	cpematch = re.match('cpe:/a:', cveID[0:7])
+	if cpematch:
+	    self.cveID  = cveID
+	    self._check_env(self.vfeed_db)
+	    self._db_init()
+	    self._vrfy_cpe()
+	else:
+	    self.cveID = cveID.upper()
+            self._check_env(self.vfeed_db)
+            self._db_init()
+	    self._vrfy_cve()
         
-        self.cveID = cveID.upper()
-        self._check_env(self.vfeed_db)
-        self._db_init()
-        self._vrfy_cve()
 
     def _vrfy_cve(self):
         try:
@@ -35,6 +47,21 @@ class vFeed(object):
 
         return self.data
 
+    #Verify CPE - By Uday
+    def _vrfy_cpe(self):
+	try:
+	    self.cur.execute('SELECT * FROM cve_cpe WHERE cpeid=?', self.query)
+	    self.data = self.cur.fetchone()
+	    if self.data is None:
+		print '[warning] Entry %s is missing from vFeed Database' %self.cveID
+		print '[hint] Update your local vfeed.db OR verify CPE'
+		exit(0)
+	except Exception, e:
+	    print'[exception]:', e
+	print "done CPE verification"
+	return self.data    
+   
+ 
     def _check_env(self, file):
 
         if not os.path.isfile(file):
@@ -272,6 +299,19 @@ class vFeed(object):
 
         return self.CPE_id
 
+    #New function by Uday - CPE to CVE Search - Give a product by CPE and get the CPEs
+    def get_cpe2cve(self):
+	'''
+	Returning CVE for a given CPE as dictionary
+	'''
+	self.CVE_id = {}
+	self.cur.execute('SELECT * FROM cve_cpe where cpeid=?', self.query)
+
+	for self.data in self.cur.fetchall():
+	    self.CVE_id[str(self.data[0])] = str(self.data[1])
+	return self.CVE_id
+
+    
     def get_ms(self):
         '''
         Returning:  Microsoft Patch references as dictionary

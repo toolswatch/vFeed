@@ -20,7 +20,7 @@ def get_help():
     print ''
     print '[usage 1]: python ' + str(sys.argv[0]) + ' <Method> <CVE>'
     print '[info] Available vFeed methods:'
-    print 'Information  ==> get_cve | get_cpe | get_cwe | get_capec | get_category'
+    print 'Information  ==> get_cve | get_cpe | get_cpe2cve | get_cwe | get_capec | get_category'
     print 'References   ==> get_refs | get_scip | get_osvdb | get_certvn | get_bid | get_iavm'
     print 'Risk         ==> get_risk | get_cvss'
     print 'Patchs 1/2   ==> get_ms | get_kb | get_aixapar | get_redhat | get_suse | get_debian | get_hp'
@@ -172,6 +172,11 @@ def call_get_cpe(vfeed):
     print ''
     print '[stats] %d CPE id(s)' % len(cveCPE)
 
+# @Uday made this change
+def call_get_cpe2cve(vfeed):
+    cveCPE = vfeed.get_cpe2cve()
+    for cpeVal, cveVal in cveCPE.items():
+	print '[cpe]: {} + "	" [cve]: {} '.format(cpeVal, cveVal)
 
 def call_get_oval(vfeed):
 

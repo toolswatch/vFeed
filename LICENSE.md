@@ -28,7 +28,7 @@ Example cases which do not require a commercial license, and thus fall under the
 Penetration testers (or penetration testing organizations) using vFeed Framework as part of their assessment toolkit.
 
 * Penetration Testing Linux Distributions including but not limited to Kali Linux, SamuraiWTF, BackBox Linux.
-* Using vFeed Framework to calculate your own systems scoring.
+* Using vFeed Framework to map and correlate vulnerabilities and threats.
 * Any non-commercial use of vFeed Framework.
 
 If you need to purchase a commercial license or are unsure whether you need to purchase a commercial license contact us - hacker@toolswatch.org

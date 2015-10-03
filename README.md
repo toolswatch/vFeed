@@ -1,7 +1,8 @@
 vFeed Python API & vFeed.db The Correlated Community Vulnerability and Threat Database
 =========================================================
+![vFeed](http://www.toolswatch.org/wp-content/uploads/2015/10/vfeed-e1443794779894.png)
 
-**vFeed Framework** is a CVE-Compatible (CWE and OVAL Compatibility in progress) naming scheme concept that provides extra structured detailed third-party references and technical characteristics for a CVE entry through an extensible XML/JSON schema.
+**vFeed Framework** is a CVE, CWE and OVAL Compatible naming scheme concept that provides extra structured detailed third-party references and technical characteristics for a CVE entry through an extensible XML/JSON schema.
 It also improves the reliability of CVEs by providing a flexible and comprehensive vocabulary for describing the relationship with other standards and security references.
 
 vFeed utilizes XML-based / JSON-based format outputs to describe in detail vulnerabilities. 
@@ -32,7 +33,7 @@ The associated **vFeed.db (The Correlated Vulnerability and Threat Database)** i
 Key features
 =================
 
-* Registered as CVE and OVAL Compatible by the Mitre Corporation
+* Registered as CVE, CWE and OVAL Compatible by the Mitre Corporation
 * Built using open source technologies
 * Rely on main Open Standards CVE, CPE, CWE, CAPEC, CVSS etc
 * Downloadable SQLite Community Correlated Vulnerability and Threat Database 

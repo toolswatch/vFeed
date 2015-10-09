@@ -12,7 +12,7 @@ root_dir = os.path.normpath(os.path.join(current_dir, ".."))
 export_dir = os.path.normpath(os.path.join(root_dir, "export"))
 
 # vFeed Database information
-title = "vFeed - The Correlated Vulnerability Database"
+title = "vFeed - The Correlated Vulnerability and Threat Database"
 author = "NJ OUCHN"
 twitter = "@toolswatch"
 repository = "https://github.com/toolswatch/vFeed"

@@ -20,7 +20,7 @@ except ImportError, e:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--version", action="version",
-                        version=".:. {0} .:. ".format(title) + "(API Release {0})".format(build))
+                        version=".:. {0} .:. ".format(title) + "(ver {0})".format(build))
     parser.add_argument("-m", "--method", metavar=('Method', 'CVE'), type=str, help="Invoking multiple vFeed methods.",
                         nargs=2)
     parser.add_argument("-e", "--export", metavar=('type', 'CVE'), type=str, help="Export to XML or JSON the CVE id",

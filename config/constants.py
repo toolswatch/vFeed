@@ -22,7 +22,7 @@ build = "0.6.0"
 url = "http://www.toolswatch.org/vfeed/"
 db = "vfeed.db"
 db_compressed = "vfeed.db.tgz"
-update_status = "update.dat"
+update_status = "update"
 
 # Third party URLs
 cve_url = "http://cve.mitre.org/cgi-bin/cvename.cgi?name="

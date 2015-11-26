@@ -19,6 +19,7 @@ repository = "https://github.com/toolswatch/vFeed"
 build = "0.6.0"
 
 # Update Information
+url_test = "http://www.toolswatch.org"
 url = "http://www.toolswatch.org/vfeed/"
 db = "vfeed.db"
 db_compressed = "vfeed.db.tgz"

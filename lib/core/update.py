@@ -6,7 +6,7 @@ import os
 import sys
 import urllib2
 import tarfile
-from config.constants import db, db_compressed, url, update_status
+from config.constants import db, db_compressed, url, url_test, update_status
 from lib.common.utils import checksum
 
 
@@ -14,6 +14,7 @@ class Update(object):
     def __init__(self):
         self.db = db
         self.db_compressed = db_compressed
+        self.url_test = url_test
         self.db_url = url
         self.db_update = update_status
         self.db_download = self.db_url + self.db_compressed
@@ -28,7 +29,7 @@ class Update(object):
 
         print "[+] Checking connectivity to", self.db_url
         try:
-            if urllib2.urlopen(self.db_url):
+            if urllib2.urlopen(self.url_test):
                 if not os.path.isfile(self.db):
                     print "[+] New install. Downloading the Correlated Vulnerability Database."
                     self.download(self.remote_db)

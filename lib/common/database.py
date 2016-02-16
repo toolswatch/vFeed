@@ -6,7 +6,7 @@
 
 import sys
 import sqlite3
-from config.constants import db
+from config.constants import db_local as db
 from lib.common.utils import check_env
 
 

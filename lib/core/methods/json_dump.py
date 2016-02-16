@@ -6,7 +6,7 @@
 import os
 import json
 import inspect
-from config.constants import title, author, build, repository, twitter, db
+from config.constants import title, author, build, repository, twitter, db_local
 from lib.common.database import Database
 from lib.common.utils import check_env, move_export
 from lib.core.methods import *
@@ -15,7 +15,7 @@ from lib.core.methods import *
 class ExportJson(object):
     def __init__(self, cve):
         self.cve = cve.upper()
-        self.db = db
+        self.db = db_local
         check_env(self.db)
         (self.cur, self.query) = Database(self.cve).db_init()
         self.data = Database(self.cve, self.cur, self.query).check_cve()

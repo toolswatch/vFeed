@@ -10,6 +10,7 @@ import os
 current_dir = os.path.abspath(os.path.dirname(__file__))
 root_dir = os.path.normpath(os.path.join(current_dir, ".."))
 export_dir = os.path.normpath(os.path.join(root_dir, "export"))
+config_dir = os.path.abspath(os.path.expanduser(os.path.join("~", ".vfeed")))
 
 # vFeed Database information
 title = "vFeed - The Correlated Vulnerability and Threat Database"
@@ -23,7 +24,10 @@ url_test = "http://www.toolswatch.org"
 url = "http://www.toolswatch.org/vfeed/"
 db = "vfeed.db"
 db_compressed = "vfeed.db.tgz"
+db_local = os.path.join(config_dir, db)
+db_compressed_local = os.path.join(config_dir, db_compressed)
 update_status = "update"
+update_status_local = os.path.join(config_dir, update_status)
 
 # Third party URLs
 cve_url = "http://cve.mitre.org/cgi-bin/cvename.cgi?name="

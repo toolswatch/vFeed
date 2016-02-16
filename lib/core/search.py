@@ -6,7 +6,7 @@
 import json
 import sys
 import re
-from config.constants import db
+from config.constants import db_local as db
 from lib.core.methods import CveExploit
 from lib.common.database import Database
 

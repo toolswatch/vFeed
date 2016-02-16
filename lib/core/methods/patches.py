@@ -13,7 +13,7 @@ from lib.common.utils import check_env
 class CvePatches(object):
     def __init__(self, cve):
         self.cve = cve.upper()
-        self.db = db
+        self.db = db_local
         check_env(self.db)
         (self.cur, self.query) = Database(self.cve).db_init()
         self.data = Database(self.cve, self.cur, self.query).check_cve()

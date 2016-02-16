@@ -6,7 +6,8 @@ import os
 import sys
 import urllib2
 import tarfile
-from config.constants import db, db_compressed, url, url_test, update_status
+from config.constants import db, db_compressed, url, url_test, update_status, \
+    config_dir, db_local, db_compressed_local, update_status_local
 from lib.common.utils import checksum
 
 
@@ -14,11 +15,16 @@ class Update(object):
     def __init__(self):
         self.db = db
         self.db_compressed = db_compressed
+        self.db_local = db_local
+        self.db_compressed_local = db_compressed_local
+        self.config_dir = config_dir
         self.url_test = url_test
         self.db_url = url
         self.db_update = update_status
+        self.db_update_local = update_status_local
         self.db_download = self.db_url + self.db_compressed
         self.db_status = self.db_url + self.db_update
+        self.db_status_local = os.path.join(config_dir, update_status)
         self.remote_db = self.db_url + self.db_compressed
 
     def update(self):
@@ -30,21 +36,23 @@ class Update(object):
         print "[+] Checking connectivity to", self.db_url
         try:
             if urllib2.urlopen(self.url_test):
-                if not os.path.isfile(self.db):
+                if not os.path.isdir(self.config_dir):
+                    os.makedirs(self.config_dir)
+                if not os.path.isfile(self.db_local):
                     print "[+] New install. Downloading the Correlated Vulnerability Database."
-                    self.download(self.remote_db)
+                    self.download(self.remote_db, self.db_compressed_local)
                     print '\n[+] Installing %s ...' % self.db_compressed
                     self.uncompress()
                     self.clean()
                     sys.exit(1)
-                if os.path.isfile(self.db):
+                if os.path.isfile(self.db_local):
                     print "[+] Checking for the latest vFeed Vulnerability Database"
                     self.check_status()
         except urllib2.URLError as e:
             print "[!] Connection error: ", e.reason
             sys.exit()
 
-    def download(self, url):
+    def download(self, url, dest=None):
         """
         This function was found in internet. So thanks to its author wherever he is.
         Just improve it a little by adding the percentage display
@@ -52,7 +60,8 @@ class Update(object):
         :return:
         """
 
-        self.filename = url.split('/')[-1]
+        self.filename = dest or url.split('/')[-1]
+        self.local = os.path.basename(dest)
         self.u = urllib2.urlopen(url)
         self.f = open(self.filename, 'wb')
         self.meta = self.u.info()
@@ -70,7 +79,7 @@ class Update(object):
             self.status = r"%10d [%3.0f %%]" % (self.filesize_dl, self.filesize_dl * 100. / self.filesize)
             self.status += chr(8) * (len(self.status) + 1)
             sys.stdout.write("\r[+] Receiving %d out of %s Bytes of %s (%3.0f %%)" % (
-                self.filesize_dl, self.filesize, self.filename, self.filesize_dl * 100. / self.filesize))
+                self.filesize_dl, self.filesize, self.local, self.filesize_dl * 100. / self.filesize))
             sys.stdout.flush()
         self.f.close()
 
@@ -80,12 +89,12 @@ class Update(object):
         :return:
         """
 
-        if not os.path.isfile(self.db_compressed):
-            print '[error] ' + self.db_compressed + ' not found'
+        if not os.path.isfile(self.db_compressed_local):
+            print '[error] ' + self.db_compressed_local + ' not found'
             sys.exit()
         try:
-            self.tar = tarfile.open(self.db_compressed, 'r:gz')
-            self.tar.extractall('.')
+            self.tar = tarfile.open(self.db_compressed_local, 'r:gz')
+            self.tar.extractall(self.config_dir)
         except Exception, e:
             print '[error] Database not extracted ', e
 
@@ -93,16 +102,16 @@ class Update(object):
         """ Check the remote update status and
         update the existing vfeed database if needed
         """
-        self.download(self.db_status)
-        self.hashLocal = checksum(self.db)
-        with open(self.db_update, 'r') as f:
+        self.download(self.db_status, self.db_status_local)
+        self.hashLocal = checksum(self.db_local)
+        with open(self.db_status_local, 'r') as f:
             self.output = f.read()
             self.hashRemote = self.output.split(',')[1]
 
         if self.hashRemote != self.hashLocal:
             print '\n[+] Downloading the recent vFeed Vulnerability Database update'
-            self.download(self.remote_db)
-            print '\n[+] Decompressing %s ' % self.db_compressed
+            self.download(self.remote_db, self.db_compressed_local)
+            print '\n[+] Decompressing %s ' % self.db_compressed_local
             self.uncompress()
 
         if self.hashRemote == self.hashLocal:
@@ -115,9 +124,9 @@ class Update(object):
         """
         print '[+] Cleaning compressed database and update file'
         try:
-            if os.path.isfile(self.db_compressed):
-                os.remove(self.db_compressed)
-            if os.path.isfile(self.db_update):
-                os.remove(self.db_update)
+            if os.path.isfile(self.db_compressed_local):
+                os.remove(self.db_compressed_local)
+            if os.path.isfile(self.db_update_local):
+                os.remove(self.db_update_local)
         except Exception, e:
             print '[!] Already cleaned', e

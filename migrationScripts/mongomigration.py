@@ -15,18 +15,12 @@ def MigrationContext():
 
 # Read Mongo Configuration
 def mongoConf():
+    confLine = 'localhost:27017'
     with open(os.path.abspath(os.path.expanduser("~"+"/vFeed/migrationScripts/mongo.conf"))) as ConfReader:
-        confLine = ''
         for line in ConfReader:
-            line = line.strip(' ')
             if 'MongoDBurl' in line:
-                confLine = line.split(' ')[1]
-        if confLine:
-            return
-        else:
-            print("[-] Error in MongoDBurl, Cannot be empty")
-            sys.exit(0)
-
+                confLine = str(line.split(' ')[1]).strip()
+    return confLine
 
 # Migration to mongo starts headerline
 # First Step: Convert to CSV from SQLite table by table
@@ -47,12 +41,11 @@ def do_sqlite_to_csv():
                         migration_read
     ])
 
-def do_csv_to_mongo():
+def do_csv_to_mongo(mongourl):
     ## From CSV files to mongo database
-    mongo_host = mongoConf()
-    print(mongo_host)
     csv_path = os.path.expanduser("~"+"/vFeed/csv_exports/")
-
+    # Change the host
+    mongo_host = mongourl
     for csv_file in glob.glob(csv_path+'*.csv'):
         table_name = csv_file.split('\\') if '\\' in csv_file else csv_file.split('/')
         table_name = table_name[len(table_name)-1].replace('.csv', '')
@@ -73,12 +66,18 @@ def do_csv_to_mongo():
 
         print("[+] Imported collection: {} --> vfeed MongoDB".format(table_name))
 
+
 if __name__ == '__main__':
     # Change directory to user's home directory and save previous directory
     current_dir = MigrationContext()
+
     # Export SQLite to CSV Files
     do_sqlite_to_csv()
+
+    # Get mongoDB url from Configuration and pass to mongo
+    mongourl = mongoConf()
+
     # Export CSV to MongoDB
-    do_csv_to_mongo()
+    do_csv_to_mongo(mongourl)
     # Change back to previous directory - Undoing previous directory change
     os.chdir(current_dir)

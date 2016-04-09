@@ -112,3 +112,24 @@ Mongo migrations
   * Replace <username> with current username
     * run `python /home/<username>/vFeed/migrationScripts/mongomigration.py` on Linux
     * run `python c:\users\<username>\vFeed\migrationScripts\mongomigration.py` on Windows
+
+Meteor UI
+---------
+
+* To Get started with Meteor UI 
+  * Install Meteor by typing `curl https://install.meteor.com/ | sh` in a Linux or OS X Terminal
+  * For Windows machines, Visit `https://www.meteor.com/install`
+  * Navigate to `vFeed` directory and type `meteor update`
+  * Alternatively, `meteor update <packagename>` to update a package
+  * The UI is currently a SPA (Single Page Application).
+  * The search field is available and is not yet implemented for searching `vfeed database`
+  * Meteor applications use mongodb by default. Here is a cautious step:
+      1. Inside the `migrationScripts` directory, edit `mongo.conf` to port 3001
+      2. From a seperate terminal type `meteor mongo`. (At this point, ensure the meteor app is already running to interact with meteor).
+      3. Run the mongo migration script `python mongomigration.py` in the `migrationScripts` directory
+
+      Explanation:
+      ============
+      * MongoDB runs on port 27017 by default.
+      * Meteor's mongo runs on port 3001
+      * By changing migration script to point to 3001, when meteor app is running, metoeor application's database gets vFeed tables.

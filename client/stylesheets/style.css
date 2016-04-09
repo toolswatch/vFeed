@@ -1,0 +1,39 @@
+/* CSS declarations go here */
+
+
+/* VFeed Template */
+
+.documentList
+{
+    overflow-x:auto;
+    overflow-y:hidden;
+    height:260px;
+    width:100%;
+    padding: 0 15px;
+}
+
+.documentItem
+{
+    border:1px solid black;
+    padding:0;
+    height:230px;
+    width: 200px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.documentItem label {
+    font-size: x-small;
+}
+
+.documentItem img
+{
+    max-width: 180px;
+    max-height: 140px;
+}
+
+.list-inline {
+    white-space:nowrap;
+}
+
+/* searchPanel */

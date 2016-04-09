@@ -1,0 +1,15 @@
+<template name="vfeed">
+    <div class="container">
+        {{> header}}
+
+        {{> searchPanel}}
+        <div class="container vFeed Stats">
+            <div class="modal-body" id="vfeedStats">
+              <pre>
+                Database Version: {{vfeedStats.db_version}}
+                Total CVEs: {{vfeedStats.total_cve}}
+              </pre>
+            </div>
+        </div>
+    </div>
+</template>

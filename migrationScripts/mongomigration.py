@@ -16,7 +16,7 @@ def MigrationContext():
 # Read Mongo Configuration
 def mongoConf():
     confLine = 'localhost:27017'
-    with open(os.path.abspath(os.path.expanduser("~"+"/vFeed/migrationScripts/mongo.conf"))) as ConfReader:
+    with open(os.path.abspath(os.path.expanduser("~") + "/vFeed/migrationScripts/mongo.conf")) as ConfReader:
         for line in ConfReader:
             if 'MongoDBurl' in line:
                 confLine = str(line.split(' ')[1]).strip()
@@ -35,7 +35,7 @@ def do_sqlite_to_csv():
     vfeed_migraton_script = "vFeed/migrationScripts/csvexports.sql"
     migration_read = '.read ' + vfeed_migraton_script
 
-    subprocess.check_call([
+    subprocess.Popen([
                         'sqlite3',
                         vfeed_db_location,
                         migration_read
@@ -54,7 +54,7 @@ def do_csv_to_mongo(mongourl):
                                 '--host',
                                 mongo_host,
                                 '-d',
-                                'vfeed',
+                                'meteor',
                                 '-c',
                                 table_name,
                                 '--type',

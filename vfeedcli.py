@@ -44,7 +44,7 @@ if __name__ == "__main__":
         method_name = args.stats[0]
         if method_name == "get_stats" or method_name == "get_latest":
             result = getattr(Stats(), method_name)
-            print result()
+            sys.stdout.write(result())
         else:
             print"[!] Unknown Method"
     elif args.list:

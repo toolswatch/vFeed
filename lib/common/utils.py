@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# Copyright (C) 2015 ToolsWatch.org
-# This file is part of vFeed Vulnerability Database Community API Parser - http://www.toolswatch.org
+# Copyright (C) 2016 ToolsWatch.org
+# This file is part of vFeed Correlated Threat & Vulnerability Community Database API Parser - http://www.toolswatch.org
 # See the file 'LICENSE' for copying permission.
 
 import inspect
@@ -84,7 +84,6 @@ def move_export(json_export, json_file):
     shutil.move(json_file, export_dir)
 
     return
-
 
 def checksum(checked_file):
     """

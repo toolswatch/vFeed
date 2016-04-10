@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015 ToolsWatch.org
+# Copyright (C) 2016 ToolsWatch.org
 # This file is part of vFeed Vulnerability Database Community API Parser - http://www.toolswatch.org
 # See the file 'LICENSE' for copying permission
 
@@ -10,18 +10,19 @@ import os
 current_dir = os.path.abspath(os.path.dirname(__file__))
 root_dir = os.path.normpath(os.path.join(current_dir, ".."))
 export_dir = os.path.normpath(os.path.join(root_dir, "export"))
+db = "vfeed.db"
+db_location = os.path.join(root_dir, db)
 
 # vFeed Database information
 title = "vFeed - The Correlated Vulnerability and Threat Database"
 author = "NJ OUCHN"
 twitter = "@toolswatch"
 repository = "https://github.com/toolswatch/vFeed"
-build = "0.6.0"
+build = "0.6.5"
 
 # Update Information
 url_test = "http://www.toolswatch.org"
 url = "http://www.toolswatch.org/vfeed/"
-db = "vfeed.db"
 db_compressed = "vfeed.db.tgz"
 update_status = "update"
 
@@ -47,3 +48,9 @@ vmware_url = "https://www.vmware.com/security/advisories/"
 edb_url = "http://www.exploit-db.com/exploits/"
 oval_url = "http://oval.mitre.org/repository/data/getDef?id="
 nmap_url = "https://nmap.org/nsedoc/scripts/"
+
+# Migration to MongoDB
+migration_dir = os.path.normpath(os.path.join(root_dir, "lib/migration"))
+mongo_conf = os.path.join(migration_dir, "mongo.conf")
+migration_script = os.path.join(migration_dir, "csvexports.sql")
+csv_dir = os.path.join(root_dir, "csv_exports/")

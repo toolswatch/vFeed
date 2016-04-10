@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.6.5
+---------
+* Added the ability to migrate to Mongo Database (Thanks so much to Ushan89 for the original code)
+* A new class `mongo.py` added (based on Ushan89 [code](https://github.com/ushan89/vFeed) to simply the process of migration from SQLite to MongoDB
+    * --migrate: Dump into a CSV then populate the vFeed MongoDB
+* The documentation updated. Visit [Documentation Page](https://github.com/toolswatch/vFeed/wiki/)
 
 0.6.0
 ---------

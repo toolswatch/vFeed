@@ -61,35 +61,11 @@ Refer to the [wiki](https://github.com/toolswatch/vFeed/wiki/) page for a detail
 Latest release
 ==============
 
-0.6.0
+0.6.5
 ---------
-* Reviewed and re-wrote the code to be as much as possible PEP8 compliant
-* Introduced a new simple vFeed menu with the following options:
-    * --method: Digs into the database and enumerate information related to CVE. See (--list)
-    * --list: Lists the available --method functions. You can refer to the wiki documentation for more information
-    * --export : Exports metadata to either JSON or XML formats
-    * --stats : Displays the vFeed.db statistics
-    * --search: Simple vFeed search utility. It supports CVE, CPE, CWE, OVAL and free text
-    * --update: To update the vFeed.db Correlated Vulnerability Database.
-    * --banner: Displays vFeed banners. Dont ask me. It is useless :)
-* Refactored the main vFeed class `api.py` into small dedicated classes:
-    * `info.py`: Used to render information about CVE alongside other open standards (CWE, CPE, CAPEC).
-    * `ref.py`: Can be leveraged to get information about references and cross-linked sources (IAVM, SCIP..)
-    * `risk.py`: Used to display the CVSS v2 and severity. 
-    * `patches.py`: Mostly used to enumerate hotfixes from 3rd party vendors such as Microsoft, Redhat, Suse etc
-    * `scanners.py` : Leveraged to list information about scanners scripts related to CVEs such as Nessus, OpenVAS .. 
-    * `exploit.py` : Used to list information about exploits PoC related to CVEs such as Metasploit, Exploit-DB .. 
-    * `rules.py` : Can be leveraged to display the IDS/IPS rules to prevent from the attack such as Snort or Suricata 
-    * `json_dump.py` : This class will generate a detailed CVE JSON output.
-* vFeed now returns JSON responses. It will be much easier to integrate with 3rd party utilities and software.
-* Added the support of CWE, OVAL and free text to `search.py` class.
-* Added URL links to the references (CVE, CWE, CAPEC, 3rd party references ..)
-* Changed name of `get_risk` to `get_severity`
-* Exported JSON/XML files are moved to the export repository.
-* Added `api_calls.py` API calls sample to demonstrate how easy to use vFeed from within your code.
-* Deprecated the value of "PCI Compliance" from `risk.py` class. This will be supported later.
-* Deprecated the method `get_milw0rm` as the source does not longer exist 
-* Todo : The XML export will be added later.
+* Added the ability to migrate to Mongo Database (Thanks so much to Ushan89 for the original code)
+* A new class `mongo.py` added (based on Ushan89 [code](https://github.com/ushan89/vFeed) to simply the process of migration from SQLite to MongoDB
+    * --migrate: Dump into a CSV then populate the vFeed MongoDB
 * The documentation updated. Visit [Documentation Page](https://github.com/toolswatch/vFeed/wiki/)
 
 See [changelog](https://github.com/toolswatch/vFeed/blob/master/CHANGELOG.md) for more details

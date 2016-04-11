@@ -9,6 +9,7 @@ import os
 import glob
 import subprocess
 import sys
+import commands
 from config.constants import migration_dir
 from config.constants import mongo_conf
 from config.constants import migration_script
@@ -22,9 +23,10 @@ class Migrate(object):
         self.mongo_conf = mongo_conf
         self.migration_script = migration_script
         self.db = db_location
+        self.mongo_url = self.mongo_conf_read()
+        self.mongo_srv_check()
         self.csv_dir = csv_dir
         self.do_sqlite_to_csv()
-        self.mongo_url = self.mongo_conf_read()
         self.do_csv_to_mongo()
 
     def mongo_conf_read(self, ):
@@ -36,6 +38,16 @@ class Migrate(object):
                 if 'Mongo_Server' in line:
                     self.conf_line = str(line.split(' ')[1]).strip()
         return self.conf_line
+
+    def mongo_srv_check(self, ):
+        """ check whether the MongoDB is up and running
+        :return: exit if server is not up
+        """
+        self.output = commands.getoutput('ps -A')
+        if 'mongod' not in self.output:
+            print '[!] MongoDB is not running. Start the mongod service'
+            sys.exit()
+        return
 
     def do_sqlite_to_csv(self, ):
         """ read the vFeed.db and export entries to CSV

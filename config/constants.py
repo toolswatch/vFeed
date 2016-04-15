@@ -11,6 +11,7 @@ current_dir = os.path.abspath(os.path.dirname(__file__))
 root_dir = os.path.normpath(os.path.join(current_dir, ".."))
 export_dir = os.path.normpath(os.path.join(root_dir, "export"))
 db = "vfeed.db"
+license_file = os.path.join(root_dir, "LICENSE.md")
 db_location = os.path.join(root_dir, db)
 
 # vFeed Database information

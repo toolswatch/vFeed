@@ -5,8 +5,9 @@
 import os
 import sys
 import urllib2
+import time
 import tarfile
-from config.constants import db, db_compressed, url, url_test, update_status
+from config.constants import db, db_compressed, url, url_test, update_status, license_file
 from lib.common.utils import checksum
 
 
@@ -16,10 +17,38 @@ class Update(object):
         self.db_compressed = db_compressed
         self.url_test = url_test
         self.db_url = url
+        self.license_file = license_file
+        self.accept_license()
         self.db_update = update_status
         self.db_download = self.db_url + self.db_compressed
         self.db_status = self.db_url + self.db_update
         self.remote_db = self.db_url + self.db_compressed
+
+    def accept_license(self):
+        """
+        vFeed License Acceptance before downloading the database.
+        Please read carefully to avoid any violation
+        :return:
+        """
+
+        print (" ########################################### ")
+        print (" !!! Please Read Carefully the License  !!! ")
+        print (" ########################################### ")
+        time.sleep(3)
+        self.license = open(self.license_file)
+        print self.license.read()
+        while True:
+            try:
+                choice = raw_input("vFeed License Acceptance (yes/no):").lower()
+
+            except KeyboardInterrupt:
+                sys.exit()
+
+            if choice.lower() in ('yes', 'y'):
+                return True
+            elif choice.lower() in ('no', 'n'):
+                print "License not accepted. Exiting program."
+                sys.exit()
 
     def update(self):
         """

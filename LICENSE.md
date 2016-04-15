@@ -1,6 +1,6 @@
 # vFeed API and vFeed.db Correlated Community Vulnerability and Threat Database Public Source License
 
-The vFeed API utility and the associated vFeed.db the Correlated Community Vulnerability and Threat Database (henceforth referred to simply as "vFeed Framework") is dual-licensed - Copyright 2004-2015 ToolsWatch Org.
+The vFeed API utility and the associated vFeed.db the Correlated Community Vulnerability and Threat Database (henceforth referred to simply as "vFeed Framework") is dual-licensed - Copyright 2004-2016 ToolsWatch Org.
 
 Cases that include commercialization of vFeed Framework require a commercial, non-free license. Otherwise, vFeed Framework can be used without charge under the terms set out below.
 
@@ -19,13 +19,13 @@ A commercial use is one intended for commercial advantage or monetary compensati
 
 Example cases of commercialization are:
 
-* Using vFeed Framework to provide commercial managed/Software-as-a-Service services.
-* Distributing vFeed Framework as a commercial product or as part of one.
-* Using vFeed Framework as a value added service/product.
+* Using vFeed API and/or the vFeed Vulnerability Database to provide commercial managed/Software-as-a-Service services.
+* Distributing or using vFeed API and/or the vFeed Vulnerability Database as a commercial product or as part of one.
+* Using vFeed API and/or the vFeed Vulnerability Database as a value added service/product.
 
 Example cases which do not require a commercial license, and thus fall under the terms set out below, include (but are not limited to):
 
-Penetration testers (or penetration testing organizations) using vFeed Framework as part of their assessment toolkit.
+Penetration testers (or penetration testing organizations) using vFeed API and/or the vFeed Vulnerability Database as part of their assessment toolkit.
 
 * Penetration Testing Linux Distributions including but not limited to Kali Linux, SamuraiWTF, BackBox Linux.
 * Using vFeed Framework to map and correlate vulnerabilities and threats.

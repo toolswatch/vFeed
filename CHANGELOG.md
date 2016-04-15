@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.6.6
+---------
+* Modified the `update.py` class to display the vFeed License before downloading the database.
+
 0.6.5
 ---------
 * Added the ability to migrate to Mongo Database (Thanks so much to Ushan89 for the original code)

@@ -1,6 +1,7 @@
 vFeed Python API & vFeed.db The Correlated Community Vulnerability and Threat Database
 =========================================================
 [![Build Status](https://travis-ci.org/toolswatch/vFeed.svg?branch=v0.6.5)](https://travis-ci.org/toolswatch/vFeed)
+[![Code Health](https://landscape.io/github/toolswatch/vFeed/master/landscape.svg?style=flat)](https://landscape.io/github/toolswatch/vFeed/master)
 ![vFeed](http://www.toolswatch.org/wp-content/uploads/2015/10/vfeed-e1443794779894.png)
 
 **vFeed Framework** is a CVE, CWE and OVAL Compatible naming scheme concept that provides extra structured detailed third-party references and technical characteristics for a CVE entry through an extensible XML/JSON schema.
@@ -61,6 +62,10 @@ Refer to the [wiki](https://github.com/toolswatch/vFeed/wiki/) page for a detail
 
 Latest release
 ==============
+
+0.6.7
+---------
+* Added support to [Landscape](https://landscape.io) with some code cleaning.
 
 0.6.6
 ---------

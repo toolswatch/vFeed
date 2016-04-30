@@ -5,7 +5,6 @@
 
 try:
     import sys
-    import inspect
     import argparse
     from config.stats import Stats
     from lib.common.banner import banner
@@ -13,7 +12,7 @@ try:
     from lib.core.update import Update
     from lib.migration.mongo import Migrate
     from config.constants import build, title
-    from lib.common.utils import enum_functions, enum_classes
+    from lib.common.utils import enum_classes
 except ImportError, e:
     print("[!] Missing a dependency:"), str(e)
     sys.exit()

@@ -4,7 +4,7 @@
 # See the file 'LICENSE' for copying permission.
 import json
 from lib.common.database import Database
-from config.constants import db, cve_url, cwe_url, capec_url
+from config.constants import cve_url, cwe_url, capec_url
 
 
 class CveInfo(object):

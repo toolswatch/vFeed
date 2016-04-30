@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.6.7
+---------
+* Added support to landscape.io with some code cleaning.
+
+
 0.6.6
 ---------
 * Modified the `update.py` class to display the vFeed License before downloading the database.

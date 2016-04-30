@@ -1,0 +1,3 @@
+ignore-paths:
+    - export
+    - csv_exports

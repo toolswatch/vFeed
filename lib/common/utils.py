@@ -5,7 +5,6 @@
 
 import inspect
 import os
-import sys
 import hashlib
 import json
 import shutil

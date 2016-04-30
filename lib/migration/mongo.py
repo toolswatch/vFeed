@@ -4,8 +4,6 @@
 # See the file 'LICENSE' for copying permission.
 # Original code by Ushan89 https://github.com/ushan89/vFeed
 # Modified to Class by NJ Ouchn
-
-import os
 import glob
 import subprocess
 import sys

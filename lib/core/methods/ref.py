@@ -5,7 +5,7 @@
 
 
 import json
-from config.constants import db, osvdb_url, bid_url
+from config.constants import osvdb_url, bid_url
 from lib.common.database import Database
 
 

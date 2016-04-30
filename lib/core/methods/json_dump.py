@@ -3,9 +3,7 @@
 # This file is part of vFeed Correlated Threat & Vulnerability Community Database API Parser - http://www.toolswatch.org
 # See the file 'LICENSE' for copying permission.
 
-import os
 import json
-import inspect
 from config.constants import title, author, build, repository, twitter, db
 from lib.common.database import Database
 from lib.common.utils import check_env, move_export

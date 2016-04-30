@@ -19,7 +19,7 @@ title = "vFeed - The Correlated Vulnerability and Threat Database"
 author = "NJ OUCHN"
 twitter = "@toolswatch"
 repository = "https://github.com/toolswatch/vFeed"
-build = "0.6.6"
+build = "0.6.7"
 
 # Update Information
 url_test = "http://www.toolswatch.org"

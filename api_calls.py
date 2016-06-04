@@ -7,7 +7,7 @@
 # from lib.core.methods import CveInfo, CveRisk
 
 import json
-from lib.core.methods.info import *
+from lib.core.methods import *
 
 
 cve = "CVE-2014-0160"

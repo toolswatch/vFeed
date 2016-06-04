@@ -4,7 +4,7 @@
 # See the file 'LICENSE' for copying permission.
 import json
 from lib.common.database import Database
-from config.constants import cve_url, cwe_url, capec_url
+from config.constants import cve_url, cwe_url, capec_url, wasc_url
 
 
 class CveInfo(object):
@@ -50,7 +50,7 @@ class CveInfo(object):
 
     def get_capec(self):
         """ Capec method
-        Returning:  JSON response with CAPEC id
+        Returning:  JSON response with CAPEC id, title, URL and Methods of Attack
         """
         self.cwe = self.get_cwe()
         self.capec = []
@@ -62,9 +62,17 @@ class CveInfo(object):
         for cwe in cwe_json:
             query2 = (cwe.get("id"),)
             self.cur.execute('SELECT * FROM cwe_capec WHERE cweid=?', query2)
-
             for self.data2 in self.cur.fetchall():
-                item = {"id": self.data2[0], "url": capec_url + str(self.data2[0]) + ".html"}
+                self.capec_id = self.data2[0].strip()
+                self.cur.execute("select capectitle from capec_db where capecid='%s' " % self.capec_id)
+                self.capec_title = self.cur.fetchone()
+                self.cur.execute("select attack from capec_db where capecid='%s' " % self.capec_id)
+                self.capec_attack = self.cur.fetchall()
+                self.cur.execute("select mitigation from capec_mit where capecid='%s' " % self.capec_id)
+                self.capec_mitigation = self.cur.fetchall()
+
+                item = {"id": self.capec_id, "attack_method": self.capec_attack, "title": str(self.capec_title[0]),
+                        "url": capec_url + self.capec_id + ".html", "mitigations": self.capec_mitigation}
                 self.capec.append(item)
 
         if len(self.capec) != 0:
@@ -109,4 +117,36 @@ class CveInfo(object):
             item = {"id": self.data[0]}
             self.cpe.append(item)
 
-        return json.dumps(self.cpe, indent=4, sort_keys=True)
+        if len(self.cpe) != 0:
+            return json.dumps(self.cpe, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
+
+    def get_wasc(self):
+        """ WASC Web Application Security Consortium Method
+        :return: JSON response with WASC ID and title.
+        """
+        self.cwe = self.get_cwe()
+        self.wasc = []
+        cwe_json = json.loads(self.cwe)
+
+        if cwe_json is None:
+            return json.dumps(None)
+
+        if self.cwe:
+            for cwe in cwe_json:
+                query2 = (cwe.get("id"),)
+                self.cur.execute('SELECT * FROM cwe_wasc WHERE cweid=?', query2)
+
+                for self.data2 in self.cur.fetchall():
+                    self.wasc_id = self.data2[1].strip()
+                    self.wasc_title = self.data2[0].rstrip().title()
+
+                    item = {"id": self.wasc_id,
+                            "title": self.wasc_title, "url": wasc_url + self.wasc_title.replace(" ", "-")}
+                    self.wasc.append(item)
+
+        if len(self.wasc) != 0:
+            return json.dumps(self.wasc, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)

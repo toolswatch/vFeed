@@ -19,7 +19,7 @@ title = "vFeed - The Correlated Vulnerability and Threat Database"
 author = "NJ OUCHN"
 twitter = "@toolswatch"
 repository = "https://github.com/toolswatch/vFeed"
-build = "0.6.7"
+build = "0.6.8"
 
 # Update Information
 url_test = "http://www.toolswatch.org"
@@ -49,6 +49,7 @@ vmware_url = "https://www.vmware.com/security/advisories/"
 edb_url = "http://www.exploit-db.com/exploits/"
 oval_url = "http://oval.mitre.org/repository/data/getDef?id="
 nmap_url = "https://nmap.org/nsedoc/scripts/"
+wasc_url = "http://projects.webappsec.org/"
 
 # Migration to MongoDB
 migration_dir = os.path.normpath(os.path.join(root_dir, "lib/migration"))

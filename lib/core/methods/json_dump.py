@@ -31,6 +31,7 @@ class ExportJson(object):
         cwe = json.loads(data.get_cwe())
         capec = json.loads(data.get_capec())
         category = json.loads(data.get_category())
+        wasc = json.loads(data.get_wasc())
 
         # Reference information
         data = CveRef(self.cve)
@@ -81,9 +82,9 @@ class ExportJson(object):
         suricata = json.loads(data.get_suricata())
 
         json_export = {
-            'vFeed': {'id': self.vfeed_id, 'Author': author, 'Product': title, 'Version': build, 'URL': repository,
+            'vFeed': {'ID': self.vfeed_id, 'Author': author, 'Product': title, 'Version': build, 'URL': repository,
                       'Contact': twitter},
-            'Information': {'CVE': info, 'CPE': cpe, 'CWE': cwe, 'CAPEC': capec, 'Category': category},
+            'Information': {'CVE': info, 'CPE': cpe, 'CWE': cwe, 'CAPEC': capec, 'Category': category, 'WASC': wasc},
             'References': {'SCIP': scip, 'OSVDB': osvdb, 'CertVN': certvn, 'BID': bid, 'IAVM': iavm,
                            'Other': {'References': refs}}, 'Risk': severity,
             'Patches': {'Microsoft Bulletins': ms, 'Microsoft KB': kb,

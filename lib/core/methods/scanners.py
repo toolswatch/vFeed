@@ -27,7 +27,10 @@ class CveScanners(object):
                     'family': str(self.data[3])}
             self.nessus.append(item)
 
-        return json.dumps(self.nessus, indent=4, sort_keys=True)
+        if len(self.nessus) != 0:
+            return json.dumps(self.nessus, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_openvas(self):
         """ OpenVAS method
@@ -42,7 +45,10 @@ class CveScanners(object):
                     'family': str(self.data[3])}
             self.openvas.append(item)
 
-        return json.dumps(self.openvas, indent=4, sort_keys=True)
+        if len(self.openvas) != 0:
+            return json.dumps(self.openvas, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_nmap(self):
         """ Nmap method
@@ -57,7 +63,10 @@ class CveScanners(object):
                     'url': nmap_url + str(self.data[0]).replace(".nse", ".html")}
             self.nmap.append(item)
 
-        return json.dumps(self.nmap, indent=4, sort_keys=True)
+        if len(self.nmap) != 0:
+            return json.dumps(self.nmap, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_oval(self):
         """ OVAL method
@@ -71,4 +80,7 @@ class CveScanners(object):
                     'url': oval_url + self.data[0]}
             self.oval.append(item)
 
-        return json.dumps(self.oval, indent=4, sort_keys=True)
+        if len(self.oval) != 0:
+            return json.dumps(self.oval, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)

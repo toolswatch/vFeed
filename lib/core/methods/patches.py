@@ -29,7 +29,10 @@ class CvePatches(object):
             item = {'id': str(self.data[0]), 'title': str(self.data[1]), 'url': ms_bulletin_url + str(self.data[0])}
             self.ms.append(item)
 
-        return json.dumps(self.ms, indent=4, sort_keys=True)
+        if len(self.ms) != 0:
+            return json.dumps(self.ms, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_kb(self):
         """ Microsoft method
@@ -43,7 +46,10 @@ class CvePatches(object):
             item = {'id': str(self.data[0]), 'title': str(self.data[1]), 'url': kb_bulletin_url + str(self.data[0])}
             self.kb.append(item)
 
-        return json.dumps(self.kb, indent=4, sort_keys=True)
+        if len(self.kb) != 0:
+            return json.dumps(self.kb, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_aixapar(self):
         """ AIX APAR method
@@ -58,7 +64,10 @@ class CvePatches(object):
             item = {'id': str(self.data[0]), 'url': ibm_url + str(self.data[0])}
             self.aixapar.append(item)
 
-        return json.dumps(self.aixapar, indent=4, sort_keys=True)
+        if len(self.aixapar) != 0:
+            return json.dumps(self.aixapar, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_redhat(self):
         """ Redhat  method
@@ -82,7 +91,10 @@ class CvePatches(object):
                                       "url": bugzilla_url + str(self.data2[1])}}
                 self.redhat.append(item2)
 
-        return json.dumps(self.redhat, indent=4, sort_keys=True)
+        if len(self.redhat) != 0:
+            return json.dumps(self.redhat, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_debian(self):
         """ Debian  method
@@ -96,7 +108,10 @@ class CvePatches(object):
             item = {'id': self.data[0], 'url': debian_url + str(self.data[0])}
             self.debian.append(item)
 
-        return json.dumps(self.debian, indent=4, sort_keys=True)
+        if len(self.debian) != 0:
+            return json.dumps(self.debian, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_suse(self):
         """ Suse  method
@@ -111,7 +126,10 @@ class CvePatches(object):
 
             self.suse.append(item)
 
-        return json.dumps(self.suse, indent=4, sort_keys=True)
+        if len(self.suse) != 0:
+            return json.dumps(self.suse, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_ubuntu(self):
         """ Ubuntu  method
@@ -125,7 +143,10 @@ class CvePatches(object):
             item = {'id': self.data[0], 'url': ubuntu_url + str(self.data[0])}
             self.ubuntu.append(item)
 
-        return json.dumps(self.ubuntu, indent=4, sort_keys=True)
+        if len(self.ubuntu) != 0:
+            return json.dumps(self.ubuntu, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_gentoo(self):
         """ Gentoo  method
@@ -139,7 +160,10 @@ class CvePatches(object):
             item = {'id': self.data[0], 'url': gentoo_url + str.replace(str(self.data[0]), 'GLSA-', '')}
             self.gentoo.append(item)
 
-        return json.dumps(self.gentoo, indent=4, sort_keys=True)
+        if len(self.gentoo) != 0:
+            return json.dumps(self.gentoo, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_fedora(self):
         """ fedora  method
@@ -153,7 +177,10 @@ class CvePatches(object):
             item = {'id': str(self.data[0]), 'url': fedora_url + str(self.data[0])}
             self.fedora.append(item)
 
-        return json.dumps(self.fedora, indent=4, sort_keys=True)
+        if len(self.fedora) != 0:
+            return json.dumps(self.fedora, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_mandriva(self):
         """ mandriva  method
@@ -167,7 +194,10 @@ class CvePatches(object):
             item = {'id': str(self.data[0]), 'url': mandriva_url + str(self.data[0])}
             self.mandriva.append(item)
 
-        return json.dumps(self.mandriva, indent=4, sort_keys=True)
+        if len(self.mandriva) != 0:
+            return json.dumps(self.mandriva, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_vmware(self):
         """ vmware  method
@@ -181,7 +211,10 @@ class CvePatches(object):
             item = {'id': str(self.data[0]), 'url': vmware_url + str(self.data[0]) + '.html'}
             self.vmware.append(item)
 
-        return json.dumps(self.vmware, indent=4, sort_keys=True)
+        if len(self.vmware) != 0:
+            return json.dumps(self.vmware, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_cisco(self):
         """ cisco  method
@@ -194,7 +227,10 @@ class CvePatches(object):
             item = {'id': str(self.data[0])}
             self.cisco.append(item)
 
-        return json.dumps(self.cisco, indent=4, sort_keys=True)
+        if len(self.cisco) != 0:
+            return json.dumps(self.cisco, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_hp(self):
         """ HP  method
@@ -208,4 +244,7 @@ class CvePatches(object):
             item = {'id': str(self.data[0]), 'url': str(self.data[1])}
             self.hp.append(item)
 
-        return json.dumps(self.hp, indent=4, sort_keys=True)
+        if len(self.hp) != 0:
+            return json.dumps(self.hp, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)

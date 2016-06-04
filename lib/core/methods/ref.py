@@ -28,7 +28,10 @@ class CveRef(object):
             item = {"vendor": self.data[0], "url": self.data[1]}
             self.references.append(item)
 
-        return json.dumps(self.references, indent=4, sort_keys=True)
+        if len(self.references) != 0:
+            return json.dumps(self.references, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_scip(self):
         """ SCIP Method
@@ -42,7 +45,10 @@ class CveRef(object):
             item = {'id': self.data[0], 'url': self.data[1]}
             self.scip.append(item)
 
-        return json.dumps(self.scip, indent=4, sort_keys=True)
+        if len(self.scip) != 0:
+            return json.dumps(self.scip, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_osvdb(self):
         """ OSVDB Open Sourced Vulnerability Database Method
@@ -56,7 +62,10 @@ class CveRef(object):
             item = {'id': self.data[0], 'url': osvdb_url + str(self.data[0])}
             self.osvdb.append(item)
 
-        return json.dumps(self.osvdb, indent=4, sort_keys=True)
+        if len(self.osvdb) != 0:
+            return json.dumps(self.osvdb, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_certvn(self):
         """ CERTVN Method
@@ -70,7 +79,10 @@ class CveRef(object):
             item = {'id': self.data[0], 'url': self.data[1]}
             self.certvn.append(item)
 
-        return json.dumps(self.certvn, indent=4, sort_keys=True)
+        if len(self.certvn) != 0:
+            return json.dumps(self.certvn, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_iavm(self):
         """ IAVM Information Assurance Vulnerability Management Method
@@ -84,7 +96,10 @@ class CveRef(object):
             item = {'id': self.data[0], 'Disa key': self.data[1], 'title': self.data[2]}
             self.iavm.append(item)
 
-        return json.dumps(self.iavm, indent=4, sort_keys=True)
+        if len(self.iavm) != 0:
+            return json.dumps(self.iavm, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_bid(self):
         """ BID SecurityFocus Method
@@ -98,4 +113,7 @@ class CveRef(object):
             item = {'id': self.data[0], 'url': bid_url + str(self.data[0])}
             self.bid.append(item)
 
-        return json.dumps(self.bid, indent=4, sort_keys=True)
+        if len(self.bid) != 0:
+            return json.dumps(self.bid, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)

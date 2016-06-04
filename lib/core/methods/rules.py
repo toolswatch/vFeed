@@ -23,7 +23,10 @@ class CveRules(object):
             item = {'id': str(self.data[0]), 'signature': str(self.data[1]), 'category': str(self.data[2])}
             self.snort.append(item)
 
-        return json.dumps(self.snort, indent=4, sort_keys=True)
+        if len(self.snort) != 0:
+            return json.dumps(self.snort, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)
 
     def get_suricata(self):
         """ Suricata method
@@ -36,4 +39,7 @@ class CveRules(object):
             item = {'id': str(self.data[0]), 'signature': str(self.data[1]), 'classtype': str(self.data[2])}
             self.suricata.append(item)
 
-        return json.dumps(self.suricata, indent=4, sort_keys=True)
+        if len(self.suricata) != 0:
+            return json.dumps(self.suricata, indent=4, sort_keys=True)
+        else:
+            return json.dumps(None)

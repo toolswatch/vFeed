@@ -1,10 +1,27 @@
 Changelog
 =========
 
+0.6.8
+-----
+* Added support to CAPEC version 2.8. Check [about CAPEC v2.8](http://capec.mitre.org/news/index.html#december72015_CAPEC_List_Version_2.8_Now_Available).
+* Added support to CWE v2.9. Check [the full changelog](http://cwe.mitre.org/data/reports/diff_reports/v2.8_v2.9.html).
+* Added mapping to [WASC v2.0 Threat Classification](http://projects.webappsec.org/w/page/13246978/Threat%20Classification).
+* Added CVSS v2.0 vectors to `risk.py` class. Now, the methods `get_cvss` and `get_severity` display the vector when available.
+* Added new method `get_wasc` to reflect the new mapping with WASC v2.0. The method returns ID, Title and URL when available.
+* Modified the method `get_capec` to return the following:
+    * The title
+    * [Method of Attacks](http://capec.mitre.org/documents/schema/schema_v2.7.1.html#Method_of_Attack%20%28Methods_of_Attack%29)
+    * [Mitigations](http://capec.mitre.org/documents/schema/schema_v2.7.1.html#Solution_or_Mitigation)
+* Reflected the changes in `cvsexports.sql` MongoDB script to generate the new added tables.
+* vFeed.db the correlated vulnerability & threat database fully regenerated to support the new changes.
+* Documentation updated accordingly.
+
+**NOTE**: Some code was cleaned. Nevertheless, the issues reported [here](https://github.com/toolswatch/vFeed/issues) will be fixed in next minor version.
+
+
 0.6.7
 ---------
 * Added support to landscape.io with some code cleaning.
-
 
 0.6.6
 ---------

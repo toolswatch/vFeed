@@ -18,10 +18,10 @@ class CveRisk(object):
         :return: JSON response with CVSS scores
         """
         self.cvss = []
-        item = {'base': str(self.data[4]), 'impact': str(self.data[5]), 'exploit': str(self.data[6]),
-                'access vector': str(self.data[7]), 'access complexity': str(self.data[8]),
-                'authentication': str(self.data[9]), 'confidentiality impact': str(self.data[10]),
-                'integrity impact': str(self.data[11]), 'availability impact': str(self.data[12])}
+        item = {'Base': str(self.data[4]), 'Impact': str(self.data[5]), 'Exploit': str(self.data[6]),
+                'Access Vector': str(self.data[7]), 'Access Complexity': str(self.data[8]),
+                'Authentication': str(self.data[9]), 'Confidentiality Impact': str(self.data[10]),
+                'Integrity Impact': str(self.data[11]), 'Availability Impact': str(self.data[12]),'Vector': str(self.data[13])}
         self.cvss.append(item)
 
         return json.dumps(self.cvss, indent=4, sort_keys=True)
@@ -38,20 +38,20 @@ class CveRisk(object):
         self.top_alert = self.top_alert()
         self.top_vulnerable = False
 
-        if cvss_data[0]["base"] == "not_defined":
+        if cvss_data[0]["Base"] == "not_defined":
             self.level = "Not Defined"
             self.top_vulnerable = "Not Defined"
-        elif cvss_data[0]["base"] == "10.0" and cvss_data[0]["exploit"] == "10.0" and cvss_data[0]["impact"] == "10.0":
+        elif cvss_data[0]["Base"] == "10.0" and cvss_data[0]["Exploit"] == "10.0" and cvss_data[0]["Impact"] == "10.0":
             self.level = "High"
             self.top_vulnerable = True
-        elif cvss_data[0]["base"] >= "7.0":
+        elif cvss_data[0]["Base"] >= "7.0":
             self.level = "High"
-        elif "4.0" <= cvss_data[0]["base"] <= "6.9":
+        elif "4.0" <= cvss_data[0]["Base"] <= "6.9":
             self.level = "Moderate"
-        elif "0.1" <= cvss_data[0]["base"] <= "3.9":
+        elif "0.1" <= cvss_data[0]["Base"] <= "3.9":
             self.level = "Low"
 
-        item = {'severity': self.level,
+        item = {'Severity': self.level,
                 'Top vulnerable': self.top_vulnerable,
                 'Top alert': self.top_alert,
                 'CVSS v2': cvss_data

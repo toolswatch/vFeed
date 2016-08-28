@@ -1,6 +1,6 @@
-vFeed Python API & vFeed.db The Correlated Community Vulnerability and Threat Database
-======================================================================================
-![vFeed](http://www.toolswatch.org/wp-content/uploads/2015/10/vfeed-e1443794779894.png)
+vFeed The Correlated Vulnerability and Threat Intelligence Database API
+=======================================================================
+![vFeed](http://www.vfeed.io/wp-content/uploads/2016/07/vfeed.png)
 
 [![Build Status](https://travis-ci.org/toolswatch/vFeed.svg?branch=v0.6.5)](https://travis-ci.org/toolswatch/vFeed)
 [![Code Health](https://landscape.io/github/toolswatch/vFeed/master/landscape.svg?style=flat)](https://landscape.io/github/toolswatch/vFeed/master)
@@ -8,13 +8,13 @@ vFeed Python API & vFeed.db The Correlated Community Vulnerability and Threat Da
 [![Compatibility](https://img.shields.io/badge/CVE-Compatible-yellow.svg)](https://cve.mitre.org/compatible/compatible.html#ToolsWatch)
 [![Compatibility](https://img.shields.io/badge/OVAL-Compatible-yellow.svg)](http://oval.mitre.org/adoption/participants.html#ToolsWatch)
 
-**vFeed Framework** is a CVE, CWE and OVAL Compatible naming scheme concept that provides extra structured detailed third-party references and technical characteristics for a CVE entry through an extensible XML/JSON schema.
+**vFeed API / Database** is a CVE, CWE and OVAL Compatible naming scheme concept that provides extra structured detailed third-party references and technical characteristics for a CVE entry through an extensible XML/JSON schema.
 It also improves the reliability of CVEs by providing a flexible and comprehensive vocabulary for describing the relationship with other standards and security references.
 
-vFeed utilizes JSON-based format outputs to describe in detail vulnerabilities. 
-They can be leveraged as input by security researchers, practitioners and tools as part of their vulnerability description. In fact, the standard syntax is easy to interpret by humans and systems.
+vFeed API generates a JSON-based format outputs to describe in detail vulnerabilities. 
+It can be leveraged as input by security researchers, practitioners and tools as part of their vulnerability description. The standard syntax is easy to interpret by humans and systems.
 
-The mandatory associated **vFeed.db (The Correlated Vulnerability and Threat Database)** is a detective and preventive security information repository used for gathering vulnerability and mitigation data from scattered internet sources into an unified database.
+The mandatory associated **vFeed DB (The Correlated Vulnerability and Threat Intelligence Database)** is a detective and preventive security information repository used for gathering vulnerability and mitigation data from scattered internet sources into an unified database. The vFeed DB must be obtained directly from [vFeed IO](http://www.vfeed.io)
 
 * Open security standards:
     * [CVE](http://cve.mitre.org)
@@ -42,10 +42,12 @@ Key features
 
 * Registered as CVE, CWE and OVAL Compatible by the Mitre Corporation
 * Support Open Standards CVE, CPE, CWE, CAPEC, CVSS etc
-* Downloadable SQLite Community Correlated Vulnerability and Threat Database 
+* Downloadable Correlated Vulnerability and Threat Intelligence Database 
 * Support correlation with 3rd party security references IAVA, OSVDB, OVAL etc
 * Support correlation with security assessment and patch vendors (Nessus, Exploit-DB, Redhat, Microsoft..)
 * Simple and ready-to-use API Python 
+
+More features at [vFeed IO](http://www.vfeed.io/features/).
 
 Target Audience
 =================
@@ -60,11 +62,18 @@ How to ?
 ==============
 
 Run `vfeedcli.py -h` for help.
-Refer to the [wiki](https://github.com/toolswatch/vFeed/wiki/) page for a detailed documentation.
+Refer to the [wiki](https://github.com/toolswatch/vFeed/wiki/) page for detailed documentation.
  
 
 Latest release
 ==============
+
+0.6.9
+-----
+* The vFeed DB is no more available through `update` command. The command is deprecated. 
+* The delivery of the vFeed DB was handed over to a new established entity [vFeed IO](http://www.vfeed.io). This entity sets the goal to become the Leading Provider of Vulnerability and Threat Intelligence Database.
+* The API has been modified to reflect the new changes. 
+
 
 0.6.8
 -----

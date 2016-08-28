@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# Copyright (C) 2016 ToolsWatch.org
-# This file is part of vFeed Correlated Threat & Vulnerability Community Database API Parser - http://www.toolswatch.org
+# Copyright (C) 2016 vFeed IO
+# This file is part of vFeed Correlated Vulnerability & Threat Database API  - http://www.vfeed.io
 # See the file 'LICENSE' for copying permission.
 
 import json
@@ -170,7 +170,9 @@ class Search(object):
     def check_exploit(cve):
         msf = CveExploit(cve).get_msf()
         edb = CveExploit(cve).get_edb()
-        if len(json.loads(msf)) != 0:
+
+        if msf is not "null":
             print "\t\t\t[!] Metasploit exploit found."
-        if len(json.loads(edb)) != 0:
+
+        if edb is not "null":
             print "\t\t\t[!] Exploit-DB PoC found."

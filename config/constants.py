@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# Copyright (C) 2016 ToolsWatch.org
-# This file is part of vFeed Vulnerability Database Community API Parser - http://www.toolswatch.org
+# Copyright (C) 2016 vFeed IO
+# This file is part of vFeed Correlated Vulnerability & Threat Database API  - http://www.vfeed.io
 # See the file 'LICENSE' for copying permission
 
 # DO NOT DELETE OR MODIFY.
@@ -11,21 +11,14 @@ current_dir = os.path.abspath(os.path.dirname(__file__))
 root_dir = os.path.normpath(os.path.join(current_dir, ".."))
 export_dir = os.path.normpath(os.path.join(root_dir, "export"))
 db = "vfeed.db"
-license_file = os.path.join(root_dir, "LICENSE.md")
 db_location = os.path.join(root_dir, db)
 
 # vFeed Database information
-title = "vFeed - The Correlated Vulnerability and Threat Database"
+title = "vFeed - The Correlated Vulnerability and Threat Intelligence Database API"
 author = "NJ OUCHN"
 twitter = "@toolswatch"
 repository = "https://github.com/toolswatch/vFeed"
-build = "0.6.8"
-
-# Update Information
-url_test = "http://www.toolswatch.org"
-url = "http://www.toolswatch.org/vfeed/"
-db_compressed = "vfeed.db.tgz"
-update_status = "update"
+build = "0.6.9"
 
 # Third party URLs
 cve_url = "http://cve.mitre.org/cgi-bin/cvename.cgi?name="
@@ -47,7 +40,7 @@ fedora_url = "https://admin.fedoraproject.org/updates/"
 mandriva_url = "http://www.mandriva.com/security/advisories?name="
 vmware_url = "https://www.vmware.com/security/advisories/"
 edb_url = "http://www.exploit-db.com/exploits/"
-oval_url = "http://oval.mitre.org/repository/data/getDef?id="
+oval_url = "https://oval.cisecurity.org/repository/search/definition/"
 nmap_url = "https://nmap.org/nsedoc/scripts/"
 wasc_url = "http://projects.webappsec.org/"
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# Copyright (C) 2016 ToolsWatch.org
-# This file is part of vFeed Vulnerability Database Community API Parser - http://www.toolswatch.org
+# Copyright (C) 2016 vFeed IO
+# This file is part of vFeed Correlated Vulnerability & Threat Database API  - http://www.vfeed.io
 # See the file 'LICENSE' for copying permission.
 
 try:
@@ -9,18 +9,17 @@ try:
     from config.stats import Stats
     from lib.common.banner import banner
     from lib.core.search import Search
-    from lib.core.update import Update
     from lib.migration.mongo import Migrate
     from config.constants import build, title
     from lib.common.utils import enum_classes
 except ImportError, e:
-    print("[!] Missing a dependency:"), str(e)
-    sys.exit()
+     print("[!] Missing a dependency:"), str(e)
+     sys.exit()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--version", action="version",
-                        version=".:. {0} .:. ".format(title) + "(ver {0})".format(build))
+                        version=".:. {0} .:. ".format(title) + "API version: {0}".format(build))
     parser.add_argument("-m", "--method", metavar=('Method', 'CVE'), type=str, help="Invoking multiple vFeed methods.",
                         nargs=2)
     parser.add_argument("-e", "--export", metavar=('type', 'CVE'), type=str, help="Export to XML or JSON the CVE id",
@@ -36,10 +35,12 @@ if __name__ == "__main__":
     parser.add_argument("--migrate", help="Migration to MongoDB", action="store_true", required=False)
     args = parser.parse_args()
 
+
     if args.search:
         Search(args.search)
     elif args.update:
-        Update().update()
+        print("The vFeed Database must be downloaded from http://www.vfeed.io")
+        print("The Obtained vFeed Database must be decompressed into vFeed directory")
     elif args.banner:
         banner()
     elif args.migrate:

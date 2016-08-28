@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# Copyright (C) 2016 ToolsWatch.org
-# This file is part of vFeed Correlated Threat & Vulnerability Community Database API Parser - http://www.toolswatch.org
+# Copyright (C) 2016 vFeed IO
+# This file is part of vFeed Correlated Vulnerability & Threat Database API  - http://www.vfeed.io
 # See the file 'LICENSE' for copying permission.
 
 # you can import class by class
@@ -82,6 +82,3 @@ cve = "CVE-2004-0990"
 export = ExportJson(cve).json_dump()
 print export
 
-print "Updating the vFeed database from your scripts"
-from lib.core.update import Update
-Update().update()

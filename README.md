@@ -8,13 +8,13 @@ vFeed The Correlated Vulnerability and Threat Intelligence Database API
 [![Compatibility](https://img.shields.io/badge/CVE-Compatible-yellow.svg)](https://cve.mitre.org/compatible/compatible.html#ToolsWatch)
 [![Compatibility](https://img.shields.io/badge/OVAL-Compatible-yellow.svg)](http://oval.mitre.org/adoption/participants.html#ToolsWatch)
 
-**vFeed API / Database** is a CVE, CWE and OVAL Compatible naming scheme concept that provides extra structured detailed third-party references and technical characteristics for a CVE entry through an extensible XML/JSON schema.
+**vFeed API / Database** is a CVE, CWE, and OVAL Compatible naming scheme concept that provides extra structured detailed third-party references and technical characteristics for a CVE entry through an extensible XML/JSON schema.
 It also improves the reliability of CVEs by providing a flexible and comprehensive vocabulary for describing the relationship with other standards and security references.
 
 vFeed API generates a JSON-based format outputs to describe in detail vulnerabilities. 
-It can be leveraged as input by security researchers, practitioners and tools as part of their vulnerability description. The standard syntax is easy to interpret by humans and systems.
+It can be leveraged as input by security researchers, practitioners, and tools as part of their vulnerability description. The standard syntax is easy to interpret by humans and systems.
 
-The mandatory associated **vFeed DB (The Correlated Vulnerability and Threat Intelligence Database)** is a detective and preventive security information repository used for gathering vulnerability and mitigation data from scattered internet sources into an unified database. The vFeed DB must be obtained directly from [vFeed IO](http://www.vfeed.io)
+The mandatory associated **vFeed DB (The Correlated Vulnerability and Threat Intelligence Database)** is a detective and preventive security information repository used for gathering vulnerability and mitigation data from scattered internet sources into an unified database. The vFeed DB must be obtained directly from [vFeed IO](http://www.vfeed.io).
 
 * Open security standards:
     * [CVE](http://cve.mitre.org)
@@ -25,7 +25,7 @@ The mandatory associated **vFeed DB (The Correlated Vulnerability and Threat Int
     * [CVSS](http://www.first.org/cvss)
     * [WASC](http://projects.webappsec.org/w/page/13246978/Threat%20Classification)
 
-* Vulnerability Assessment & Exploitation IDs (Metasploit, Saint Corporation, Nessus Scripts, Nmap, Exploit-DB)
+* Vulnerability Assessment & Exploitation IDs (Metasploit, SAINT Corporation, Tenable's Nessus Plugin IDs, Nmap, Exploit-DB)
 * Vendors Security Alerts:
     * Microsoft MS
     * Mandriva
@@ -40,10 +40,10 @@ The mandatory associated **vFeed DB (The Correlated Vulnerability and Threat Int
 Key features
 =================
 
-* Registered as CVE, CWE and OVAL Compatible by the Mitre Corporation
-* Support Open Standards CVE, CPE, CWE, CAPEC, CVSS etc
+* Registered as CVE, CWE, and OVAL Compatible by the Mitre Corporation
+* Support Open Standards such as CVE, CPE, CWE, CAPEC, CVSS and more
 * Downloadable Correlated Vulnerability and Threat Intelligence Database 
-* Support correlation with 3rd party security references IAVA, OSVDB, OVAL etc
+* Support correlation with 3rd-party security references IAVA, OVAL etc
 * Support correlation with security assessment and patch vendors (Nessus, Exploit-DB, Redhat, Microsoft..)
 * Simple and ready-to-use API Python 
 
@@ -55,7 +55,7 @@ Target Audience
 * Penetration testers who want to analyze CVEs and gather extra information to help shape avenues to exploit vulnerabilities.
 * Security auditors who want to report accurate information about findings. vFeed could be the best way to describe a CVE with attributes based on standards and 3rd party references as vendors or companies involved into standarization efforts.
 * Security tools vendors / security open source developers who need to implement libraries to enumerate useful information about CVEs without wasting time to correlate and to create a proprietary database. vFeed is by far the best solution. Methods can be invoked from programs or scripts with a simple call.
-* Any security hacker who is conducting researches and need a very fast and accurate way to enumerate available exploits or techniques to check a vulnerability
+* Any security hacker who is conducting research and needs a very fast and accurate way to enumerate available exploits or techniques to check a vulnerability.
 
 
 How to ?

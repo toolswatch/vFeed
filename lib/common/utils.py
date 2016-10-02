@@ -4,13 +4,11 @@
 # See the file 'LICENSE' for copying permission.
 
 from __future__ import print_function
-import re
 import os
 import json
 import shutil
 import inspect
 import commands
-import hashlib
 
 from config.constants import export_dir
 

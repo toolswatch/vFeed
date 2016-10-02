@@ -4,7 +4,6 @@
 # See the file 'LICENSE' for copying permission.
 
 import json
-import sys
 
 from config.constants import db
 from lib.core.methods import CveExploit

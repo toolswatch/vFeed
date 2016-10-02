@@ -7,7 +7,6 @@ from __future__ import print_function
 
 try:
     import sys
-    import json
     import argparse
 
     from config.stats import Stats

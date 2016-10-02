@@ -3,7 +3,6 @@
 # This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
 
-import sys
 import sqlite3
 
 from config.constants import db

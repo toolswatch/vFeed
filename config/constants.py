@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - http://www.vfeed.io
+# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
 # See the file 'LICENSE' for copying permission
-
 # DO NOT DELETE OR MODIFY.
 
 import os
@@ -17,8 +16,8 @@ db_location = os.path.join(root_dir, db)
 title = "vFeed - The Correlated Vulnerability and Threat Intelligence Database API"
 author = "NJ OUCHN"
 twitter = "@toolswatch"
-repository = "https://github.com/toolswatch/vFeed"
-build = "0.6.9"
+repository = "https://vfeed.io"
+build = "0.7.0"
 
 # Third party URLs
 cve_url = "http://cve.mitre.org/cgi-bin/cvename.cgi?name="

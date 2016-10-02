@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - http://www.vfeed.io
+# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
+
 import json
+
 from lib.common.database import Database
 from lib.core.methods.info import CveInfo
 
@@ -18,68 +20,75 @@ class CveRisk(object):
         :return: JSON response with CVSS scores
         """
         self.cvss = []
-        item = {'Base': str(self.data[4]), 'Impact': str(self.data[5]), 'Exploit': str(self.data[6]),
-                'Access Vector': str(self.data[7]), 'Access Complexity': str(self.data[8]),
-                'Authentication': str(self.data[9]), 'Confidentiality Impact': str(self.data[10]),
-                'Integrity Impact': str(self.data[11]), 'Availability Impact': str(self.data[12]),'Vector': str(self.data[13])}
+
+        if self.data is False:
+            return None
+
+        item = {"base": str(self.data[4]), "impact": str(self.data[5]), "exploitability": str(self.data[6]),
+                "accessVector": str(self.data[7]), "accessComplexity": str(self.data[8]),
+                "authentication": str(self.data[9]), "confidentiality": str(self.data[10]),
+                "integrity": str(self.data[11]), "availability": str(self.data[12]), "vector": str(self.data[13])}
         self.cvss.append(item)
 
-        return json.dumps(self.cvss, indent=4, sort_keys=True)
+        return json.dumps(self.cvss, indent=2, sort_keys=True)
 
     def get_severity(self):
         """ Severity Method
         :return: JSON response with Severity level, Top categories ...
         """
 
+        if self.data is False:
+            return None
+
         self.severity = []
         self.cvss = self.get_cvss()
         cvss_data = json.loads(self.cvss)
 
-        self.top_alert = self.top_alert()
+        self.top_alert = self.top_alert_check(self.cve_id)
         self.top_vulnerable = False
 
-        if cvss_data[0]["Base"] == "not_defined":
-            self.level = "Not Defined"
-            self.top_vulnerable = "Not Defined"
-        elif cvss_data[0]["Base"] == "10.0" and cvss_data[0]["Exploit"] == "10.0" and cvss_data[0]["Impact"] == "10.0":
-            self.level = "High"
+        if cvss_data[0]["base"] == "not_defined":
+            self.level = "notDefined"
+            self.top_vulnerable = "notDefined"
+        elif cvss_data[0]["base"] == "10.0" and cvss_data[0]["exploitability"] == "10.0" and cvss_data[0][
+            "impact"] == "10.0":
+            self.level = "high"
             self.top_vulnerable = True
-        elif cvss_data[0]["Base"] >= "7.0":
-            self.level = "High"
-        elif "4.0" <= cvss_data[0]["Base"] <= "6.9":
-            self.level = "Moderate"
-        elif "0.1" <= cvss_data[0]["Base"] <= "3.9":
-            self.level = "Low"
+        elif cvss_data[0]["base"] >= "7.0":
+            self.level = "high"
+        elif "4.0" <= cvss_data[0]["base"] <= "6.9":
+            self.level = "moderate"
+        elif "0.1" <= cvss_data[0]["base"] <= "3.9":
+            self.level = "low"
 
-        item = {'Severity': self.level,
-                'Top vulnerable': self.top_vulnerable,
-                'Top alert': self.top_alert,
-                'CVSS v2': cvss_data
+        item = {"severity": self.level,
+                "topVulnerable": self.top_vulnerable,
+                "topAlert": self.top_alert,
+                "cvss2": cvss_data
                 }
         self.severity.append(item)
 
-        return json.dumps(self.severity, indent=4)
+        return json.dumps(self.severity, indent=2)
 
-    def top_alert(self):
+    @staticmethod
+    def top_alert_check(cve):
 
         """
         Returning:  top list of CWEs such as in  CWE/SANS 2011, OWASP 2010, OWASP 2013....
 
         """
+        top_alert = []
+        category = CveInfo(cve).get_category()
 
-        self.top_alert = []
-        self.category = CveInfo(self.cve_id).get_category()
-
-        if json.loads(self.category) is None:
+        if json.loads(category) is None:
             return False
 
-        self.category = json.loads(self.category)
-        self.top_category = ['CWE-929', 'CWE-930', 'CWE-931', 'CWE-932', 'CWE-933', 'CWE-934', 'CWE-935', 'CWE-936',
-                             'CWE-937', 'CWE-938', 'CWE-810', 'CWE-811', 'CWE-812', 'CWE-813', 'CWE-814', 'CWE-815',
-                             'CWE-816', 'CWE-817', 'CWE-818', 'CWE-819', 'CWE-864', 'CWE-865', 'CWE-691']
+        category = json.loads(category)
+        top_category = ['CWE-929', 'CWE-930', 'CWE-931', 'CWE-932', 'CWE-933', 'CWE-934', 'CWE-935', 'CWE-936',
+                        'CWE-937', 'CWE-938', 'CWE-810', 'CWE-811', 'CWE-812', 'CWE-813', 'CWE-814', 'CWE-815',
+                        'CWE-816', 'CWE-817', 'CWE-818', 'CWE-819', 'CWE-864', 'CWE-865', 'CWE-691']
 
         """
-
         CWE-864 --> 2011 Top 25 - Insecure Interaction Between Components
         CWE-865 --> 2011 Top 25 - Risky Resource Management
         CWE-691 --> Insufficient Control Flow Management
@@ -106,13 +115,13 @@ class CveRisk(object):
 
         """
 
-        for self_cat in self.top_category:
-            for item in self.category:
-                if item.get("id") == self_cat:
+        for cat in top_category:
+            for item in category:
+                if item.get("id") == cat:
                     item = {"id": item.get("id"), "title": item.get("title")}
-                    self.top_alert.append(item)
+                    top_alert.append(item)
 
-        if self.top_alert:
-            return self.top_alert
+        if top_alert:
+            return top_alert
         else:
             return False

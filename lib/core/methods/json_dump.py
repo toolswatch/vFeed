@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - http://www.vfeed.io
+# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
 
 import json
+
 from config.constants import title, author, build, repository, twitter, db
 from lib.common.database import Database
 from lib.common.utils import check_env, move_export
@@ -25,78 +26,79 @@ class ExportJson(object):
         :return: JSON response with Snort ID, signature and category
         """
         # CVE basic information
-        data = CveInfo(self.cve)
-        info = json.loads(data.get_cve())
-        cpe = json.loads(data.get_cpe())
-        cwe = json.loads(data.get_cwe())
-        capec = json.loads(data.get_capec())
-        category = json.loads(data.get_category())
-        wasc = json.loads(data.get_wasc())
+        self.data = CveInfo(self.cve)
+        info = json.loads(self.data.get_cve())
+
+        if info is None:
+            return False
+
+        cpe = json.loads(self.data.get_cpe())
+        cwe = json.loads(self.data.get_cwe())
+        capec = json.loads(self.data.get_capec())
+        category = json.loads(self.data.get_category())
+        wasc = json.loads(self.data.get_wasc())
 
         # Reference information
-        data = CveRef(self.cve)
-        scip = json.loads(data.get_scip())
-        osvdb = json.loads(data.get_osvdb())
-        certvn = json.loads(data.get_certvn())
-        bid = json.loads(data.get_bid())
-        iavm = json.loads(data.get_iavm())
-        refs = json.loads(data.get_refs())
+        self.data = CveRef(self.cve)
+        scip = json.loads(self.data.get_scip())
+        osvdb = json.loads(self.data.get_osvdb())
+        certvn = json.loads(self.data.get_certvn())
+        bid = json.loads(self.data.get_bid())
+        iavm = json.loads(self.data.get_iavm())
+        refs = json.loads(self.data.get_refs())
 
         # Risk calculation
-        data = CveRisk(self.cve)
-        severity = json.loads(data.get_severity())
+        self.data = CveRisk(self.cve)
+        severity = json.loads(self.data.get_severity())
 
         # Patch Information
-        data = CvePatches(self.cve)
-        ms = json.loads(data.get_ms())
-        kb = json.loads(data.get_kb())
-        aixapar = json.loads(data.get_aixapar())
-        redhat = json.loads(data.get_redhat())
-        debian = json.loads(data.get_debian())
-        ubuntu = json.loads(data.get_ubuntu())
-        suse = json.loads(data.get_suse())
-        gentoo = json.loads(data.get_gentoo())
-        fedora = json.loads(data.get_fedora())
-        mandriva = json.loads(data.get_mandriva())
-        vmware = json.loads(data.get_vmware())
-        cisco = json.loads(data.get_cisco())
-        hp = json.loads(data.get_hp())
+        self.data = CvePatches(self.cve)
+        ms = json.loads(self.data.get_ms())
+        kb = json.loads(self.data.get_kb())
+        aixapar = json.loads(self.data.get_aixapar())
+        redhat = json.loads(self.data.get_redhat())
+        debian = json.loads(self.data.get_debian())
+        ubuntu = json.loads(self.data.get_ubuntu())
+        suse = json.loads(self.data.get_suse())
+        gentoo = json.loads(self.data.get_gentoo())
+        fedora = json.loads(self.data.get_fedora())
+        mandriva = json.loads(self.data.get_mandriva())
+        vmware = json.loads(self.data.get_vmware())
+        cisco = json.loads(self.data.get_cisco())
+        hp = json.loads(self.data.get_hp())
 
         # Scanners Information
-        data = CveScanners(self.cve)
-        nessus = json.loads(data.get_nessus())
-        openvas = json.loads(data.get_openvas())
-        oval = json.loads(data.get_oval())
-        nmap = json.loads(data.get_nmap())
+        self.data = CveScanners(self.cve)
+        nessus = json.loads(self.data.get_nessus())
+        openvas = json.loads(self.data.get_openvas())
+        oval = json.loads(self.data.get_oval())
+        nmap = json.loads(self.data.get_nmap())
 
         # Exploitation Information
-        data = CveExploit(self.cve)
-        msf = json.loads(data.get_msf())
-        saint = json.loads(data.get_saint())
-        edb = json.loads(data.get_edb())
-        elliot = json.loads(data.get_d2())
+        self.data = CveExploit(self.cve)
+        msf = json.loads(self.data.get_msf())
+        saint = json.loads(self.data.get_saint())
+        edb = json.loads(self.data.get_edb())
+        elliot = json.loads(self.data.get_d2())
 
         # Rules Information
-        data = CveRules(self.cve)
-        snort = json.loads(data.get_snort())
-        suricata = json.loads(data.get_suricata())
+        self.data = CveRules(self.cve)
+        snort = json.loads(self.data.get_snort())
+        suricata = json.loads(self.data.get_suricata())
 
         json_export = {
-            'vFeed': {'ID': self.vfeed_id, 'Author': author, 'Product': title, 'Version': build, 'URL': repository,
+            "vFeed": {"id": self.vfeed_id, "author": author, "product": title, "api": build, "url": repository,
                       'Contact': twitter},
-            'Information': {'CVE': info, 'CPE': cpe, 'CWE': cwe, 'CAPEC': capec, 'Category': category, 'WASC': wasc},
-            'References': {'SCIP': scip, 'OSVDB': osvdb, 'CertVN': certvn, 'BID': bid, 'IAVM': iavm,
-                           'Other': {'References': refs}}, 'Risk': severity,
-            'Patches': {'Microsoft Bulletins': ms, 'Microsoft KB': kb,
-                        'IBM AIX Apar': aixapar, 'Redhat': redhat, 'Debian': debian,
-                        'Ubuntu': ubuntu, 'Gentoo': gentoo, 'Suse': suse, 'Fedora': fedora,
-                        'Mandriva': mandriva, 'Vmware': vmware, 'Cisco': cisco, 'HP': hp},
-            'Scanners': {'Nessus': nessus, 'OpenVas': openvas, 'Oval': oval, 'Nmap': nmap},
-            'Exploits': {'Metasploit': msf, 'Saint': saint, 'ExploitDB': edb, 'Elliot D2': elliot},
-            'Rules': {'Snort': snort, 'Suricata': suricata}}
+            "information": {"cve": info, "cpe": cpe, "cwe": cwe, "capec": capec, "category": category, "wasc": wasc},
+            "references": {"scip": scip, "osvdb": osvdb, "certvn": certvn, "bid": bid, "iavm": iavm,
+                           'other': {"links": refs}}, "risk": severity,
+            "patches": {"microsoft bulletins": ms, "microsoft kb": kb,
+                        "ibm": aixapar, "redhat": redhat, "debian": debian,
+                        "ubuntu": ubuntu, "gentoo": gentoo, "suse": suse, "fedora": fedora,
+                        "mandriva": mandriva, "vmware": vmware, "cisco": cisco, "hp": hp},
+            "scanners": {"nessus": nessus, "openvas": openvas, "oval": oval, "nmap": nmap},
+            "exploits": {"metasploit": msf, "saint": saint, "edb": edb, "elliot D2": elliot},
+            "rules": {"snort": snort, "suricata": suricata}}
 
-        print "[+] Exporting to JSON file %s" % self.json_file
         move_export(json_export, self.json_file)
-        print "[!] %s moved to export repository" % self.json_file
-
-        return json.dumps(json_export, indent=4, sort_keys=True)
+        return json.dumps(json_export, indent=2, sort_keys=True)

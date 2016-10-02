@@ -1,6 +1,6 @@
 vFeed The Correlated Vulnerability and Threat Intelligence Database API
 =======================================================================
-![vFeed](http://www.vfeed.io/wp-content/uploads/2016/07/vfeed.png)
+![vFeed](https://vfeed.io/wp-content/uploads/2016/07/vfeed.png)
 
 [![Build Status](https://travis-ci.org/toolswatch/vFeed.svg?branch=v0.6.5)](https://travis-ci.org/toolswatch/vFeed)
 [![Code Health](https://landscape.io/github/toolswatch/vFeed/master/landscape.svg?style=flat)](https://landscape.io/github/toolswatch/vFeed/master)
@@ -14,7 +14,7 @@ It also improves the reliability of CVEs by providing a flexible and comprehensi
 vFeed API generates a JSON-based format outputs to describe in detail vulnerabilities. 
 It can be leveraged as input by security researchers, practitioners and tools as part of their vulnerability description. The standard syntax is easy to interpret by humans and systems.
 
-The mandatory associated **vFeed DB (The Correlated Vulnerability and Threat Intelligence Database)** is a detective and preventive security information repository used for gathering vulnerability and mitigation data from scattered internet sources into an unified database. The vFeed DB must be obtained directly from [vFeed IO](http://www.vfeed.io)
+The mandatory associated **vFeed DB (The Correlated Vulnerability and Threat Intelligence Database)** is a detective and preventive security information repository used for gathering vulnerability and mitigation data from scattered internet sources into an unified database. The vFeed DB must be obtained directly from [vFeed IO](https://vfeed.io)
 
 * Open security standards:
     * [CVE](http://cve.mitre.org)
@@ -47,7 +47,7 @@ Key features
 * Support correlation with security assessment and patch vendors (Nessus, Exploit-DB, Redhat, Microsoft..)
 * Simple and ready-to-use API Python 
 
-More features at [vFeed IO](http://www.vfeed.io/features/).
+More features at [vFeed IO](https://vfeed.io/features/).
 
 Target Audience
 =================
@@ -68,12 +68,19 @@ Refer to the [wiki](https://github.com/toolswatch/vFeed/wiki/) page for detailed
 Latest release
 ==============
 
+0.7.0
+-----
+* [New] Updated and optimized the function `search` with new keys (cve, cwe, oval and text). Please refer to [documentation](https://github.com/toolswatch/vFeed/wiki/2--Usage-(API-and-Command-Line))
+* [New] The `search` result now returns JSON content. The content contains reference to exploits whenever they are available
+* [New] Added support to Python3. Thanks to Elnappo (https://github.com/elnappo)
+* [Fix] Fixed issue #64. The CLI is separated from the library.
+* [Fix] Fixed issue #67. Modified the `config.py` to reflect The OVAL repository new URL hosted by CIS.
+
 0.6.9
 -----
 * The vFeed DB is no more available through `update` command. The command is deprecated. 
-* The delivery of the vFeed DB was handed over to a new established entity [vFeed IO](http://www.vfeed.io). This entity sets the goal to become the Leading Provider of Vulnerability and Threat Intelligence Database.
-* The API has been modified to reflect the new changes. 
-
+* The delivery of the vFeed DB was handed over to a new established entity [vFeed IO](https://vfeed.io). This entity sets the goal to become the Leading Provider of Vulnerability and Threat Intelligence Database.
+* The API has been modified to reflect the new changes.  
 
 0.6.8
 -----
@@ -91,12 +98,3 @@ Latest release
 * Documentation updated accordingly.
 
 **NOTE**: Some code was cleaned. Nevertheless, the issues reported [here](https://github.com/toolswatch/vFeed/issues) will be fixed in next minor version.
-
-
-0.6.7
----------
-* Added support to [Landscape](https://landscape.io) with some code cleaning.
-
-0.6.6
----------
-* Modified the `update.py` class to display the vFeed License before downloading the database.

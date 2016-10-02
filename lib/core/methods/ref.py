@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - http://www.vfeed.io
+# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
 
 
 import json
+
 from config.constants import osvdb_url, bid_url
 from lib.common.database import Database
 
@@ -29,7 +30,7 @@ class CveRef(object):
             self.references.append(item)
 
         if len(self.references) != 0:
-            return json.dumps(self.references, indent=4, sort_keys=True)
+            return json.dumps(self.references, indent=2, sort_keys=True)
         else:
             return json.dumps(None)
 
@@ -42,11 +43,11 @@ class CveRef(object):
             'SELECT * FROM map_cve_scip WHERE cveid=?', self.query)
 
         for self.data in self.cur.fetchall():
-            item = {'id': self.data[0], 'url': self.data[1]}
+            item = {"id": self.data[0], "url": self.data[1]}
             self.scip.append(item)
 
         if len(self.scip) != 0:
-            return json.dumps(self.scip, indent=4, sort_keys=True)
+            return json.dumps(self.scip, indent=2, sort_keys=True)
         else:
             return json.dumps(None)
 
@@ -59,11 +60,11 @@ class CveRef(object):
             'SELECT * FROM map_cve_osvdb WHERE cveid=?', self.query)
 
         for self.data in self.cur.fetchall():
-            item = {'id': self.data[0], 'url': osvdb_url + str(self.data[0])}
+            item = {"id": self.data[0], "url": osvdb_url + str(self.data[0])}
             self.osvdb.append(item)
 
         if len(self.osvdb) != 0:
-            return json.dumps(self.osvdb, indent=4, sort_keys=True)
+            return json.dumps(self.osvdb, indent=2, sort_keys=True)
         else:
             return json.dumps(None)
 
@@ -76,11 +77,11 @@ class CveRef(object):
             'SELECT * FROM map_cve_certvn WHERE cveid=?', self.query)
 
         for self.data in self.cur.fetchall():
-            item = {'id': self.data[0], 'url': self.data[1]}
+            item = {"id": self.data[0], "url": self.data[1]}
             self.certvn.append(item)
 
         if len(self.certvn) != 0:
-            return json.dumps(self.certvn, indent=4, sort_keys=True)
+            return json.dumps(self.certvn, indent=2, sort_keys=True)
         else:
             return json.dumps(None)
 
@@ -93,11 +94,11 @@ class CveRef(object):
             'SELECT * FROM map_cve_iavm WHERE cveid=?', self.query)
 
         for self.data in self.cur.fetchall():
-            item = {'id': self.data[0], 'Disa key': self.data[1], 'title': self.data[2]}
+            item = {"id": self.data[0], "key": self.data[1], "title": self.data[2]}
             self.iavm.append(item)
 
         if len(self.iavm) != 0:
-            return json.dumps(self.iavm, indent=4, sort_keys=True)
+            return json.dumps(self.iavm, indent=2, sort_keys=True)
         else:
             return json.dumps(None)
 
@@ -110,10 +111,10 @@ class CveRef(object):
             'SELECT * FROM map_cve_bid WHERE cveid=?', self.query)
 
         for self.data in self.cur.fetchall():
-            item = {'id': self.data[0], 'url': bid_url + str(self.data[0])}
+            item = {"id": self.data[0], "url": bid_url + str(self.data[0])}
             self.bid.append(item)
 
         if len(self.bid) != 0:
-            return json.dumps(self.bid, indent=4, sort_keys=True)
+            return json.dumps(self.bid, indent=2, sort_keys=True)
         else:
             return json.dumps(None)

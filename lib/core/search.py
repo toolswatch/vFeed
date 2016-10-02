@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - http://www.vfeed.io
+# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
 
 import json
 import sys
-import re
+
 from config.constants import db
 from lib.core.methods import CveExploit
 from lib.common.database import Database
@@ -15,164 +15,148 @@ class Search(object):
     def __init__(self, query):
         self.query = query
         self.db = db
-        self.detect_entry()
+        self.res = []
 
-    def detect_entry(self):
-        """ detect user input entry (CVE, CPE, OVAL or CWE). Used for Search method
-        :return: type of entry
-        """
-        cve_entry = re.compile("CVE-\d+-\d+", re.IGNORECASE)
-        cpe_entry = re.compile("cpe:/[a-zA-Z0-9]", re.IGNORECASE)
-        cwe_entry = re.compile("CWE-\\d+", re.IGNORECASE)
-        oval_entry = re.compile("oval:org.[a-zA-Z0-9]", re.IGNORECASE)
-
-        if re.findall(cve_entry, self.query):
-            self.search_cve()
-        elif re.findall(cpe_entry, self.query):
-            self.search_cpe()
-        elif re.findall(cwe_entry, self.query):
-            self.search_cwe()
-        elif re.findall(oval_entry, self.query):
-            self.search_oval()
-        else:
-            self.search_summary()
-
-        return
-
-    def search_cve(self):
+    def cve(self):
         """ Simple method to search for CVE occurrences
-        :return: CVE summary
+        :return: CVE summary and msf, edb when available
         """
-        self.cve = self.query.upper()
-        (self.cur, self.query) = Database(self.cve).db_init()
+        self.cve_id = self.query.upper()
+        (self.cur, self.query) = Database(self.cve_id).db_init()
         self.data = Database(self.cve, self.cur, self.query).check_cve()
-
-        print '[+] Querying information for %s ...' % self.cve
-        self.cur.execute("SELECT * from nvd_db where cveid=?", (self.cve,))
+        self.cur.execute("SELECT * from nvd_db where cveid=?", (self.cve_id,))
         self.cve_data = self.cur.fetchall()
 
-        for data in self.cve_data:
-            print data[3]
+        if self.cve_data:
+            item = {"id": self.cve_id, "published": self.data[1], "modified": self.data[2],
+                    "summary": self.data[3],
+                    "exploits": {"metasploit": self.check_msf(self.cve_id), "exploitdb": self.check_edb(self.cve_id)}}
+            self.res.append(item)
+        else:
+            self.res = None
 
-        print "\n[?] Hint \nTry:\n `vfeedcli.py --method get_cve %s` " % self.cve
-        print "or\n `vfeedcli.py --export json_dump %s`" % self.cve
+        return json.dumps(self.res, indent=2)
 
-    def search_cpe(self):
+    def cpe(self):
         """
         Simple method to search for CPEs
-        :return: CVEs (exploits are highlighted when available)
+        :return: CVEs and msf exploits when available
         """
         self.cpe = self.query.lower()
         (self.cur, self.query) = Database(self.cpe).db_init()
 
-        self.cur.execute("SELECT count(distinct cveid) from cve_cpe where cpeid like ?", ('%' + self.cpe + '%',))
-        self.count_cve = self.cur.fetchone()
         self.cur.execute("SELECT count(distinct cpeid) from cve_cpe where cpeid like ?", ('%' + self.cpe + '%',))
         self.count_cpe = self.cur.fetchone()
 
-        if self.count_cve[0] == 0:
-            print '[!] Occurrence not found'
-            sys.exit()
-
-        print '[+] Gathering information ... '
         self.cur.execute("SELECT distinct cpeid from cve_cpe where cpeid like ? ORDER BY cpeid DESC",
                          ('%' + self.cpe + '%',))
-        self.cpe_datas = self.cur.fetchall()
+        self.cpe_data = self.cur.fetchall()
 
-        for i in range(0, self.count_cpe[0]):
-            self.mycpe = self.cpe_datas[i][0]
-            print '\t[+] %s' % self.mycpe
-            self.cur.execute("SELECT cveid from cve_cpe where cpeid=?", (self.mycpe,))
-            self.cve_datas = self.cur.fetchall()
-            for self.cve_data in self.cve_datas:
-                self.mycve = self.cve_data[0]
-                print '\t\t|-> %s' % self.mycve
-                self.check_exploit(self.mycve)
-        print '[+] Printing search statistics for %s' % self.cpe
-        print '\t [-] Total Unique CVEs        [%s] ' % self.count_cve
-        print '\t [-] Total Found CPEs         [%s] ' % self.count_cpe
+        if self.cpe_data:
+            for i in range(0, self.count_cpe[0]):
+                self.cve_id = []
+                self.exploit_msf = []
+                self.cpe_id = self.cpe_data[i][0]
+                self.cur.execute("SELECT cveid from cve_cpe where cpeid=?", (self.cpe_id,))
+                self.cve_datas = self.cur.fetchall()
 
-    def search_cwe(self):
+                for self.cve_data in self.cve_datas:
+                    self.cve_id.append(self.cve_data[0])
+                    self.exploit = self.check_msf(self.cve_data[0])
+                    if self.exploit is not None:
+                        self.exploit_msf.append(self.exploit)
+
+                item = {self.cpe_id: {"exploits": {"metasploit": self.exploit_msf}, "vulnerability": self.cve_id}}
+                self.res.append(item)
+
+        else:
+            self.res = None
+
+        return json.dumps(self.res, indent=2)
+
+    def cwe(self):
         """
         Simple method to search CWEs
         :return: CVEs related to CWE
         """
+        self.cve_id = []
         self.cwe = self.query.upper()
         (self.cur, self.query) = Database(self.cwe).db_init()
 
-        self.cur.execute("SELECT count(distinct cveid) from cve_cwe where cweid=?", (self.cwe,))
-        self.count_cve = self.cur.fetchone()
-        if self.count_cve[0] == 0:
-            print '[!] Occurrence not found'
-            sys.exit()
-
-        print '[+] Gathering information ... '
         self.cur.execute("SELECT cveid from cve_cwe where cweid=? ORDER BY cveid DESC", (self.cwe,))
-        cve_data = self.cur.fetchall()
-        for data in cve_data:
-            self.mycve = data[0]
-            print '\t\t|-> %s' % self.mycve
-            self.check_exploit(self.mycve)
+        self.cve_datas = self.cur.fetchall()
 
-        print '[+] Printing search statistics for %s' % self.cwe
-        print '\t [-] Total unique found CVEs: %s' % self.count_cve
+        if self.cve_datas:
+            for self.cve_data in self.cve_datas:
+                self.cve_id.append(self.cve_data[0])
+            item = {self.cwe: {"vulnerability": self.cve_id}}
+            self.res.append(item)
+        else:
+            self.res = None
 
-    def search_oval(self):
+        return json.dumps(self.res, indent=2)
+
+    def oval(self):
         """
         Simple method to search OVAL
         :return: CVEs related to OVAL
         """
+        self.cve_id = []
         self.oval = self.query.lower()
         (self.cur, self.query) = Database(self.oval).db_init()
 
-        self.cur.execute("SELECT count(distinct cveid) from map_cve_oval where ovalid=?", (self.oval,))
-        self.count_cve = self.cur.fetchone()
-        self.cur.execute("SELECT count(distinct ovalid) from map_cve_oval where ovalid=?", (self.oval,))
-        self.count_oval = self.cur.fetchone()
+        self.cur.execute("SELECT distinct ovalid from map_cve_oval where ovalid=? ", (self.oval,))
+        self.oval_data = self.cur.fetchall()
 
-        if self.count_cve[0] == 0:
-            print '[!] Occurrence not found'
-            sys.exit()
-        print '[+] Gathering information ... '
-
-        self.cur.execute("SELECT distinct ovalid from map_cve_oval where ovalid =? ORDER BY ovalid DESC", (self.oval,))
-        self.oval_datas = self.cur.fetchall()
-
-        for i in range(0, self.count_oval[0]):
-            self.myoval = self.oval_datas[i][0]
-            print '\t[+] %s' % self.myoval
-
-            self.cur.execute("SELECT cveid from map_cve_oval where ovalid=?", (self.myoval,))
+        if self.oval_data:
+            self.oval_id = self.oval_data[0][0]
+            self.cur.execute("SELECT cveid from map_cve_oval where ovalid=?", (self.oval_id,))
             self.cve_datas = self.cur.fetchall()
+
             for self.cve_data in self.cve_datas:
-                self.mycve = self.cve_data[0]
-                print '\t\t|-> %s' % self.mycve
-                self.check_exploit(self.mycve)
+                self.cve_id.append(self.cve_data[0])
 
-        print '[+] Printing search statistics for %s' % self.oval
-        print '\t [-] Total Unique CVEs        [%s] ' % self.count_cve
-        print '\t [-] Total Found OVAL         [%s] ' % self.count_oval
+            item = {self.oval_id: {"vulnerability": self.cve_id}}
+            self.res.append(item)
+        else:
+            self.res = None
 
-    def search_summary(self):
-        self.entry = self.query.lower()
+        return json.dumps(self.res, indent=2)
+
+    def text(self):
+        self.cve_id = []
+        self.entry = self.query
         (self.cur, self.conn) = Database(None).db_init()
 
-        print '[+] Querying information for %s ...' % self.entry
         self.cur.execute("SELECT * from nvd_db where summary like ? ORDER BY cveid DESC",
                          ('%' + self.entry + '%',))
-
         self.entry_data = self.cur.fetchall()
-        for data in self.entry_data:
-            print '|-> ' + data[0] + ': ' + data[3]
-            print ''
+
+        if self.entry_data:
+            for self.data in self.entry_data:
+                self.cve_id.append(self.data[0] + " : " + self.data[3])
+
+            item = {self.entry: {"vulnerability": self.cve_id}}
+            self.res.append(item)
+        else:
+            self.res = None
+
+        return json.dumps(self.res, indent=2)
 
     @staticmethod
-    def check_exploit(cve):
+    def check_msf(cve):
         msf = CveExploit(cve).get_msf()
-        edb = CveExploit(cve).get_edb()
-
         if msf is not "null":
-            print "\t\t\t[!] Metasploit exploit found."
+            msf = json.loads(msf)
+            return msf
+        else:
+            return None
 
+    @staticmethod
+    def check_edb(cve):
+        edb = CveExploit(cve).get_edb()
         if edb is not "null":
-            print "\t\t\t[!] Exploit-DB PoC found."
+            edb = json.loads(edb)
+            return edb
+        else:
+            return None

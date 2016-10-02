@@ -1,13 +1,17 @@
 #!/usr/bin/env python
 # Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - http://www.vfeed.io
+# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
 # Original code by Ushan89 https://github.com/ushan89/vFeed
 # Modified to Class by NJ Ouchn
+
+from __future__ import print_function
+
 import glob
-import subprocess
+import os
 import sys
-import commands
+import subprocess
+
 from config.constants import migration_dir
 from config.constants import mongo_conf
 from config.constants import migration_script
@@ -22,7 +26,6 @@ class Migrate(object):
         self.migration_script = migration_script
         self.db = db_location
         self.mongo_url = self.mongo_conf_read()
-        self.mongo_srv_check()
         self.csv_dir = csv_dir
         self.do_sqlite_to_csv()
         self.do_csv_to_mongo()
@@ -36,16 +39,6 @@ class Migrate(object):
                 if 'Mongo_Server' in line:
                     self.conf_line = str(line.split(' ')[1]).strip()
         return self.conf_line
-
-    def mongo_srv_check(self, ):
-        """ check whether the MongoDB is up and running
-        :return: exit if server is not up
-        """
-        self.output = commands.getoutput('ps -A')
-        if 'mongod' not in self.output:
-            print '[!] MongoDB is not running. Start the mongod service'
-            sys.exit()
-        return
 
     def do_sqlite_to_csv(self, ):
         """ read the vFeed.db and export entries to CSV
@@ -66,7 +59,6 @@ class Migrate(object):
         for csv_file in glob.glob(self.csv_dir + '*.csv'):
             self.table_name = csv_file.split('\\') if '\\' in csv_file else csv_file.split('/')
             self.table_name = self.table_name[len(self.table_name) - 1].replace('.csv', '')
-            print "processing ..", self.table_name
             try:
                 subprocess.check_call([
                     'mongoimport',
@@ -82,7 +74,7 @@ class Migrate(object):
                     csv_file,
                     '--headerline'
                 ])
-            except Exception, e:
-                print '[Warning] Caught an exception', e
+            except Exception as e:
+                print('[Warning] Caught an exception', e)
 
-            print("[+] Imported collection: {} --> vFeed MongoDB".format(self.table_name))
+            print (("[+] Imported collection: {} --> vFeed MongoDB".format(self.table_name)))

@@ -1,6 +1,20 @@
 Changelog
 =========
 
+0.7.0
+-----
+* [New] Updated and optimized the function `search` with new keys (cve, cwe, oval and text). Please refer to [documentation](https://github.com/toolswatch/vFeed/wiki/2--Usage-(API-and-Command-Line))
+* [New] The `search` result now returns JSON content. The content contains reference to exploits whenever they are available
+* [New] Added support to Python3. Thanks to Elnappo (https://github.com/elnappo)
+* [Fix] Fixed issue #64. The CLI is separated from the library.
+* [Fix] Fixed issue #67. Modified the `config.py` to reflect The OVAL repository new URL hosted by CIS.
+
+0.6.9
+-----
+* The vFeed DB is no more available through `update` command. The command is deprecated. 
+* The delivery of the vFeed DB was handed over to a new established entity [vFeed IO](https://vfeed.io). This entity sets the goal to become the Leading Provider of Vulnerability and Threat Intelligence Database.
+* The API has been modified to reflect the new changes. 
+
 0.6.8
 -----
 * Added support to CAPEC version 2.8. Check [about CAPEC v2.8](http://capec.mitre.org/news/index.html#december72015_CAPEC_List_Version_2.8_Now_Available).

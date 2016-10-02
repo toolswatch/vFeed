@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - http://www.vfeed.io
+# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
+
 import json
+
 from lib.common.database import Database
 from config.constants import cve_url, cwe_url, capec_url, wasc_url
 
@@ -23,8 +25,10 @@ class CveInfo(object):
             item = {"id": self.cve, "published": self.data[1], "modified": self.data[2],
                     "summary": self.data[3], "url": cve_url + self.cve}
             self.info.append(item)
+        else:
+            self.info = None
 
-        return json.dumps(self.info, indent=4)
+        return json.dumps(self.info, indent=2)
 
     def get_cwe(self):
         """ CWE method
@@ -44,7 +48,7 @@ class CveInfo(object):
                 self.cwe.append(item)
 
         if len(self.cwe) != 0:
-            return json.dumps(self.cwe, indent=4, sort_keys=True)
+            return json.dumps(self.cwe, indent=2, sort_keys=True)
         else:
             return json.dumps(None)
 
@@ -76,7 +80,7 @@ class CveInfo(object):
                 self.capec.append(item)
 
         if len(self.capec) != 0:
-            return json.dumps(self.capec, indent=4, sort_keys=True)
+            return json.dumps(self.capec, indent=2, sort_keys=True)
         else:
             return json.dumps(None)
 
@@ -102,7 +106,7 @@ class CveInfo(object):
                     self.category.append(item)
 
         if len(self.category) != 0:
-            return json.dumps(self.category, indent=4, sort_keys=True)
+            return json.dumps(self.category, indent=2, sort_keys=True)
         else:
             return json.dumps(None)
 
@@ -118,7 +122,7 @@ class CveInfo(object):
             self.cpe.append(item)
 
         if len(self.cpe) != 0:
-            return json.dumps(self.cpe, indent=4, sort_keys=True)
+            return json.dumps(self.cpe, indent=2, sort_keys=True)
         else:
             return json.dumps(None)
 
@@ -147,6 +151,6 @@ class CveInfo(object):
                     self.wasc.append(item)
 
         if len(self.wasc) != 0:
-            return json.dumps(self.wasc, indent=4, sort_keys=True)
+            return json.dumps(self.wasc, indent=2, sort_keys=True)
         else:
             return json.dumps(None)

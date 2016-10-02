@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - http://www.vfeed.io
+# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
+
 import json
+
 from lib.common.database import Database
 
 
@@ -20,11 +22,11 @@ class CveRules(object):
         self.cur.execute('SELECT * FROM map_cve_snort WHERE cveid=?', self.query)
 
         for self.data in self.cur.fetchall():
-            item = {'id': str(self.data[0]), 'signature': str(self.data[1]), 'category': str(self.data[2])}
+            item = {"id": str(self.data[0]), 'signature': str(self.data[1]), 'category': str(self.data[2])}
             self.snort.append(item)
 
         if len(self.snort) != 0:
-            return json.dumps(self.snort, indent=4, sort_keys=True)
+            return json.dumps(self.snort, indent=2, sort_keys=True)
         else:
             return json.dumps(None)
 
@@ -36,10 +38,10 @@ class CveRules(object):
         self.cur.execute('SELECT * FROM map_cve_suricata WHERE cveid=?', self.query)
 
         for self.data in self.cur.fetchall():
-            item = {'id': str(self.data[0]), 'signature': str(self.data[1]), 'classtype': str(self.data[2])}
+            item = {"id": str(self.data[0]), 'signature': str(self.data[1]), 'classtype': str(self.data[2])}
             self.suricata.append(item)
 
         if len(self.suricata) != 0:
-            return json.dumps(self.suricata, indent=4, sort_keys=True)
+            return json.dumps(self.suricata, indent=2, sort_keys=True)
         else:
             return json.dumps(None)

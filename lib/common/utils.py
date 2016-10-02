@@ -1,13 +1,17 @@
 #!/usr/bin/env python
 # Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - http://www.vfeed.io
+# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
 
-import inspect
+from __future__ import print_function
+import re
 import os
-import hashlib
 import json
 import shutil
+import inspect
+import commands
+import hashlib
+
 from config.constants import export_dir
 
 
@@ -18,14 +22,14 @@ def check_env(file):
     :return:
     """
     if not os.path.isfile(file):
-        print "WARNING - " + file + ' is missing.'
         return False
 
 
 def enum_classes(method_name, cve_id):
     """
     return list of functions into a class
-    :param class_name:
+    :param cve_id:
+    :param method_name:
     :return: list of function
     """
     import lib.core.methods as functions
@@ -40,20 +44,20 @@ def enum_classes(method_name, cve_id):
     for my_class in classes:
         if method_name == "list":
             # Sanitize the class name.
-            print "Methods related to Class:", \
-                str(my_class).replace("class", "").replace("<", "").replace(">", "").split(".")[
-                    4].replace("'", "")
+            print("Built-in functions related to class:",
+                  str(my_class).replace("class", "").replace("<", "").replace(">", "").split(".")[
+                      4].replace("'", ""))
             method_found = True
         for function in enum_functions(my_class):
             if method_name == "list":
                 if "__" not in function:
-                    print '\t|-->', function
+                    print("\t |---> ", function)
             else:
                 if method_name == function:
                     result = getattr(my_class(cve_id), method_name)
                     return result()
     if not method_found:
-        return "[!] Unknown Method. Use option --list to enumerate list of available methods"
+        return "Use option '--list' to enumerate the available methods."
 
 
 def enum_functions(class_name):
@@ -75,7 +79,7 @@ def move_export(json_export, json_file):
     """
     output_file = open(json_file, "w")
     dest_file = os.path.join(export_dir, json_file)
-    json.dump(json_export, output_file, indent=4)
+    json.dump(json_export, output_file, indent=2)
 
     if os.path.exists(dest_file):
         os.remove(dest_file)
@@ -84,16 +88,10 @@ def move_export(json_export, json_file):
 
     return
 
-def checksum(checked_file):
+
+def mongo_server():
+    """ check whether the MongoDB is up and running
+    :return: listing of processes
     """
-    Calculate file sha1
-    :param checked_file:
-    :return: file checksum
-    """
-    sha1 = hashlib.sha1()
-    f = open(checked_file, 'rb')
-    try:
-        sha1.update(f.read())
-    finally:
-        f.close()
-    return sha1.hexdigest()
+    output = commands.getoutput('ps -A')
+    return output

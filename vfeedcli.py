@@ -61,8 +61,7 @@ if __name__ == "__main__":
         check_server = mongo_server()
         if "mongod" not in check_server:
             print("[!] MongoDB is not running. Start the mongod service")
-            #sys.exit()
-            Migrate()
+            sys.exit()
         else:
             Migrate()
 

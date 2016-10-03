@@ -8,7 +8,7 @@ import os
 import json
 import shutil
 import inspect
-import commands
+import subprocess
 
 from config.constants import export_dir
 
@@ -91,5 +91,8 @@ def mongo_server():
     """ check whether the MongoDB is up and running
     :return: listing of processes
     """
-    output = commands.getoutput('ps -A')
-    return output
+    output = subprocess.Popen(["ps", "A"], stdout=subprocess.PIPE)
+    for x in output.stdout:
+        if "mongod" in x:
+            return True
+    return "[!] MongoDB is not running. Start the mongod service"

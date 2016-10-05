@@ -3,11 +3,11 @@ Changelog
 
 0.7.0
 -----
-* [New] Updated and optimized `search` function with new keys (cve, cwe, oval and text). Please refer to [documentation](https://github.com/toolswatch/vFeed/wiki/2--Usage-(API-and-Command-Line))
+* [New] Updated and optimized `search` function with new keys (cve, cpe, cwe, oval and text). Please refer to [documentation](https://github.com/toolswatch/vFeed/wiki/2--Usage-(API-and-Command-Line))
 * [New] The `search` result is returned as JSON content. It may contain references to exploits whenever they are available
 * [New] Added support to Python3. Thanks to Elnappo (https://github.com/elnappo)
 * [Fix] Fixed issue #64. The CLI is separated from the library.
-* [Fix] Fixed issue #67. Modified the `config.py` to reflect The OVAL repository new URL hosted by CIS.
+* [Fix] Fixed issue #67. Modified the `config.py` to reflect The OVAL repository new URL hosted by CIS
 
 0.6.9
 -----

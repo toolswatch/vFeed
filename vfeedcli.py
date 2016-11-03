@@ -10,8 +10,8 @@ try:
     import argparse
 
     from config.stats import Stats
-    from lib.common.banner import banner
     from lib.core.search import Search
+    from lib.common.banner import banner
     from lib.migration.mongo import Migrate
     from config.constants import build, title
     from lib.common.utils import enum_classes, mongo_server
@@ -57,11 +57,11 @@ if __name__ == "__main__":
 
     if args.migrate:
         # checking whether the MongoDB server is running
-        check_server = mongo_server()
-        if check_server is True:
+        if mongo_server("mongod"):
+            print("[+] MongoDB service is up. Starting migrating ....")
             Migrate()
         else:
-            print(check_server)
+            print("[!] MongoDB service is probably not up.")
 
     if args.stats:
         method_name = args.stats[0]

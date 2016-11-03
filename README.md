@@ -68,6 +68,11 @@ Refer to the [wiki](https://github.com/toolswatch/vFeed/wiki/) page for detailed
 Latest release
 ==============
 
+0.7.0.1
+-----
+* [Fix] Fixed issue #72. Migration is not working for ubuntu and debian.
+* [Improve] Improved the check_mongo() to support tp linux and OSX.
+
 0.7.0
 -----
 * [New] Updated and optimized `search` function with new keys (cve, cpe, cwe, oval and text). Please refer to [documentation](https://github.com/toolswatch/vFeed/wiki/2--Usage-(API-and-Command-Line))

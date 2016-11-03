@@ -8,8 +8,9 @@ import os
 import json
 import shutil
 import inspect
-import subprocess
 
+from sys import platform
+from subprocess import check_output
 from config.constants import export_dir
 
 
@@ -87,12 +88,16 @@ def move_export(json_export, json_file):
     return
 
 
-def mongo_server():
+def mongo_server(process):
     """ check whether the MongoDB is up and running
     :return: listing of processes
     """
-    output = subprocess.Popen(["ps", "A"], stdout=subprocess.PIPE)
-    for x in output.stdout:
-        if "mongod" in x:
-            return True
-    return "[!] MongoDB is not running. Start the mongod service"
+    if platform == "linux" or platform == "linux2":
+        command = "pidof"
+    elif platform == "darwin":
+        command = "pgrep"
+    try:
+        check_output([command, process])
+        return True
+    except:
+        return False

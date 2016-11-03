@@ -89,8 +89,8 @@ def move_export(json_export, json_file):
 
 
 def mongo_server(process):
-    """ check whether the MongoDB is up and running
-    :return: listing of processes
+    """ check whether the Mongo process is up and running
+    :return: True / False
     """
     if platform == "linux" or platform == "linux2":
         command = "pidof"

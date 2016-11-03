@@ -58,10 +58,10 @@ if __name__ == "__main__":
     if args.migrate:
         # checking whether the MongoDB server is running
         if mongo_server("mongod"):
-            print("[+] MongoDB service is up. Starting migrating ....")
+            print("[+] Mongo service is up. Starting migrating ....")
             Migrate()
         else:
-            print("[!] MongoDB service is probably not up.")
+            print("[!] Mongo service is probably not up.")
 
     if args.stats:
         method_name = args.stats[0]

@@ -2,7 +2,7 @@ Changelog
 =========
 0.7.0.1
 -----
-* [Fix] Fixed issue #72. Migration is not working for ubuntu and debian.
+* [Fix] Fixed issue #72. Migration was not working for ubuntu and debian.
 * [Improve] Improved the check_mongo() to support tp linux and OSX.
 
 0.7.0

@@ -43,11 +43,18 @@ class Migrate(object):
         :return: CSV files into csv_exports directory
         """
         self.migration_read = '.read ' + self.migration_script
-        subprocess.check_call([
-            'sqlite3',
-            self.db,
-            self.migration_read
-        ])
+        try:
+            subprocess.check_call([
+                'sqlite3',
+                self.db,
+                self.migration_read
+            ])
+        except OSError as e:
+            if e.errno == os.errno.ENOENT:
+                 print('[Error] sqlite binary not found: install SQLite',e)
+                 raise
+            else:
+                 raise
 
     def do_csv_to_mongo(self, ):
         """ read the csv files and populate the vFeed MongoDB

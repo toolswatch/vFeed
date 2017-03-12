@@ -1,4 +1,4 @@
-vFeed The Correlated Vulnerability and Threat Intelligence Database API
+vFeed The Correlated Vulnerability and Threat Intelligence Database Wrapper
 =======================================================================
 ![vFeed](https://vfeed.io/wp-content/uploads/2016/07/vfeed.png)
 

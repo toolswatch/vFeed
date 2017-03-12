@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Copyright (C) 2017 ToolsWatch.org
-# This file is part of vFeed Vulnerability Database Community API Parser - http://www.toolswatch.org
+# This file is part of vFeed Correlated Vulnerability & Threat Database Python Wrapper  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
 
 from __future__ import print_function
@@ -9,8 +9,9 @@ import os
 import sys
 import urllib2
 import tarfile
-from config.constants import db, dropbox_cksum, dropbox_dl
+
 from lib.common.utils import checksum
+from config.constants import db, dropbox_cksum, dropbox_dl
 
 
 class Update(object):

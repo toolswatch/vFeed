@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
+# Copyright (C) 2017 vFeed IO
+# This file is part of vFeed Correlated Vulnerability & Threat Database Python Wrapper  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
 
 from __future__ import print_function
@@ -11,6 +11,7 @@ try:
 
     from config.stats import Stats
     from lib.core.search import Search
+    from lib.core.update import Update
     from lib.common.banner import banner
     from lib.migration.mongo import Migrate
     from config.constants import build, title
@@ -49,14 +50,14 @@ if __name__ == "__main__":
             print("[!] Unknown built-in function:", str(e))
 
     if args.update:
-        print("[+] The vFeed Database must be downloaded from the official repository at https://vfeed.io")
-        print("[+] Once downloaded, decompress it into your API repository.")
+        Update().update()
 
     if args.banner:
         banner()
 
     if args.migrate:
         # checking whether the MongoDB server is running
+        # todo This test will be moved to Migrate class
         if mongo_server("mongod"):
             print("[+] Mongo service is up. Starting migrating ....")
             Migrate()

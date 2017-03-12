@@ -1,11 +1,14 @@
 #!/usr/bin/env python
-# Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
+# Copyright (C) 2017 vFeed IO
+# This file is part of vFeed Correlated Vulnerability & Threat Database Python Wrapper  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
 
 from __future__ import print_function
 import json
+import sys
+import os.path
 
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from lib.core.methods import *
 from lib.core.search import Search
 
@@ -102,3 +105,7 @@ print(Search(txt).text())
 txt = "what are you talking about willis ?"
 print("Search for", txt)
 print(Search(txt).text())
+
+from lib.core.update import Update
+
+Update().update()

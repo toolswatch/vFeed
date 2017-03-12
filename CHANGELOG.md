@@ -1,5 +1,13 @@
 Changelog
 =========
+
+0.7.1
+-----
+* [New] Reactivated the ability to automate the download process for Consultancy / Integrator plans using private Dropbox repository.
+* [Improve] Improved the `mongo.py` to check whether SQLite exists. Thanks to Alex Faraino (https://github.com/AlexFaraino/vFeed)
+* [Fix] Modified vfeedcli from API to wrapper.
+* [Doc] [Documentation](https://vfeed.io/docs) updated to reflect the new changes.
+
 0.7.0.1
 -----
 * [Fix] Fixed issue #72. Migration was not working for ubuntu and debian.
@@ -35,7 +43,6 @@ Changelog
 * Documentation updated accordingly.
 
 **NOTE**: Some code was cleaned. Nevertheless, the issues reported [here](https://github.com/toolswatch/vFeed/issues) will be fixed in next minor version.
-
 
 0.6.7
 ---------
@@ -84,7 +91,6 @@ Changelog
 * Todo : The XML export will be added later.
 * The documentation updated. Visit [Documentation Page](https://github.com/toolswatch/vFeed/wiki/)
 
-
 Beta v0.5.0
 -----------
 * Added a new class ` search.py `. Now it is possible to search for CPE associated CVEs. Check the full documentation
@@ -131,7 +137,6 @@ Beta v0.4.7
 
 Beta v0.4.6
 -----------
-
 * Added the support to Suricata ET SID (http://suricata-ids.org/). When available, vFeed reports the mapping with Suricata ID, Attack title rule and class type
 * Added the support to VMware IDs. 
 * Updated the Gentoo GLSA mapper. Many new IDs have been added to vFeed.db
@@ -144,7 +149,6 @@ Beta v0.4.6
  
 Beta v0.4.5
 -----------
-
 * Added the support to CWE v2.5. Now, vFeed reports the newest CWE-id added to version 2.5. See here for more information http://cwe.mitre.org/data/reports/diff_reports/v2.4_v2.5.html
 * Added the support to OWASP Top 2013. The method get_category() reports the appropriate OWASP ID. The method get_risk() also reports the categories of the attack as topAlert value.
 * Better support of Microsoft Bulletins and KB.
@@ -158,7 +162,6 @@ Beta v0.4.5
 
 Beta v0.4.0
 -----------
-
 * Refactored the `exportXML` method as a separate class vFeedXML (vfeed\exportxml.py). The method `export()` could be invoked to generate the appropriate vFeed XML format
 * Changed methods name to something "pythonic compliant names" according to Andres Riancho (Thanks to David Mirza for python documentation). Format is now get_cve, get_cpe etc instead of the awful checkCVE, checkCPE ...(Issue Ref: https://github.com/toolswatch/vFeed/issues/13)
 * Added the support to DISA/IAVM database (Information Assurance Vulnerability Alert) advisories from DoD-CERT. When available, the IAVM id and DISA VMSkey are reported
@@ -190,7 +193,6 @@ Beta v0.4.0
 
 Beta v0.3.9
 -----------
-
 * Added the support of Metasploit Ids. Now vFeed reports msf exploit id, link to file and title
 * Added the support of CAPEC. When the reference exists, the CAPEC id and link are reported accordingly with its associated CWE
 * checkCWE extended to support the CWE title. Sometimes, it's comfortable to deal with human words than ids ;)
@@ -209,7 +211,6 @@ the topAlert value is filled with categories name such as OWASP Top Ten 2010 Cat
 
 Beta v0.3.6
 -----------
-
 * Refactoring as a first step towards having the vfeed module in pypi (andres riancho)
 * PEP8 compatible code (at least what autopep8 can do) (andres riancho)
 * README format is now RST (andres riancho)
@@ -218,7 +219,6 @@ Beta v0.3.6
 
 Beta v0.3.5
 -----------
-
 * Extended the checkREDHAT method
     * Added the support of Redhat OVAL ids reference. Now, vFeed reports more accurate Redhat Patchs with associated Redhat OVAL ids 
     * Added the support of Redhat Bugzilla Ids and advisory issue date
@@ -236,7 +236,6 @@ Beta v0.3.5
  
 Beta v0.3
 ---------
-
 * Rewrite vFeedApi.py as a class (added _init_db() method with sql query sanitization)
 * Added a class vFeedInfo to return variables and global configuration
 * Added a config.py module.
@@ -247,7 +246,6 @@ Beta v0.3
 
 Beta v0.2
 ---------
-
 * moved project to github
 * added an updater.py to download the vFeed vulnerability database
 

@@ -8,7 +8,7 @@ vFeed The Correlated Vulnerability and Threat Intelligence Database API
 [![Compatibility](https://img.shields.io/badge/CVE-Compatible-yellow.svg)](https://cve.mitre.org/compatible/compatible.html#ToolsWatch)
 [![Compatibility](https://img.shields.io/badge/OVAL-Compatible-yellow.svg)](http://oval.mitre.org/adoption/participants.html#ToolsWatch)
 
-**vFeed API / Database** is a CVE, CWE and OVAL Compatible naming scheme concept that provides extra structured detailed third-party references and technical characteristics for a CVE entry through an extensible XML/JSON schema.
+**vFeed Python Wrapper / Database** is a CVE, CWE and OVAL Compatible naming scheme concept that provides extra structured detailed third-party references and technical characteristics for a CVE entry through an extensible XML/JSON schema.
 It also improves the reliability of CVEs by providing a flexible and comprehensive vocabulary for describing the relationship with other standards and security references.
 
 vFeed API generates a JSON-based format outputs to describe in detail vulnerabilities. 
@@ -45,7 +45,7 @@ Key features
 * Downloadable Correlated Vulnerability and Threat Intelligence Database 
 * Support correlation with 3rd party security references IAVA, OSVDB, OVAL etc
 * Support correlation with security assessment and patch vendors (Nessus, Exploit-DB, Redhat, Microsoft..)
-* Simple and ready-to-use API Python 
+* Simple and ready-to-use Python Wrapper
 
 More features at [vFeed IO](https://vfeed.io/features/).
 
@@ -62,11 +62,18 @@ How to ?
 ==============
 
 Run `vfeedcli.py -h` for help.
-Refer to the [wiki](https://github.com/toolswatch/vFeed/wiki/) page for detailed documentation.
+Refer to the [Documentation](https://vfeed.io/docs) official documentation page.
  
 
 Latest release
 ==============
+
+0.7.1
+-----
+* [New] Reactivated the ability to automate the download process for Consultancy / Integrator plans using private Dropbox repository.
+* [Improve] Improved the `mongo.py` to check whether SQLite exists. Thanks to Alex Faraino (https://github.com/AlexFaraino/vFeed)
+* [Fix] Modified vfeedcli from API to wrapper.
+* [Doc] [Documentation](https://vfeed.io/docs) updated to reflect the new changes.
 
 0.7.0.1
 -----

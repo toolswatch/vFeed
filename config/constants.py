@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
+# Copyright (C) 2017 vFeed IO
+# This file is part of vFeed Correlated Vulnerability & Threat Database Python Wrapper  - https://vfeed.io
 # See the file 'LICENSE' for copying permission
 # DO NOT DELETE OR MODIFY.
 
@@ -12,12 +12,16 @@ export_dir = os.path.normpath(os.path.join(root_dir, "export"))
 db = "vfeed.db"
 db_location = os.path.join(root_dir, db)
 
-# vFeed Database information
-title = "vFeed - The Correlated Vulnerability and Threat Intelligence Database API"
-author = "NJ OUCHN"
-twitter = "@toolswatch"
+# vFeed database information
+title = "vFeed - The Correlated Vulnerability and Threat Intelligence Database Wrapper"
+author = "vFeed IO"
+twitter = "@vfeed_io"
 repository = "https://vfeed.io"
-build = "0.7.0"
+build = "0.7.1"
+
+# Automated update Information
+dropbox_dl  = " INSERT YOUR DB LINK HERE"
+dropbox_cksum = " INSERT YOUR UPDATE FILE LINK HERE"
 
 # Third party URLs
 cve_url = "http://cve.mitre.org/cgi-bin/cvename.cgi?name="

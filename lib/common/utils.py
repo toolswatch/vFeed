@@ -1,11 +1,12 @@
 #!/usr/bin/env python
-# Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
+# Copyright (C) 2017 vFeed IO
+# This file is part of vFeed Correlated Vulnerability & Threat Database Python Wrapper  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
 
 from __future__ import print_function
 import os
 import json
+import hashlib
 import shutil
 import inspect
 
@@ -101,3 +102,18 @@ def mongo_server(process):
         return True
     except:
         return False
+
+
+def checksum(file):
+    """
+    Calculate file sha1
+    :param file:
+    :return: file checksum
+    """
+    sha1 = hashlib.sha1()
+    f = open(file, 'rb')
+    try:
+        sha1.update(f.read())
+    finally:
+        f.close()
+    return sha1.hexdigest()

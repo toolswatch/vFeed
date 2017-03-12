@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 # !/usr/bin/env python
-# Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
+# Copyright (C) 2017 vFeed IO
+# This file is part of vFeed Correlated Vulnerability & Threat Database Python Wrapper  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
 
 from __future__ import print_function
+
 
 def banner():
     tag = ("""

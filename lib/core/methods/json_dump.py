@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# Copyright (C) 2016 vFeed IO
-# This file is part of vFeed Correlated Vulnerability & Threat Database API  - https://vfeed.io
+# Copyright (C) 2017 vFeed IO
+# This file is part of vFeed Correlated Vulnerability & Threat Database Python Wrapper  - https://vfeed.io
 # See the file 'LICENSE' for copying permission.
 
 import json
@@ -87,7 +87,7 @@ class ExportJson(object):
         suricata = json.loads(self.data.get_suricata())
 
         json_export = {
-            "vFeed": {"id": self.vfeed_id, "author": author, "product": title, "api": build, "url": repository,
+            "vFeed": {"id": self.vfeed_id, "author": author, "product": title, "wrapper": build, "url": repository,
                       'Contact': twitter},
             "information": {"cve": info, "cpe": cpe, "cwe": cwe, "capec": capec, "category": category, "wasc": wasc},
             "references": {"scip": scip, "osvdb": osvdb, "certvn": certvn, "bid": bid, "iavm": iavm,

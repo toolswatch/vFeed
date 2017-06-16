@@ -1,6 +1,16 @@
 Changelog
 =========
 
+0.7.2
+-----
+* Added support to CAPEC v2.10. Check [the full changelog](http://capec.mitre.org/data/reports/diff_reports/v2.9_v2.10.html).
+* Added support to CWE v2.11. Check [the full changelog](http://cwe.mitre.org/data/reports/diff_reports/v2.10_v2.11.html).
+* Added support to the new [Microsoft security update](https://portal.msrc.microsoft.com/en-us/security-guidance)
+* [Improve] Improved the `get_ms` method to returns both all and new Microsoft bulletins and KBs.
+* [Improve] Fixed issue #65. Cleaned the database from **Reject** entries.
+* [Doc] [Documentation](https://vfeed.io/docs) updated to reflect the new changes.
+_All changes are immediate for consultancy / integrator license customers. The CE database will be available by the end of the month_
+
 0.7.1
 -----
 * [New] Reactivated the ability to automate the download process for Consultancy / Integrator plans using private Dropbox repository.

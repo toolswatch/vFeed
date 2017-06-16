@@ -27,9 +27,9 @@ class ExportJson(object):
         """
         # CVE basic information
         self.data = CveInfo(self.cve)
-        info = json.loads(self.data.get_cve())
+        cve_info = json.loads(self.data.get_cve())
 
-        if info is None:
+        if cve_info is None:
             return False
 
         cpe = json.loads(self.data.get_cpe())
@@ -54,7 +54,6 @@ class ExportJson(object):
         # Patch Information
         self.data = CvePatches(self.cve)
         ms = json.loads(self.data.get_ms())
-        kb = json.loads(self.data.get_kb())
         aixapar = json.loads(self.data.get_aixapar())
         redhat = json.loads(self.data.get_redhat())
         debian = json.loads(self.data.get_debian())
@@ -89,11 +88,10 @@ class ExportJson(object):
         json_export = {
             "vFeed": {"id": self.vfeed_id, "author": author, "product": title, "wrapper": build, "url": repository,
                       'Contact': twitter},
-            "information": {"cve": info, "cpe": cpe, "cwe": cwe, "capec": capec, "category": category, "wasc": wasc},
+            "information": {"cve": cve_info, "cpe": cpe, "cwe": cwe, "capec": capec, "category": category, "wasc": wasc},
             "references": {"scip": scip, "osvdb": osvdb, "certvn": certvn, "bid": bid, "iavm": iavm,
                            'other': {"links": refs}}, "risk": severity,
-            "patches": {"microsoft bulletins": ms, "microsoft kb": kb,
-                        "ibm": aixapar, "redhat": redhat, "debian": debian,
+            "patches": {"microsoft": ms, "ibm": aixapar, "redhat": redhat, "debian": debian,
                         "ubuntu": ubuntu, "gentoo": gentoo, "suse": suse, "fedora": fedora,
                         "mandriva": mandriva, "vmware": vmware, "cisco": cisco, "hp": hp},
             "scanners": {"nessus": nessus, "openvas": openvas, "oval": oval, "nmap": nmap},

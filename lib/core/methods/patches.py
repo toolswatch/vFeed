@@ -7,8 +7,8 @@
 import json
 
 from config.constants import *
-from lib.common.database import Database
 from lib.common.utils import check_env
+from lib.common.database import Database
 
 
 class CvePatches(object):
@@ -27,28 +27,12 @@ class CvePatches(object):
         self.cur.execute('SELECT * FROM map_cve_ms WHERE cveid=?', self.query)
 
         for self.data in self.cur.fetchall():
-            item = {"id": str(self.data[0]), "title": str(self.data[1]), "url": ms_bulletin_url + str(self.data[0])}
+            item = {"id": str(self.data[0]), "kb": str(self.data[1]), "title": str(self.data[2]),
+                    "url": str(self.data[3])}
             self.ms.append(item)
 
         if len(self.ms) != 0:
             return json.dumps(self.ms, indent=2, sort_keys=True)
-        else:
-            return json.dumps(None)
-
-    def get_kb(self):
-        """ Microsoft method
-        :return: JSON response with Microsoft KB ID and link
-        """
-        self.kb = []
-        self.cur.execute(
-            'SELECT * FROM map_cve_mskb WHERE cveid=?', self.query)
-
-        for self.data in self.cur.fetchall():
-            item = {"id": str(self.data[0]), "title": str(self.data[1]), "url": kb_bulletin_url + str(self.data[0])}
-            self.kb.append(item)
-
-        if len(self.kb) != 0:
-            return json.dumps(self.kb, indent=2, sort_keys=True)
         else:
             return json.dumps(None)
 

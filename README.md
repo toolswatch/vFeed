@@ -2,7 +2,7 @@ vFeed The Correlated Vulnerability and Threat Intelligence Database Wrapper
 =======================================================================
 ![vFeed](https://vfeed.io/wp-content/uploads/2016/07/vfeed.png)
 
-[![Build Status](https://travis-ci.org/toolswatch/vFeed.svg?branch=v0.6.5)](https://travis-ci.org/toolswatch/vFeed)
+[![Build Status](https://travis-ci.org/toolswatch/vFeed.svg?branch=master)](https://travis-ci.org/toolswatch/vFeed)
 [![Code Health](https://landscape.io/github/toolswatch/vFeed/master/landscape.svg?style=flat)](https://landscape.io/github/toolswatch/vFeed/master)
 [![Compatibility](https://img.shields.io/badge/CWE-Compatible-yellow.svg)](http://cwe.mitre.org/compatible/organizations.html#ToolsWatch)
 [![Compatibility](https://img.shields.io/badge/CVE-Compatible-yellow.svg)](https://cve.mitre.org/compatible/compatible.html#ToolsWatch)
@@ -68,45 +68,19 @@ Refer to the [Documentation](https://vfeed.io/docs) official documentation page.
 Latest release
 ==============
 
+0.7.2
+-----
+* Added support to CAPEC v2.10. Check [the full changelog](http://capec.mitre.org/data/reports/diff_reports/v2.9_v2.10.html).
+* Added support to CWE v2.11. Check [the full changelog](http://cwe.mitre.org/data/reports/diff_reports/v2.10_v2.11.html).
+* Added support to the new [Microsoft security update](https://portal.msrc.microsoft.com/en-us/security-guidance)
+* [Improve] Improved the `get_ms` method to returns both all and new Microsoft bulletins and KBs.
+* [Improve] Fixed issue #65. Cleaned the database from **Reject** entries.
+* [Doc] [Documentation](https://vfeed.io/docs) updated to reflect the new changes.
+_All changes are immediate for consultancy / integrator license customers. The CE database will be available by the end of the month_
+
 0.7.1
 -----
 * [New] Reactivated the ability to automate the download process for Consultancy / Integrator plans using private Dropbox repository.
 * [Improve] Improved the `mongo.py` to check whether SQLite exists. Thanks to Alex Faraino (https://github.com/AlexFaraino/vFeed)
 * [Fix] Modified vfeedcli from API to wrapper.
 * [Doc] [Documentation](https://vfeed.io/docs) updated to reflect the new changes.
-
-0.7.0.1
------
-* [Fix] Fixed issue #72. Migration was not working for ubuntu and debian.
-* [Improve] Improved the check_mongo() to support tp linux and OSX.
-
-0.7.0
------
-* [New] Updated and optimized `search` function with new keys (cve, cpe, cwe, oval and text). Please refer to [documentation](https://github.com/toolswatch/vFeed/wiki/2--Usage-(API-and-Command-Line))
-* [New] The `search` result is returned as JSON content. It may contain references to exploits whenever they are available
-* [New] Added support to Python3. Thanks to Elnappo (https://github.com/elnappo)
-* [Fix] Fixed issue #64. The CLI is separated from the library.
-* [Fix] Fixed issue #67. Modified the `config.py` to reflect The OVAL repository new URL hosted by CIS.
-
-0.6.9
------
-* The vFeed DB is no more available through `update` command. The command is deprecated. 
-* The delivery of the vFeed DB was handed over to a new established entity [vFeed IO](https://vfeed.io). This entity sets the goal to become the Leading Provider of Vulnerability and Threat Intelligence Database.
-* The API has been modified to reflect the new changes.  
-
-0.6.8
------
-* Added support to CAPEC version 2.8. Check [about CAPEC v2.8](http://capec.mitre.org/news/index.html#december72015_CAPEC_List_Version_2.8_Now_Available).
-* Added support to CWE v2.9. Check [the full changelog](http://cwe.mitre.org/data/reports/diff_reports/v2.8_v2.9.html).
-* Added mapping to [WASC v2.0 Threat Classification](http://projects.webappsec.org/w/page/13246978/Threat%20Classification).
-* Added CVSS v2.0 vectors to `risk.py` class. Now, the methods `get_cvss` and `get_severity` display the vector when available.
-* Added new method `get_wasc` to reflect the new mapping with WASC v2.0. The method returns ID, Title and URL when available.
-* Modified the method `get_capec` to return the following:
-    * The title
-    * [Method of Attacks](http://capec.mitre.org/documents/schema/schema_v2.7.1.html#Method_of_Attack%20%28Methods_of_Attack%29)
-    * [Mitigations](http://capec.mitre.org/documents/schema/schema_v2.7.1.html#Solution_or_Mitigation)
-* Reflected the changes in `cvsexports.sql` MongoDB script to generate the new added tables.
-* vFeed.db the correlated vulnerability & threat database fully regenerated to support the new changes.
-* Documentation updated accordingly.
-
-**NOTE**: Some code was cleaned. Nevertheless, the issues reported [here](https://github.com/toolswatch/vFeed/issues) will be fixed in next minor version.

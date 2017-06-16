@@ -17,7 +17,7 @@ title = "vFeed - The Correlated Vulnerability and Threat Intelligence Database W
 author = "vFeed IO"
 twitter = "@vfeed_io"
 repository = "https://vfeed.io"
-build = "0.7.1"
+build = "0.7.2"
 
 # Automated update Information
 dropbox_dl  = " INSERT YOUR DB LINK HERE"

@@ -7,7 +7,7 @@ from __future__ import print_function
 
 import os
 import sys
-import urllib2
+import urllib
 import tarfile
 
 from lib.common.utils import checksum
@@ -89,7 +89,7 @@ class Update(object):
         try:
             self.tar = tarfile.open(self.db_compressed, 'r:gz')
             self.tar.extractall('.')
-        except Exception, e:
+        except Exception as e:
             print("[!] Database not extracted ", e)
 
     def check_status(self):
@@ -122,7 +122,7 @@ class Update(object):
                 os.remove(self.db_compressed)
             if os.path.isfile(self.db_update):
                 os.remove(self.db_update)
-        except Exception, e:
+        except Exception as e:
             print("[+] Already cleaned", e)
 
     def check_drobpox_lnk(self):

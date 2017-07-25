@@ -7,7 +7,7 @@ from __future__ import print_function
 
 import os
 import sys
-import urllib
+import urllib2
 import tarfile
 
 from lib.common.utils import checksum

@@ -7,7 +7,10 @@ from __future__ import print_function
 
 import os
 import sys
-import urllib2
+try:
+    import urllib2
+except ImportError:
+    import urllib.request as urllib2
 import tarfile
 
 from lib.common.utils import checksum

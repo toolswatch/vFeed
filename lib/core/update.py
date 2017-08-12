@@ -62,7 +62,7 @@ class Update(object):
         self.u = urllib2.urlopen(url)
         self.f = open(self.filename, 'wb')
         self.meta = self.u.info()
-        self.filesize = int(self.meta.getheaders("Content-Length")[0])
+        self.filesize = int(self.meta.get("Content-Length"))
         self.filesize_dl = 0
         self.block_sz = 8192
         while True:

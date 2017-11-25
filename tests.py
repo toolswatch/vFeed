@@ -106,6 +106,11 @@ txt = "what are you talking about willis ?"
 print("Search for", txt)
 print(Search(txt).text())
 
+from config.stats import Stats
+
+Stats().get_stats()
+
 from lib.core.update import Update
 
 Update().update()
+

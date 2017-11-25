@@ -13,11 +13,11 @@ db = "vfeed.db"
 db_location = os.path.join(root_dir, db)
 
 # vFeed database information
-title = "vFeed - The Correlated Vulnerability and Threat Intelligence Database Wrapper"
+title = "vFeed - The Correlated Vulnerability and Threat Intelligence Database API"
 author = "vFeed IO"
 twitter = "@vfeed_io"
 repository = "https://vfeed.io"
-build = "0.7.1"
+build = "0.7.2.1"
 
 # Automated update Information
 dropbox_dl  = " INSERT YOUR DB LINK HERE"

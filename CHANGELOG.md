@@ -1,11 +1,15 @@
 Changelog
 =========
 
+0.7.2.1
+-----
+* [Fix] Imporved Migrate() module (SQLite to MongoDB). Thanks to Thiago Palmeira from Infolink for reporting the bug.
+
 0.7.2
 -----
-* Added support to CAPEC v2.10. Check [the full changelog](http://capec.mitre.org/data/reports/diff_reports/v2.9_v2.10.html).
-* Added support to CWE v2.11. Check [the full changelog](http://cwe.mitre.org/data/reports/diff_reports/v2.10_v2.11.html).
-* Added support to the new [Microsoft security update](https://portal.msrc.microsoft.com/en-us/security-guidance)
+* [New] Added support to CAPEC v2.10. Check [the full changelog](http://capec.mitre.org/data/reports/diff_reports/v2.9_v2.10.html).
+* [New] Added support to CWE v2.11. Check [the full changelog](http://cwe.mitre.org/data/reports/diff_reports/v2.10_v2.11.html).
+* [New] Added support to the new [Microsoft security update](https://portal.msrc.microsoft.com/en-us/security-guidance)
 * [Improve] Improved the `get_ms` method to returns both all and new Microsoft bulletins and KBs.
 * [Improve] Fixed issue #65. Cleaned the database from **Reject** entries.
 * [Doc] [Documentation](https://vfeed.io/docs) updated to reflect the new changes.
@@ -33,18 +37,18 @@ _All changes are immediate for consultancy / integrator license customers. The C
 
 0.6.9
 -----
-* The vFeed DB is no more available through `update` command. The command is deprecated. 
-* The delivery of the vFeed DB was handed over to a new established entity [vFeed IO](https://vfeed.io). This entity sets the goal to become the Leading Provider of Vulnerability and Threat Intelligence Database.
-* The API has been modified to reflect the new changes. 
+* [New] The vFeed DB is no more available through `update` command. The command is deprecated. 
+* [New] The delivery of the vFeed DB was handed over to a new established entity [vFeed IO](https://vfeed.io). This entity sets the goal to become the Leading Provider of Vulnerability and Threat Intelligence Database.
+* [New] The API has been modified to reflect the new changes. 
 
 0.6.8
 -----
-* Added support to CAPEC version 2.8. Check [about CAPEC v2.8](http://capec.mitre.org/news/index.html#december72015_CAPEC_List_Version_2.8_Now_Available).
-* Added support to CWE v2.9. Check [the full changelog](http://cwe.mitre.org/data/reports/diff_reports/v2.8_v2.9.html).
-* Added mapping to [WASC v2.0 Threat Classification](http://projects.webappsec.org/w/page/13246978/Threat%20Classification).
-* Added CVSS v2.0 vectors to `risk.py` class. Now, the methods `get_cvss` and `get_severity` display the vector when available.
-* Added new method `get_wasc` to reflect the new mapping with WASC v2.0. The method returns ID, Title and URL when available.
-* Modified the method `get_capec` to return the following:
+* [New] Added support to CAPEC version 2.8. Check [about CAPEC v2.8](http://capec.mitre.org/news/index.html#december72015_CAPEC_List_Version_2.8_Now_Available).
+* [New] Added support to CWE v2.9. Check [the full changelog](http://cwe.mitre.org/data/reports/diff_reports/v2.8_v2.9.html).
+* [New] Added mapping to [WASC v2.0 Threat Classification](http://projects.webappsec.org/w/page/13246978/Threat%20Classification).
+* [New] Added CVSS v2.0 vectors to `risk.py` class. Now, the methods `get_cvss` and `get_severity` display the vector when available.
+* [New] Added new method `get_wasc` to reflect the new mapping with WASC v2.0. The method returns ID, Title and URL when available.
+* [New] Modified the method `get_capec` to return the following:
     * The title
     * [Method of Attacks](http://capec.mitre.org/documents/schema/schema_v2.7.1.html#Method_of_Attack%20%28Methods_of_Attack%29)
     * [Mitigations](http://capec.mitre.org/documents/schema/schema_v2.7.1.html#Solution_or_Mitigation)
@@ -56,16 +60,16 @@ _All changes are immediate for consultancy / integrator license customers. The C
 
 0.6.7
 ---------
-* Added support to landscape.io with some code cleaning.
+* [New] Added support to landscape.io with some code cleaning.
 
 0.6.6
 ---------
-* Modified the `update.py` class to display the vFeed License before downloading the database.
+* [Improve] Modified the `update.py` class to display the vFeed License before downloading the database.
 
 0.6.5
 ---------
-* Added the ability to migrate to Mongo Database (Thanks so much to Ushan89 for the original code)
-* A new class `mongo.py` added (based on Ushan89 [code](https://github.com/ushan89/vFeed) to simply the process of migration from SQLite to MongoDB
+* [New] Added the ability to migrate to Mongo Database (Thanks so much to Ushan89 for the original code)
+* [New] A new class `mongo.py` added (based on Ushan89 [code](https://github.com/ushan89/vFeed) to simply the process of migration from SQLite to MongoDB
     * --migrate: Dump into a CSV then populate the vFeed MongoDB
 * The documentation updated. Visit [Documentation Page](https://github.com/toolswatch/vFeed/wiki/)
 

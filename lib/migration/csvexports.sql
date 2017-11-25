@@ -100,9 +100,6 @@ SELECT * FROM map_cve_msf;
 .once csv_exports/map_cve_ubuntu.csv
 SELECT * FROM map_cve_ubuntu;
 
-.once csv_exports/map_cve_mskb.csv
-SELECT * FROM map_cve_mskb;
-
 .once csv_exports/map_cve_vmware.csv
 SELECT * FROM map_cve_vmware;
 

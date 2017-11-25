@@ -1,6 +1,6 @@
 vFeed The Correlated Vulnerability and Threat Intelligence Database Wrapper
 =======================================================================
-![vFeed](https://vfeed.io/wp-content/uploads/2016/07/vfeed.png)
+![vFeed](https://vfeed.io/wp-content/uploads/2016/08/logo_new-e1472658851686.png)
 
 [![Build Status](https://travis-ci.org/toolswatch/vFeed.svg?branch=master)](https://travis-ci.org/toolswatch/vFeed)
 [![Code Health](https://landscape.io/github/toolswatch/vFeed/master/landscape.svg?style=flat)](https://landscape.io/github/toolswatch/vFeed/master)
@@ -67,6 +67,10 @@ Refer to the [Documentation](https://vfeed.io/docs) official documentation page.
 
 Latest release
 ==============
+
+0.7.2.1
+-----
+* [Fix] Fixed Migrate() module (SQLite to MongoDB). Thanks to Thiago Palmeira from Infolink for reporting the bug.
 
 0.7.2
 -----

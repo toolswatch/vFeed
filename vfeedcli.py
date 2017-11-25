@@ -23,7 +23,7 @@ except ImportError as e:
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-v", action="version", version=".:. {0} .:. ".format(title) + "API version: {0}".format(build))
+    parser.add_argument("-v", action="version", version="{0}".format(title) + " {0}".format(build))
     parser.add_argument("-m", "--method", metavar=('method', 'CVE'), help="Invoking multiple vFeed built-in functions",
                         nargs=2)
     parser.add_argument("-e", "--export", metavar=('json_dump', 'CVE'), help="Export the JSON content", nargs=2)
@@ -59,8 +59,9 @@ if __name__ == "__main__":
         # checking whether the MongoDB server is running
         # todo This test will be moved to Migrate class
         if mongo_server("mongod"):
-            print("[+] Mongo service is up. Starting migrating ....")
-            Migrate()
+            print("[+] Mongo service is up")
+            if Migrate():
+                print("[+] Migration successfully completed")
         else:
             print("[!] Mongo service is probably not up.")
 
@@ -87,3 +88,6 @@ if __name__ == "__main__":
         result = enum_classes(method_name, cve_id)
         if result is not False:
             print(result)
+
+    if len(sys.argv) < 2:
+        parser.print_help()

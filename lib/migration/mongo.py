@@ -7,15 +7,15 @@
 
 from __future__ import print_function
 
+import os
 import glob
 import subprocess
 
-from config.constants import migration_dir
-from config.constants import mongo_conf
-from config.constants import migration_script
-from config.constants import db_location
 from config.constants import csv_dir
-
+from config.constants import mongo_conf
+from config.constants import db_location
+from config.constants import migration_dir
+from config.constants import migration_script
 
 class Migrate(object):
     def __init__(self):
@@ -42,6 +42,7 @@ class Migrate(object):
         """ read the vFeed.db and export entries to CSV
         :return: CSV files into csv_exports directory
         """
+        print("[+] Starting Migration Process ....")
         self.migration_read = '.read ' + self.migration_script
 
         try:
@@ -52,7 +53,7 @@ class Migrate(object):
             ])
         except OSError as e:
             if e.errno == os.errno.ENOENT:
-                print('[Error] SQlite binary not found: install SQLite', e)
+                print("[Error] SQlite binary not found: install SQLite", e)
                 raise
             else:
                 raise
@@ -81,6 +82,6 @@ class Migrate(object):
                     '--headerline'
                 ])
             except Exception as e:
-                print('[Warning] Caught an exception', e)
+                print("[Warning] Caught an exception", e)
 
             print (("[+] Imported collection: {} --> vFeed MongoDB".format(self.table_name)))

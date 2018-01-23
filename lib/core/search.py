@@ -8,7 +8,7 @@ import json
 from config.constants import db
 from lib.core.methods import CveExploit
 from lib.common.database import Database
-
+import re
 
 class Search(object):
     def __init__(self, query):
@@ -141,6 +141,64 @@ class Search(object):
             self.res = None
 
         return json.dumps(self.res, indent=2)
+        
+        
+    def text2(self):
+        self.cve_id = []
+        self.entry = self.query
+        (self.cur, self.conn) = Database(None).db_init()
+        self.entry_data = []
+	def constr(ls):
+		def filter_data(x):
+			desc = x[3]
+			for x in ls:
+				if not x in desc:
+					return False	
+			return True
+		return filter_data
+	for x in self.entry.split(" "):
+		self.cur.execute("SELECT * from nvd_db where summary like ? ORDER BY cveid DESC",
+				               ('%' + x + '%',))
+		self.entry_data += self.cur.fetchall()
+	self.entry_data = filter(constr(self.entry.split(" ")), self.entry_data)
+        if self.entry_data:
+            for self.data in self.entry_data:
+                self.cve_id.append(self.data[0] + " : " + self.data[3])
+
+            item = {self.entry.split(" "): {"vulnerability": self.cve_id}}
+            self.res.append(item)
+        else:
+            self.res = None
+
+        return json.dumps(self.res, indent=2)
+
+
+    def regex(self):
+        self.cve_id = []
+        self.entry = self.query
+        (self.cur, self.conn) = Database(None).db_init()
+        self.entry_data = []
+	def constr(regex_str):
+		def filter_data(x):
+			desc = x[3]
+			regex = re.compile(regex_str)	
+			return re.search(regex, desc) != None 
+		return filter_data
+
+	self.cur.execute("SELECT * from nvd_db ORDER BY cveid DESC")			
+	self.entry_data += self.cur.fetchall()
+	self.entry_data = filter(constr(self.entry), self.entry_data)
+        if self.entry_data:
+            for self.data in self.entry_data:
+                self.cve_id.append(self.data[0] + " : " + self.data[3])
+
+            item = {"Pattern('" +self.entry+ "')": {"vulnerability": self.cve_id}}
+            self.res.append(item)
+        else:
+            self.res = None
+
+        return json.dumps(self.res, indent=2)
+
 
     @staticmethod
     def check_msf(cve):

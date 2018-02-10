@@ -156,16 +156,15 @@ class Search(object):
 					return False	
 			return True
 		return filter_data
-	for x in self.entry.split(" "):
-		self.cur.execute("SELECT * from nvd_db where summary like ? ORDER BY cveid DESC",
-				               ('%' + x + '%',))
-		self.entry_data += self.cur.fetchall()
+	
+	self.cur.execute("SELECT * from nvd_db ORDER BY cveid DESC")			
+	self.entry_data = self.cur.fetchall()
 	self.entry_data = filter(constr(self.entry.split(" ")), self.entry_data)
         if self.entry_data:
             for self.data in self.entry_data:
                 self.cve_id.append(self.data[0] + " : " + self.data[3])
 
-            item = {self.entry.split(" "): {"vulnerability": self.cve_id}}
+            item = {str(self.entry.split(" ")): {"vulnerability": self.cve_id}}
             self.res.append(item)
         else:
             self.res = None

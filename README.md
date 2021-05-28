@@ -50,7 +50,7 @@ Key features
 * Support correlation with security assessment and patch vendors (Nessus, Exploit-DB, Redhat, Microsoft..)
 * Easy and ready-to-use python Wrapper
 
-More features at [vFeed IO](https://vfeed.io/features/).
+More features at [vFeed, Inc](https://vfeed.io/).
 
 Target Audience
 =================
@@ -70,6 +70,11 @@ Refer to the [Documentation](https://vfeed.io/docs) official documentation page.
 
 Latest release
 ==============
+
+1.0
+-----
+* [NEW RELEASE] - Project handed over to vFeed, Inc >> https://github.com/vfeedio/pyvfeed
+
 
 0.7.2.1
 -----
